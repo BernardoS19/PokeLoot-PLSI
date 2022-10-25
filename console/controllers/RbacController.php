@@ -94,30 +94,78 @@ class RbacController extends Controller
         $auth->add($deleteElemento);
 
         //add "CreateEvento"
-        $createEvento = $auth->createPermission('deleteElemento');
-        $deleteElemento->description = 'Elimina um elemento de Carta';
-        $auth->add($deleteElemento);
+        $createEvento = $auth->createPermission('createEvento');
+        $createEvento->description = 'Cria um evento';
+        $auth->add($createEvento);
 
         //add "UpdateEvento"
-        $deleteElemento = $auth->createPermission('deleteElemento');
-        $deleteElemento->description = 'Elimina um elemento de Carta';
-        $auth->add($deleteElemento);
+        $updateEvento = $auth->createPermission('updateEvento');
+        $updateEvento->description = 'Altera um evento';
+        $auth->add($updateEvento);
 
         //add "ReadEvento"
-        $deleteElemento = $auth->createPermission('deleteElemento');
-        $deleteElemento->description = 'Elimina um elemento de Carta';
-        $auth->add($deleteElemento);
+        $readEvento = $auth->createPermission('readEvento');
+        $readEvento->description = 'Ler um evento';
+        $auth->add($readEvento);
 
         //add "DeleteEvento"
-        $deleteElemento = $auth->createPermission('deleteElemento');
-        $deleteElemento->description = 'Elimina um elemento de Carta';
-        $auth->add($deleteElemento);
+        $deleteEvento = $auth->createPermission('deleteElemento');
+        $deleteEvento->description = 'Elimina um Evento';
+        $auth->add($deleteEvento);
+
+        //add "CreateColecao"
+        $createColecao = $auth->createPermission('createColecao');
+        $createColecao->description = 'Cria uma Colecao';
+        $auth->add($createColecao);
+
+        //add "UpdateColecao"
+        $updateColecao = $auth->createPermission('updateColecao');
+        $updateColecao->description = 'Altera uma colecao';
+        $auth->add($updateColecao);
+
+        //add "ReadColecao"
+        $readColecao = $auth->createPermission('readColecao');
+        $readColecao->description = 'Ler uma Colecao';
+        $auth->add($readColecao);
+
+        //add "DeleteColecao"
+        $deleteColecao = $auth->createPermission('deleteColecao');
+        $deleteColecao->description = 'Elimina uma Colecao';
+        $auth->add($deleteColecao);
+
+        //add "CreatePedido"
+        $createPedido = $auth->createPermission('createPedido');
+        $createPedido->description = 'Cria um Pedido';
+        $auth->add($createPedido);
+
+        //add "UpdatePedido"
+        $updatePedido = $auth->createPermission('updatePedido');
+        $updatePedido->description = 'Altera um Pedido';
+        $auth->add($updatePedido);
+
+        //add "ReadPedido"
+        $readPedido = $auth->createPermission('readPedido');
+        $readPedido->description = 'ler um Pedido';
+        $auth->add($readPedido);
+
+        //add "DeletePedido"
+        $deletePedido = $auth->createPermission('deletePedido');
+        $deletePedido->description = 'Elimina um Pedido';
+        $auth->add($deletePedido);
+
+        //add "CreatePerfil"
+        $createPerfil = $auth->createPermission('createPerfil');
+        $createPerfil->description = 'Cria um perfil';
+        $auth->add($createPerfil);
+
+        //add "UpdatePerfil"
+        $updatePerfil = $auth->createPermission('updatePerfil');
+        $updatePerfil->description = 'Altera um perfil';
+        $auth->add($updatePerfil);
 
         // add "admin" role and give this role the "updatePost" permission
         // as well as the permissions of the "author" role
         $admin = $auth->createRole('admin');
-        $avaliador = $auth->createRole('avaliador');
-        $cliente = $auth->createRole('cliente');
         $auth->add($admin);
         //User
         $auth->addChild($admin, $createUser);
@@ -126,7 +174,7 @@ class RbacController extends Controller
         $auth->addChild($admin, $deleteUser);
         //Carta
         $auth->addChild($admin, $createCarta);
-        $auth->addChild($admin, $updateCarta;
+        $auth->addChild($admin, $updateCarta);
         $auth->addChild($admin, $readCarta);
         $auth->addChild($admin, $deleteCarta);
         //Tipo
@@ -139,6 +187,34 @@ class RbacController extends Controller
         $auth->addChild($admin, $updateElemento);
         $auth->addChild($admin, $readElemento);
         $auth->addChild($admin, $deleteElemento);
+        //Evento
+        $auth->addChild($admin, $createEvento);
+        $auth->addChild($admin, $updateEvento);
+        $auth->addChild($admin, $readEvento);
+        $auth->addChild($admin, $deleteEvento);
+        //Colecao
+        $auth->addChild($admin, $createColecao);
+        $auth->addChild($admin, $updateColecao);
+        $auth->addChild($admin, $readColecao);
+        $auth->addChild($admin, $deleteColecao);
+
+        $avaliador = $auth->createRole('avaliador');
+        $auth->add($avaliador);
+        $auth->addChild($avaliador, $updateCarta);
+        $auth->addChild($avaliador, $readCarta);
+        $auth->addChild($avaliador, $readTipo);
+        $auth->addChild($avaliador, $readElemento);
+        $auth->addChild($avaliador, $createPedido);
+        $auth->addChild($avaliador, $updatePedido);
+        $auth->addChild($avaliador, $readPedido);
+        $auth->addChild($avaliador, $deletePedido);
+
+        $cliente = $auth->createRole('cliente');
+        $auth->add($cliente);
+        $auth->addChild($cliente, $readCarta);
+        $auth->addChild($cliente, $readTipo);
+        $auth->addChild($cliente, $readElemento);
+        $auth->addChild($cliente, $updatePerfil);
 
         // Assign roles to users. 1  returned by IdentityInterface::getId()
         // usually implemented in your User model.
