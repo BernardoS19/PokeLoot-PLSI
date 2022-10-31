@@ -26,6 +26,7 @@ class SiteController extends Controller
                     [
                         'actions' => ['login', 'error'],
                         'allow' => true,
+                        'roles' => ['admin','avaliador'],
                     ],
                     [
                         'actions' => ['logout', 'index'],
