@@ -26,7 +26,7 @@ class SiteController extends Controller
                     [
                         'actions' => ['login', 'error'],
                         'allow' => true,
-                        'roles' => ['admin','avaliador'],
+                        'roles' => ['?'],
                     ],
                     [
                         'actions' => ['logout', 'index'],
@@ -73,7 +73,8 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+        //Se não for guest e se não for cliente
+        if (!Yii::$app->user->isGuest && !Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId())) {
             return $this->goHome();
         }
 

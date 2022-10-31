@@ -69,7 +69,7 @@ class RbacController extends Controller
         $auth->add($readTipo);
 
         //add "DeleteTipo"
-        $deleteTipo = $auth->createPermission('deleteCarta');
+        $deleteTipo = $auth->createPermission('deleteTipo');
         $deleteTipo->description = 'Elimina um Tipo de Carta';
         $auth->add($deleteTipo);
 
@@ -109,7 +109,7 @@ class RbacController extends Controller
         $auth->add($readEvento);
 
         //add "DeleteEvento"
-        $deleteEvento = $auth->createPermission('deleteElemento');
+        $deleteEvento = $auth->createPermission('deleteEvento');
         $deleteEvento->description = 'Elimina um Evento';
         $auth->add($deleteEvento);
 
@@ -165,55 +165,67 @@ class RbacController extends Controller
 
         // add "admin" role and give this role the "updatePost" permission
         // as well as the permissions of the "author" role
+
+        // Admin
         $admin = $auth->createRole('admin');
         $auth->add($admin);
-        //User
+        // permissões User
         $auth->addChild($admin, $createUser);
         $auth->addChild($admin, $updateUser);
         $auth->addChild($admin, $readUser);
         $auth->addChild($admin, $deleteUser);
-        //Carta
+        // permissões Carta
         $auth->addChild($admin, $createCarta);
         $auth->addChild($admin, $updateCarta);
         $auth->addChild($admin, $readCarta);
         $auth->addChild($admin, $deleteCarta);
-        //Tipo
+        // permissões Tipo
         $auth->addChild($admin, $createTipo);
         $auth->addChild($admin, $updateTipo);
         $auth->addChild($admin, $readTipo);
         $auth->addChild($admin, $deleteTipo);
-        //Elemento
+        // permissões Elemento
         $auth->addChild($admin, $createElemento);
         $auth->addChild($admin, $updateElemento);
         $auth->addChild($admin, $readElemento);
         $auth->addChild($admin, $deleteElemento);
-        //Evento
+        // permissões Evento
         $auth->addChild($admin, $createEvento);
         $auth->addChild($admin, $updateEvento);
         $auth->addChild($admin, $readEvento);
         $auth->addChild($admin, $deleteEvento);
-        //Colecao
+        // permissões Colecao
         $auth->addChild($admin, $createColecao);
         $auth->addChild($admin, $updateColecao);
         $auth->addChild($admin, $readColecao);
         $auth->addChild($admin, $deleteColecao);
 
+        // Avaliador
         $avaliador = $auth->createRole('avaliador');
         $auth->add($avaliador);
+        // permissões Cartas
         $auth->addChild($avaliador, $updateCarta);
         $auth->addChild($avaliador, $readCarta);
+        // permissões Tipos
         $auth->addChild($avaliador, $readTipo);
+        // permissões Elementos
         $auth->addChild($avaliador, $readElemento);
+        // permissões Pedidos
         $auth->addChild($avaliador, $createPedido);
         $auth->addChild($avaliador, $updatePedido);
         $auth->addChild($avaliador, $readPedido);
         $auth->addChild($avaliador, $deletePedido);
 
+        // Cliente
         $cliente = $auth->createRole('cliente');
         $auth->add($cliente);
+        // permissões Cartas
         $auth->addChild($cliente, $readCarta);
+        // permissões Tipos
         $auth->addChild($cliente, $readTipo);
+        // permissões Elementos
         $auth->addChild($cliente, $readElemento);
+        // permissões Perfil
         $auth->addChild($cliente, $updatePerfil);
 
         // Assign roles to users. 1  returned by IdentityInterface::getId()
