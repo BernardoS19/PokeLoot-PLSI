@@ -74,7 +74,10 @@ class SiteController extends Controller
     public function actionLogin()
     {
         //Se não for guest e se não for cliente
-        if (!Yii::$app->user->isGuest && !Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId())) {
+        $isGuest = Yii::$app->user->isGuest;
+        $role = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
+
+        if ($isGuest || $role == 'cliente') {
             return $this->goHome();
         }
 
