@@ -58,9 +58,11 @@ class SignupForm extends Model
         $user->save();
 
         //Atribuir a role 'cliente' ao user registado
-        $auth = \Yii::$app->authManager;
-        $cliente = $auth->getRole('cliente');
-        $auth->assign($cliente, $user->getId());
+        if ($user->id != 1){
+            $auth = \Yii::$app->authManager;
+            $cliente = $auth->getRole('cliente');
+            $auth->assign($cliente, $user->getId());
+        }
 
         return true;
     }
