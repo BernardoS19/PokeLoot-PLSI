@@ -77,4 +77,15 @@ class LoginForm extends Model
 
         return $this->_user;
     }
+
+    public function isAllowed(){
+        $roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
+        foreach($roles as $role){
+            if($role == 'admin' || $role == 'avaliador'){
+                return $role;
+            } else {
+                return $role;
+            }
+        }
+    }
 }

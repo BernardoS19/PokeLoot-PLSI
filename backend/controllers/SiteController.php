@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
+use yii\web\UrlManager;
 
 /**
  * Site controller
@@ -29,7 +30,12 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['admin', 'avaliador'],
+                    ],
+                    [
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -74,25 +80,29 @@ class SiteController extends Controller
     public function actionLogin()
     {
         //Se não for guest e se não for cliente
-        $isGuest = Yii::$app->user->isGuest;
-        $role = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
+        //$isGuest = Yii::$app->user->isGuest;
+        //$role = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
 
-        if ($isGuest || $role == 'cliente') {
-            return $this->goHome();
-        }
+       // if (!$isGuest && !$role == 'cliente') {
 
-        $this->layout = 'blank';
+            $this->layout = 'blank';
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
+            $model = new LoginForm();
+            if ($model->load(Yii::$app->request->post()) && $model->login() && $model->isAllowed()) {
+                var_dump($model->isAllowed());
+                die();
+                return $this->goBack();
+            }
 
-        $model->password = '';
+            $model->password = '';
 
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        /*}
+        else {
+            return $this->;
+        }*/
     }
 
     /**
