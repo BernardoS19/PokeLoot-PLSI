@@ -32,7 +32,7 @@ class SiteController extends Controller
                     [
                         'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['admin', 'avaliador'],
+                        'roles' => [/*'admin', 'avaliador'*/'@'],
                     ],
                     [
                         'actions' => ['logout'],
@@ -79,30 +79,19 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        //Se não for guest e se não for cliente
-        //$isGuest = Yii::$app->user->isGuest;
-        //$role = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
+        $this->layout = 'blank';
 
-       // if (!$isGuest && !$role == 'cliente') {
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login() && $model->isAllowed()) {
+            return $this->goBack();
+        }
 
-            $this->layout = 'blank';
+        $model->password = '';
 
-            $model = new LoginForm();
-            if ($model->load(Yii::$app->request->post()) && $model->login() && $model->isAllowed()) {
-                var_dump($model->isAllowed());
-                die();
-                return $this->goBack();
-            }
+        return $this->render('login', [
+            'model' => $model,
+        ]);
 
-            $model->password = '';
-
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        /*}
-        else {
-            return $this->;
-        }*/
     }
 
     /**
