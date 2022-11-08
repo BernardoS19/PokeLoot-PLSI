@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
+use yii\web\UrlManager;
 
 /**
  * Site controller
@@ -29,7 +30,12 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['admin', 'avaliador'],
+                    ],
+                    [
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -73,16 +79,17 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        //Se não for guest e se não for cliente
-        if (!Yii::$app->user->isGuest && !Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId())) {
-            return $this->goHome();
-        }
-
         $this->layout = 'blank';
 
         $model = new LoginForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            if ( $model->isAllowed()) {
+                return $this->goBack();
+            }
+            else {
+                //$this->redirect(Yii::getAlias('@frontend')."/web/site/login");
+            }
         }
 
         $model->password = '';
@@ -90,6 +97,7 @@ class SiteController extends Controller
         return $this->render('login', [
             'model' => $model,
         ]);
+
     }
 
     /**
