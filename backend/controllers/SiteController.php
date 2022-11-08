@@ -32,7 +32,7 @@ class SiteController extends Controller
                     [
                         'actions' => ['index'],
                         'allow' => true,
-                        'roles' => [/*'admin', 'avaliador'*/'@'],
+                        'roles' => ['admin', 'avaliador'],
                     ],
                     [
                         'actions' => ['logout'],
@@ -82,8 +82,14 @@ class SiteController extends Controller
         $this->layout = 'blank';
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login() && $model->isAllowed()) {
-            return $this->goBack();
+
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            if ( $model->isAllowed()) {
+                return $this->goBack();
+            }
+            else {
+                //$this->redirect(Yii::getAlias('@frontend')."/web/site/login");
+            }
         }
 
         $model->password = '';

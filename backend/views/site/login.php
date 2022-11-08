@@ -1,32 +1,49 @@
 <?php
-
-/** @var yii\web\View $this */
-/** @var yii\bootstrap5\ActiveForm $form */
-/** @var \common\models\LoginForm $model */
-
-use yii\bootstrap5\ActiveForm;
-use yii\bootstrap5\Html;
-
-$this->title = 'Login';
+use yii\helpers\Html;
 ?>
-<div class="site-login">
-    <div class="mt-5 offset-lg-3 col-lg-6">
-        <h1><?= Html::encode($this->title) ?></h1>
+<div class="card">
+    <div class="card-body login-card-body">
+        <p class="login-box-msg">Acesso reservado a administradores</p>
 
-        <p>Por favor introduza as suas credenciais de Admistrador</p>
+        <?php $form = \yii\bootstrap4\ActiveForm::begin(['id' => 'login-form']) ?>
 
-        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+        <?= $form->field($model,'username', [
+            'options' => ['class' => 'form-group has-feedback'],
+            'inputTemplate' => '{input}<div class="input-group-append"><div class="input-group-text"><span class="fas fa-envelope"></span></div></div>',
+            'template' => '{beginWrapper}{input}{error}{endWrapper}',
+            'wrapperOptions' => ['class' => 'input-group mb-3']
+        ])
+            ->label(false)
+            ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
 
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'password', [
+            'options' => ['class' => 'form-group has-feedback'],
+            'inputTemplate' => '{input}<div class="input-group-append"><div class="input-group-text"><span class="fas fa-lock"></span></div></div>',
+            'template' => '{beginWrapper}{input}{error}{endWrapper}',
+            'wrapperOptions' => ['class' => 'input-group mb-3']
+        ])
+            ->label(false)
+            ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
 
-            <?= $form->field($model, 'password')->passwordInput() ?>
-
-            <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-            <div class="form-group">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
+        <div class="row">
+            <div>
+                <?= $form->field($model, 'rememberMe')->checkbox([
+                    'template' => '<div class="icheck-primary">{input} Lembrar-me</div>',
+                    'labelOptions' => [
+                        'class' => ''
+                    ],
+                    'uncheck' => null
+                ]) ?>
+                <br>
+                <?= Html::submitButton('Entrar', ['class' => 'btn btn-primary btn-block']) ?>
             </div>
+        </div>
 
-        <?php ActiveForm::end(); ?>
+        <?php \yii\bootstrap4\ActiveForm::end(); ?>
+        <br>
+        <p class="mb-0">
+            <a href="#" class="text-center">Registar um novo utilizador</a>
+        </p>
     </div>
+    <!-- /.login-card-body -->
 </div>
