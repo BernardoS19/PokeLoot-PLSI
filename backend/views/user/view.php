@@ -13,14 +13,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($model->username) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Tem a certeza que quer eliminar este Utilizador?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -31,14 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
+            [
+                'label' => 'Role',
+                'value' => $model->getUserRole(),
+            ],
             'email:email',
-            'status',
-            'created_at',
-            'updated_at',
-            'verification_token',
+//            'auth_key',
+//            'password_hash',
+//            'password_reset_token',
+//            'status',
+//            'created_at',
+//            'updated_at',
+//            'verification_token',
         ],
     ]) ?>
 
