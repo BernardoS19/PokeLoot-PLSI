@@ -6,6 +6,7 @@ use Yii;
 use common\models\User;
 use app\models\UserSearch;
 use frontend\models\SignupForm;
+use yii\base\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -69,8 +70,6 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-//        $model = new User();
-
         $signup = new SignupForm();
 
         if ($this->request->isPost) {
@@ -82,7 +81,7 @@ class UserController extends Controller
                 $authManager = Yii::$app->authManager;
 
                 $role = $authManager->getRole($user->getUserRole());
-                $role = $role ? : $authManager->getPermission($user->getUserRole());
+
                 $authManager->revoke($role, $user->id);
 
                 $novaRole = $authManager->getRole(addslashes($_POST["roles"]));
@@ -93,9 +92,6 @@ class UserController extends Controller
                 return $this->redirect(['view', 'id' => $user->id]);
             }
         }
-//      else {
-////        $model->loadDefaultValues();
-//      }
 
         return $this->render('create', [
             'signup' => $signup,
@@ -113,8 +109,23 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            $model->load($this->request->post());
+
+            $authManager = Yii::$app->authManager;
+
+            $role = $authManager->getRole($model->getUserRole());
+
+            $authManager->revoke($role, $model->id);
+
+            $novaRole = $authManager->getRole(addslashes($_POST["roles"]));
+            $authManager->assign($novaRole, $model->id);
+
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id, 'status' => 'success']);
+            } else {
+                return $this->redirect(['view', 'id' => $model->id, 'status' => 'failed']);
+            }
         }
 
         return $this->render('update', [
