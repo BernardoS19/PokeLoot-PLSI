@@ -2,8 +2,10 @@
 
 namespace backend\controllers;
 
+use Yii;
 use common\models\User;
 use app\models\UserSearch;
+use frontend\models\SignupForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -67,18 +69,36 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
+//        $model = new User();
+
+        $signup = new SignupForm();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            $signup->load($this->request->post());
+            if ($signup->validate()) {
+                $signup->signup();
+                $user = User::findOne(['email' => $signup->email]);
+
+                $authManager = Yii::$app->authManager;
+
+                $role = $authManager->getRole($user->getUserRole());
+                $role = $role ? : $authManager->getPermission($user->getUserRole());
+                $authManager->revoke($role, $user->id);
+
+                $novaRole = $authManager->getRole(addslashes($_POST["roles"]));
+                $authManager->assign($novaRole, $user->id);
+
+                Yii::$app->session->setFlash('success', 'O utilizador foi criado com sucesso');
+
+                return $this->redirect(['view', 'id' => $user->id]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
+//      else {
+////        $model->loadDefaultValues();
+//      }
 
         return $this->render('create', [
-            'model' => $model,
+            'signup' => $signup,
         ]);
     }
 
