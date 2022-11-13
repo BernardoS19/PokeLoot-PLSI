@@ -30,7 +30,8 @@ AppAsset::register($this);
             <nav class="navbar navbar-expand-lg navbar-light main_box">
                 <div class="container">
                     <!-- Brand and toggle get grouped for better mobile display -->
-                    <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
+<!--                    <a class="navbar-brand logo_h" href="#"><img src="../../web/img/logo.png" alt=""></a>-->
+                    <h2>PokéLoot</h2>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="icon-bar"></span>
@@ -41,67 +42,69 @@ AppAsset::register($this);
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto">
                             <!-- Navbar links -->
+                            <!-- Pagina Inicial -->
                             <li class="nav-item">
                                 <?= Html::a('Início', ['/site/index'], ['class' => 'nav-link']) ?>
                             </li>
+                            <!-- Teste -->
                             <li class="nav-item">
-                                <?= Html::a('Contact', ['/site/contact'], ['class' => 'nav-link']) ?>
+                                <?= Html::a('Contact(teste)', ['/site/contact'], ['class' => 'nav-link']) ?>
                             </li>
+                            <!-- CATÁLOGO -->
+                            <li class="nav-item">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                   aria-expanded="false">Catálogo</a>
+                            </li>
+                            <!-- EVENTOS -->
+                            <li class="nav-item">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                   aria-expanded="false">Eventos</a>
+                            </li>
+
+                            <li class="nav-item">
+
+                            </li>
+
                             <!-- LOGIN -->
                             <li class="nav-item">
                                 <?php
-                                    if (Yii::$app->user->isGuest){
-                                        echo Html::a('Login', ['/site/login'], ['class' => 'nav-link']);
-                                    } else {
-                                        echo Html::a('Logout (' . Yii::$app->user->identity->username . ')', ['site/logout'], ['data' => ['method' => 'post'], 'class' => 'nav-link']);
-                                    }
+                                if (Yii::$app->user->isGuest){
+                                    echo Html::a('Login', ['/site/login'], ['class' => 'nav-link']);
+                                } else {
+                                    echo Html::a('Logout (' . Yii::$app->user->identity->username . ')', ['site/logout'], ['data' => ['method' => 'post'], 'class' => 'nav-link']);
+                                }
                                 ?>
                             </li>
-                            <li class="nav-item submenu dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Shop</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item submenu dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Blog</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item submenu dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Pages</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
-                                </ul>
-                            </li>
                         </ul>
+                        <!-- ICONS -->
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
+                            <!-- Pesquisa -->
                             <li class="nav-item">
-                                <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+                                <button class="search"><span id="search"><i class="fa fa-search" aria-hidden="true"></i></span></button>
                             </li>
+                            <?php
+                                if (!Yii::$app->user->isGuest){
+                            ?>
+                                <!-- Lista de desejos -->
+                                <li class="nav-item"><a href="#" class="cart"><span><i class="fa fa-star" aria-hidden="true"></i></span></a></li>
+                                <!-- Carrinho -->
+                                <li class="nav-item"><a href="#" class="cart"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a></li>
+                            <?php
+                                }
+                            ?>
+
                         </ul>
                     </div>
                 </div>
             </nav>
         </div>
+        <!-- SEARCH INPUT -->
         <div class="search_input" id="search_input_box">
             <div class="container">
                 <form class="d-flex justify-content-between">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
+                    <input type="text" class="form-control" id="search_input" placeholder="Procurar">
                     <button type="submit" class="btn"></button>
-                    <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+                    <span id="close_search" title="Close Search"><i class="fa fa-close" aria-hidden="true"></i></span>
                 </form>
             </div>
         </div>
