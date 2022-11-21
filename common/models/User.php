@@ -161,13 +161,6 @@ class User extends ActiveRecord implements IdentityInterface
         return $role;
     }
 
-    //Relações
-    public function getPerfil()
-    {
-        return Perfil::findOne(['user_id' => $this->getId()]);
-    }
-
-
     /**
      * {@inheritdoc}
      */
