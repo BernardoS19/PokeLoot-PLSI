@@ -1,5 +1,7 @@
 <?php
 
+use yii\helpers\Html;
+
 /** @var yii\web\View $this */
 
 $this->title = 'PokéLoot - Página Inicial';
@@ -25,7 +27,7 @@ $this->title = 'PokéLoot - Página Inicial';
                         <!-- single product -->
                         <div class="col-lg-3 col-md-6">
                             <div class="single-product">
-                                <img class="img-fluid" src="img/carta_teste.png" alt="">
+                                <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
                                 <div class="product-details">
                                     <h6>Carta_teste1</h6>
                                     <div class="price">
@@ -45,7 +47,7 @@ $this->title = 'PokéLoot - Página Inicial';
                         <!-- single product -->
                         <div class="col-lg-3 col-md-6">
                             <div class="single-product">
-                                <img class="img-fluid" src="img/carta_teste.png" alt="">
+                                <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
                                 <div class="product-details">
                                     <h6>Carta_teste1</h6>
                                     <div class="price">
@@ -65,7 +67,7 @@ $this->title = 'PokéLoot - Página Inicial';
                         <!-- single product -->
                         <div class="col-lg-3 col-md-6">
                             <div class="single-product">
-                                <img class="img-fluid" src="img/carta_teste.png" alt="">
+                                <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
                                 <div class="product-details">
                                     <h6>Carta_teste1</h6>
                                     <div class="price">
@@ -85,7 +87,7 @@ $this->title = 'PokéLoot - Página Inicial';
                         <!-- single product -->
                         <div class="col-lg-3 col-md-6">
                             <div class="single-product">
-                                <img class="img-fluid" src="img/carta_teste.png" alt="">
+                                <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
                                 <div class="product-details">
                                     <h6>Carta_teste1</h6>
                                     <div class="price">
@@ -124,7 +126,7 @@ $this->title = 'PokéLoot - Página Inicial';
                     <!-- single product -->
                     <div class="col-lg-3 col-md-6">
                         <div class="single-product">
-                            <img class="img-fluid" src="img/carta_teste.png" alt="">
+                            <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
                             <div class="product-details">
                                 <h6>Carta_teste1</h6>
                                 <div class="price">
@@ -144,7 +146,7 @@ $this->title = 'PokéLoot - Página Inicial';
                     <!-- single product -->
                     <div class="col-lg-3 col-md-6">
                         <div class="single-product">
-                            <img class="img-fluid" src="img/carta_teste.png" alt="">
+                            <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
                             <div class="product-details">
                                 <h6>Carta_teste1</h6>
                                 <div class="price">
@@ -164,7 +166,7 @@ $this->title = 'PokéLoot - Página Inicial';
                     <!-- single product -->
                     <div class="col-lg-3 col-md-6">
                         <div class="single-product">
-                            <img class="img-fluid" src="img/carta_teste.png" alt="">
+                            <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
                             <div class="product-details">
                                 <h6>Carta_teste1</h6>
                                 <div class="price">
@@ -184,7 +186,7 @@ $this->title = 'PokéLoot - Página Inicial';
                     <!-- single product -->
                     <div class="col-lg-3 col-md-6">
                         <div class="single-product">
-                            <img class="img-fluid" src="img/carta_teste.png" alt="">
+                            <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
                             <div class="product-details">
                                 <h6>Carta_teste1</h6>
                                 <div class="price">

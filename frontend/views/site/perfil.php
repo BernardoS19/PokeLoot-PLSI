@@ -10,6 +10,9 @@ $this->title = 'PokéLoot - Perfil';
 
     <div class="body-content">
 
+        <h2>Perfil</h2>
+
+        <p>Username: <?= $user->username ?></p>
         
 
     </div>
