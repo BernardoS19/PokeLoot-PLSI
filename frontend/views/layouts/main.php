@@ -71,7 +71,7 @@ AppAsset::register($this);
                                 if (Yii::$app->user->isGuest){
                                     echo Html::a('Login', ['/site/login'], ['class' => 'nav-link']);
                                 } else {
-                                    echo Html::a('Logout (' . Yii::$app->user->identity->username . ')', ['site/logout'], ['data' => ['method' => 'post'], 'class' => 'nav-link']);
+                                    echo Html::a('Perfil', ['site/perfil'], ['class' => 'nav-link']);
                                 }
                                 ?>
                             </li>
