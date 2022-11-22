@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -76,6 +77,21 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    /**
+     * Página de Perfil
+     */
+    public function actionPerfil()
+    {
+        if (Yii::$app->user->isGuest){
+            return $this->goHome();
+        }
+        $user = User::findOne(Yii::$app->user->id);
+
+        return $this->render('perfil', [
+            'user' => $user,
+        ]);
     }
 
     /**
