@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 
-$this->title = 'PokéLoot - Página Inicial';
+$this->title = 'PokéLoot';
 ?>
 <div class="site-index">
     <div class="p-4">

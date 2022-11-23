@@ -95,6 +95,23 @@ class SiteController extends Controller
     }
 
     /**
+     * Página de Catálogo
+     */
+    public function actionCatalogo()
+    {
+        return $this->render('catalogo');
+    }
+
+    /**
+     * Página de Carrinho
+     */
+    public function actionCarrinho()
+    {
+        return $this->render('carrinho');
+    }
+
+
+    /**
      * Logs in a user.
      *
      * @return mixed
