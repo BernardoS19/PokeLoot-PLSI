@@ -23,4 +23,3 @@ $this->title = 'Perfil';
         <div class=""></div>
     </div>
 </section>
-

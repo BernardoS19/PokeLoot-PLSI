@@ -47,13 +47,9 @@ AppAsset::register($this);
                             <li class="nav-item">
                                 <?= Html::a('Início', ['/site/index'], ['class' => 'nav-link']) ?>
                             </li>
-                            <!-- Teste -->
-                            <li class="nav-item">
-                                <?= Html::a('Contact(teste)', ['/site/contact'], ['class' => 'nav-link']) ?>
-                            </li>
                             <!-- CATÁLOGO -->
                             <li class="nav-item">
-                                <?= Html::a('Catálogo', ['/site/catalogo'], ['class' => 'nav-link']) ?>
+                                <?= Html::a('Catálogo', ['carta/index'], ['class' => 'nav-link']) ?>
                             </li>
                             <!-- EVENTOS -->
                             <li class="nav-item">
@@ -62,16 +58,17 @@ AppAsset::register($this);
                             </li>
 
                             <li class="nav-item">
-
+                            </li>
+                            <li class="nav-item">
                             </li>
 
                             <!-- LOGIN -->
                             <li class="nav-item">
                                 <?php
                                 if (Yii::$app->user->isGuest){
-                                    echo Html::a('Login', ['/site/login'], ['class' => 'nav-link']);
+                                    echo Html::a('Login', ['site/login'], ['class' => 'nav-link']);
                                 } else {
-                                    echo Html::a('Perfil', ['site/perfil'], ['class' => 'nav-link']);
+                                    echo Html::a('Perfil', ['perfil/index'], ['class' => 'nav-link']);
                                 }
                                 ?>
                             </li>
@@ -86,9 +83,9 @@ AppAsset::register($this);
                                 if (!Yii::$app->user->isGuest){
                             ?>
                                 <!-- Lista de desejos -->
-                                <li class="nav-item"><a href="<?= Url::toRoute('site/desejos') ?>" class="cart"><span><i class="fa fa-star" aria-hidden="true"></i></span></a></li>
+                                <li class="nav-item"><a href="<?= Url::toRoute('lista_desejos/index') ?>" class="cart"><span><i class="fa fa-star" aria-hidden="true"></i></span></a></li>
                                 <!-- Carrinho -->
-                                    <li class="nav-item"><a href="<?= Url::toRoute('site/carrinho') ?>" class="cart"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a></li>
+                                    <li class="nav-item"><a href="<?= Url::toRoute('carrinho/index') ?>" class="cart"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a></li>
                             <?php
                                 }
                             ?>
