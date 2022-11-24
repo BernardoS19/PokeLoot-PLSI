@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -37,7 +38,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'perfil'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -77,6 +78,62 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+
+    /**
+     * Página de Perfil
+     */
+    public function actionPerfil()
+    {
+        if (Yii::$app->user->isGuest){
+            return $this->goHome();
+        }
+        $user = User::findOne(Yii::$app->user->id);
+
+        return $this->render('perfil', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * Página de Catálogo
+     */
+    public function actionCatalogo()
+    {
+        return $this->render('catalogo');
+    }
+
+    /**
+     * Página de Detalhes de uma Carta
+     */
+    public function actionDetalhes()
+    {
+        return $this->render('detalhes_carta');
+    }
+
+    /**
+     * Página de Carrinho
+     */
+    public function actionCarrinho()
+    {
+        return $this->render('carrinho');
+    }
+
+    /**
+     * Página de Lista de desejos
+     */
+    public function actionDesejos()
+    {
+        return $this->render('lista_desejos');
+    }
+
+    /**
+     * Página de Evento
+     */
+    public function actionEvento()
+    {
+        return $this->render('evento');
+    }
+
 
     /**
      * Logs in a user.
