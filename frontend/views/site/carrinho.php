@@ -8,8 +8,10 @@ $this->title = 'Carrinho';
 ?>
 <div class="p-4"></div>
 
-<section class="cart_area">
+<section class="">
     <div class="container">
+        <h2>Carrinho de Compras</h2>
+        <br>
         <div class="cart_inner">
             <div class="table-responsive">
                 <table class="table">
@@ -26,7 +28,7 @@ $this->title = 'Carrinho';
                         <td>
                             <div class="media">
                                 <div class="d-flex">
-                                    <img src="img/cart.jpg" alt="">
+                                    <?= Html::img(Yii::getAlias('@imgurl'). '/carta_teste.png') ?>
                                 </div>
                                 <div class="media-body">
                                     <p>Minimalistic shop for multipurpose use</p>

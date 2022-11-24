@@ -103,11 +103,35 @@ class SiteController extends Controller
     }
 
     /**
+     * Página de Detalhes de uma Carta
+     */
+    public function actionDetalhes()
+    {
+        return $this->render('detalhes_carta');
+    }
+
+    /**
      * Página de Carrinho
      */
     public function actionCarrinho()
     {
         return $this->render('carrinho');
+    }
+
+    /**
+     * Página de Lista de desejos
+     */
+    public function actionDesejos()
+    {
+        return $this->render('lista_desejos');
+    }
+
+    /**
+     * Página de Evento
+     */
+    public function actionEvento()
+    {
+        return $this->render('evento');
     }
 
 

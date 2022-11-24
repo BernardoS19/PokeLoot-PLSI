@@ -86,7 +86,7 @@ AppAsset::register($this);
                                 if (!Yii::$app->user->isGuest){
                             ?>
                                 <!-- Lista de desejos -->
-                                <li class="nav-item"><a href="#" class="cart"><span><i class="fa fa-star" aria-hidden="true"></i></span></a></li>
+                                <li class="nav-item"><a href="<?= Url::toRoute('site/desejos') ?>" class="cart"><span><i class="fa fa-star" aria-hidden="true"></i></span></a></li>
                                 <!-- Carrinho -->
                                     <li class="nav-item"><a href="<?= Url::toRoute('site/carrinho') ?>" class="cart"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a></li>
                             <?php

@@ -197,7 +197,7 @@ $this->title = 'Catálogo';
                     <!-- single product -->
                     <div class="col-lg-4 col-md-6">
                         <div class="single-product">
-                            <img class="img-fluid" src="img/product/p1.jpg" alt="">
+                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
                             <div class="product-details">
                                 <h6>addidas New Hammer sole
                                     for Sports person</h6>
@@ -230,7 +230,7 @@ $this->title = 'Catálogo';
                     <!-- single product -->
                     <div class="col-lg-4 col-md-6">
                         <div class="single-product">
-                            <img class="img-fluid" src="img/product/p2.jpg" alt="">
+                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
                             <div class="product-details">
                                 <h6>addidas New Hammer sole
                                     for Sports person</h6>
@@ -263,7 +263,7 @@ $this->title = 'Catálogo';
                     <!-- single product -->
                     <div class="col-lg-4 col-md-6">
                         <div class="single-product">
-                            <img class="img-fluid" src="img/product/p3.jpg" alt="">
+                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
                             <div class="product-details">
                                 <h6>addidas New Hammer sole
                                     for Sports person</h6>
@@ -296,7 +296,7 @@ $this->title = 'Catálogo';
                     <!-- single product -->
                     <div class="col-lg-4 col-md-6">
                         <div class="single-product">
-                            <img class="img-fluid" src="img/product/p4.jpg" alt="">
+                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
                             <div class="product-details">
                                 <h6>addidas New Hammer sole
                                     for Sports person</h6>
@@ -329,7 +329,7 @@ $this->title = 'Catálogo';
                     <!-- single product -->
                     <div class="col-lg-4 col-md-6">
                         <div class="single-product">
-                            <img class="img-fluid" src="img/product/p5.jpg" alt="">
+                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
                             <div class="product-details">
                                 <h6>addidas New Hammer sole
                                     for Sports person</h6>
