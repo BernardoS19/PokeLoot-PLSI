@@ -2,19 +2,16 @@
 
 namespace backend\controllers;
 
-use Yii;
-use common\models\User;
-use app\models\UserSearch;
-use frontend\models\SignupForm;
-use yii\base\Model;
+use common\models\Tipo;
+use common\models\TipoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * TipoController implements the CRUD actions for Tipo model.
  */
-class UserController extends Controller
+class TipoController extends Controller
 {
     /**
      * @inheritDoc
@@ -35,13 +32,13 @@ class UserController extends Controller
     }
 
     /**
-     * Lists all User models.
+     * Lists all Tipo models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
+        $searchModel = new TipoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -51,8 +48,8 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a single User model.
-     * @param int $id
+     * Displays a single Tipo model.
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -64,44 +61,31 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new Tipo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $signup = new SignupForm();
+        $model = new Tipo();
 
         if ($this->request->isPost) {
-            $signup->load($this->request->post());
-            if ($signup->validate()) {
-                $signup->signup();
-                $user = User::findOne(['email' => $signup->email]);
-
-                $authManager = Yii::$app->authManager;
-
-                $role = $authManager->getRole($user->getUserRole());
-
-                $authManager->revoke($role, $user->id);
-
-                $novaRole = $authManager->getRole(addslashes($_POST["roles"]));
-                $authManager->assign($novaRole, $user->id);
-
-                Yii::$app->session->setFlash('success', 'O utilizador foi criado com sucesso');
-
-                return $this->redirect(['view', 'id' => $user->id]);
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
+        } else {
+            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
-            'signup' => $signup,
+            'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing Tipo model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -109,23 +93,8 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost) {
-            $model->load($this->request->post());
-
-            $authManager = Yii::$app->authManager;
-
-            $role = $authManager->getRole($model->getUserRole());
-
-            $authManager->revoke($role, $model->id);
-
-            $novaRole = $authManager->getRole(addslashes($_POST["roles"]));
-            $authManager->assign($novaRole, $model->id);
-
-            if ($model->save()){
-                return $this->redirect(['view', 'id' => $model->id, 'status' => 'success']);
-            } else {
-                return $this->redirect(['view', 'id' => $model->id, 'status' => 'failed']);
-            }
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -134,34 +103,29 @@ class UserController extends Controller
     }
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing Tipo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        $user = User::findOne($id);
-        $authManager = Yii::$app->authManager;
-        $role = $authManager->getRole($user->getUserRole());
-        $authManager->revoke($role, $id);
-
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the Tipo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id
-     * @return User the loaded model
+     * @param int $id ID
+     * @return Tipo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne(['id' => $id])) !== null) {
+        if (($model = Tipo::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
