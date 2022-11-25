@@ -8,8 +8,10 @@ use Yii;
  * This is the model class for table "perfil".
  *
  * @property int $id
- * @property string|null $morada
+ * @property string|null $nome
  * @property string|null $telefone
+ * @property string|null $morada
+ * @property string|null $cod_postal
  * @property int $user_id
  *
  * @property User $user
@@ -32,8 +34,10 @@ class Perfil extends \yii\db\ActiveRecord
         return [
             [['user_id'], 'required'],
             [['user_id'], 'integer'],
-            [['morada'], 'string', 'max' => 255],
+            [['nome'], 'string', 'max' => 45],
             [['telefone'], 'string', 'max' => 9],
+            [['morada'], 'string', 'max' => 255],
+            [['cod_postal'], 'string', 'max' => 8],
             [['user_id'], 'unique'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -46,8 +50,10 @@ class Perfil extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'morada' => 'Morada',
+            'nome' => 'Nome',
             'telefone' => 'Telefone',
+            'morada' => 'Morada',
+            'cod_postal' => 'Cod Postal',
             'user_id' => 'User ID',
         ];
     }
