@@ -22,11 +22,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'imagem_id')->textInput() ?>
 
-    <?= $form->field($model, 'tipo_id')->textInput() ?>
+    <?= $form->field($model, 'tipo_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Tipo::find()->asArray()->all(), 'id', 'nome')) ?>
 
-    <?= $form->field($model, 'elemento_id')->textInput() ?>
+    <?= $form->field($model, 'elemento_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Elemento::find()->asArray()->all(), 'id', 'nome')) ?>
 
-    <?= $form->field($model, 'colecao_id')->textInput() ?>
+    <?= $form->field($model, 'colecao_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Colecao::find()->asArray()->all(), 'id', 'nome')) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

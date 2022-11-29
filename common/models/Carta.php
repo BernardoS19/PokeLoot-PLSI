@@ -68,13 +68,13 @@ class Carta extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nome' => 'Nome',
-            'preco' => 'Preco',
-            'descricao' => 'Descricao',
+            'preco' => 'Preço',
+            'descricao' => 'Descrição',
             'verificado' => 'Verificado',
-            'imagem_id' => 'Imagem ID',
-            'tipo_id' => 'Tipo ID',
-            'elemento_id' => 'Elemento ID',
-            'colecao_id' => 'Colecao ID',
+            'imagem_id' => 'Imagem',
+            'tipo_id' => 'Tipo',
+            'elemento_id' => 'Elemento',
+            'colecao_id' => 'Coleção',
         ];
     }
 
