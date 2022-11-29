@@ -199,6 +199,11 @@ class RbacController extends Controller
         $auth->addChild($admin, $updateColecao);
         $auth->addChild($admin, $readColecao);
         $auth->addChild($admin, $deleteColecao);
+        // permissões Pedidos
+        $auth->addChild($admin, $createPedido);
+        $auth->addChild($admin, $updatePedido);
+        $auth->addChild($admin, $readPedido);
+        $auth->addChild($admin, $deletePedido);
 
         // Avaliador
         $avaliador = $auth->createRole('avaliador');

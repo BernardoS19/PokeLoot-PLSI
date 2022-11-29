@@ -5,6 +5,7 @@
 
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
+use yii\helpers\Url;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
@@ -46,14 +47,9 @@ AppAsset::register($this);
                             <li class="nav-item">
                                 <?= Html::a('Início', ['/site/index'], ['class' => 'nav-link']) ?>
                             </li>
-                            <!-- Teste -->
-                            <li class="nav-item">
-                                <?= Html::a('Contact(teste)', ['/site/contact'], ['class' => 'nav-link']) ?>
-                            </li>
                             <!-- CATÁLOGO -->
                             <li class="nav-item">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Catálogo</a>
+                                <?= Html::a('Catálogo', ['carta/index'], ['class' => 'nav-link']) ?>
                             </li>
                             <!-- EVENTOS -->
                             <li class="nav-item">
@@ -62,16 +58,17 @@ AppAsset::register($this);
                             </li>
 
                             <li class="nav-item">
-
+                            </li>
+                            <li class="nav-item">
                             </li>
 
                             <!-- LOGIN -->
                             <li class="nav-item">
                                 <?php
                                 if (Yii::$app->user->isGuest){
-                                    echo Html::a('Login', ['/site/login'], ['class' => 'nav-link']);
+                                    echo Html::a('Login', ['site/login'], ['class' => 'nav-link']);
                                 } else {
-                                    echo Html::a('Logout (' . Yii::$app->user->identity->username . ')', ['site/logout'], ['data' => ['method' => 'post'], 'class' => 'nav-link']);
+                                    echo Html::a('Perfil', ['perfil/index'], ['class' => 'nav-link']);
                                 }
                                 ?>
                             </li>
@@ -86,9 +83,9 @@ AppAsset::register($this);
                                 if (!Yii::$app->user->isGuest){
                             ?>
                                 <!-- Lista de desejos -->
-                                <li class="nav-item"><a href="#" class="cart"><span><i class="fa fa-star" aria-hidden="true"></i></span></a></li>
+                                <li class="nav-item"><a href="<?= Url::toRoute('lista_desejos/index') ?>" class="cart"><span><i class="fa fa-star" aria-hidden="true"></i></span></a></li>
                                 <!-- Carrinho -->
-                                <li class="nav-item"><a href="#" class="cart"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a></li>
+                                    <li class="nav-item"><a href="<?= Url::toRoute('carrinho/index') ?>" class="cart"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a></li>
                             <?php
                                 }
                             ?>
@@ -112,7 +109,6 @@ AppAsset::register($this);
     <!-- End Header Area -->
 
 
-
     <main role="main" class="flex-shrink-0">
         <div class="container">
             <?= Breadcrumbs::widget([
@@ -128,71 +124,6 @@ AppAsset::register($this);
     <footer class="footer-area section_gap">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3  col-md-6 col-sm-6">
-                    <div class="single-footer-widget">
-                        <h6>About Us</h6>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore
-                            magna aliqua.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-4  col-md-6 col-sm-6">
-                    <div class="single-footer-widget">
-                        <h6>Newsletter</h6>
-                        <p>Stay update with our latest</p>
-                        <div class="" id="mc_embed_signup">
-
-                            <form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                  method="get" class="form-inline">
-
-                                <div class="d-flex flex-row">
-
-                                    <input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
-                                           required="" type="email">
-
-
-                                    <button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
-                                    <div style="position: absolute; left: -5000px;">
-                                        <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-                                    </div>
-
-                                    <!-- <div class="col-lg-4 col-md-4">
-                                                <button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
-                                            </div>  -->
-                                </div>
-                                <div class="info"></div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3  col-md-6 col-sm-6">
-                    <div class="single-footer-widget mail-chimp">
-                        <h6 class="mb-20">Instragram Feed</h6>
-                        <ul class="instafeed d-flex flex-wrap">
-                            <li><img src="img/i1.jpg" alt=""></li>
-                            <li><img src="img/i2.jpg" alt=""></li>
-                            <li><img src="img/i3.jpg" alt=""></li>
-                            <li><img src="img/i4.jpg" alt=""></li>
-                            <li><img src="img/i5.jpg" alt=""></li>
-                            <li><img src="img/i6.jpg" alt=""></li>
-                            <li><img src="img/i7.jpg" alt=""></li>
-                            <li><img src="img/i8.jpg" alt=""></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6 col-sm-6">
-                    <div class="single-footer-widget">
-                        <h6>Follow Us</h6>
-                        <p>Let us be social</p>
-                        <div class="footer-social d-flex align-items-center">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-dribbble"></i></a>
-                            <a href="#"><i class="fa fa-behance"></i></a>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
                 <p class="footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->

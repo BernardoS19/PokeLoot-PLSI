@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -77,6 +78,16 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+
+
+    /**
+     * Página de Evento
+     */
+    public function actionEvento()
+    {
+        return $this->render('evento');
+    }
+
 
     /**
      * Logs in a user.
