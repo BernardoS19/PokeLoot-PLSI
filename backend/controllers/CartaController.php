@@ -2,11 +2,14 @@
 
 namespace backend\controllers;
 
+use app\models\UploadForm;
 use common\models\Carta;
 use common\models\CartaSearch;
+use common\models\Imagem;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CartaController implements the CRUD actions for Carta model.
@@ -71,18 +74,30 @@ class CartaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Carta();
+        $uploadForm = new UploadForm();
+        $imagem = new Imagem();
+        $carta = new Carta();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id, 'imagem_id' => $model->imagem_id, 'tipo_id' => $model->tipo_id, 'elemento_id' => $model->elemento_id, 'colecao_id' => $model->colecao_id]);
+            if ($carta->load($this->request->post())) {
+                $uploadForm->imagemCarta = UploadedFile::getInstance($uploadForm, 'imagemCarta');
+                $nomeImagem = date('mdyhis');
+                if ($uploadForm->upload($nomeImagem)) {
+                    $imagem->nome = $nomeImagem . '.' . $uploadForm->imagemCarta->extension;
+                    if ($imagem->save()) {
+                        $carta->verificado = 0;
+                        $carta->imagem_id = $imagem->id;
+                        $carta->save();
+
+                        return $this->redirect(['view', 'id' => $carta->id, 'imagem_id' => $carta->imagem_id, 'tipo_id' => $carta->tipo_id, 'elemento_id' => $carta->elemento_id, 'colecao_id' => $carta->colecao_id]);
+                    }
+                }
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => $carta,
+            'uploadForm' => $uploadForm,
         ]);
     }
 

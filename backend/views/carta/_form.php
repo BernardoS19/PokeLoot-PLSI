@@ -1,26 +1,26 @@
 <?php
 
+use app\models\UploadForm;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var common\models\Carta $model */
 /** @var yii\widgets\ActiveForm $form */
+/** @var UploadForm $uploadForm */
 ?>
 
 <div class="carta-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+
+    <?= $form->field($uploadForm, 'imagemCarta')->fileInput() ?>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'preco')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'preco')->textInput(['maxlength' => true, 'type' => 'number', 'step' => 0.1]) ?>
 
-    <?= $form->field($model, 'descricao')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'verificado')->textInput() ?>
-
-    <?= $form->field($model, 'imagem_id')->textInput() ?>
+    <?= $form->field($model, 'descricao')->textarea(['rows' => 4]) ?>
 
     <?= $form->field($model, 'tipo_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Tipo::find()->asArray()->all(), 'id', 'nome')) ?>
 
