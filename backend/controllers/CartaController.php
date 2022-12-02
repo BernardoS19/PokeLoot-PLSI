@@ -126,6 +126,52 @@ class CartaController extends Controller
     }
 
     /**
+     * Updates an existing Carta model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param int $id ID
+     * @param int $imagem_id Imagem ID
+     * @param int $tipo_id Tipo ID
+     * @param int $elemento_id Elemento ID
+     * @param int $colecao_id Colecao ID
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate_imagem($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id)
+    {
+        $uploadForm = new UploadForm();
+        $carta = $this->findModel($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id);
+
+        $imagem = new Imagem();
+        $imagemAnterior = Imagem::findOne($imagem_id);
+        if ($this->request->isPost) {
+            $uploadForm->imagemCarta = UploadedFile::getInstance($uploadForm, 'imagemCarta');
+            $nomeImagem = date('mdyhis');
+
+            if ($uploadForm->upload($nomeImagem)) {
+                $imagem->nome = $nomeImagem . '.' . $uploadForm->imagemCarta->extension;
+
+                if ($imagem->save()) {
+                    $carta->imagem_id = $imagem->id;
+                    $carta->save();
+
+                    if(file_exists(\Yii::getAlias('@common') . '/images/' . $imagemAnterior->nome)) {
+                        unlink(\Yii::getAlias('@common') . '/images/' . $imagemAnterior->nome);
+                    }
+                    $imagemAnterior->delete();
+
+                    return $this->redirect(['view', 'id' => $carta->id, 'imagem_id' => $carta->imagem_id, 'tipo_id' => $carta->tipo_id, 'elemento_id' => $carta->elemento_id, 'colecao_id' => $carta->colecao_id]);
+                }
+            }
+        }
+
+        return $this->render('update_imagem', [
+            'model' => $carta,
+            'uploadForm' => $uploadForm,
+        ]);
+    }
+
+
+    /**
      * Deletes an existing Carta model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
@@ -138,7 +184,14 @@ class CartaController extends Controller
      */
     public function actionDelete($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id)
     {
-        $this->findModel($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id)->delete();
+        $carta = $this->findModel($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id);
+
+        $imagem = Imagem::findOne($imagem_id);
+        if(file_exists(\Yii::getAlias('@common') . '/images/' . $imagem->nome)) {
+            unlink(\Yii::getAlias('@common') . '/images/' . $imagem->nome);
+        }
+        $carta->delete();
+        $imagem->delete();
 
         return $this->redirect(['index']);
     }

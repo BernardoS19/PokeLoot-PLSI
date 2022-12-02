@@ -17,8 +17,9 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form_update_carta', [
+    <?= $this->render('_form_update_imagem', [
         'model' => $model,
+        'uploadForm' => $uploadForm,
     ]) ?>
 
 </div>
