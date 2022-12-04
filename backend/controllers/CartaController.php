@@ -6,9 +6,11 @@ use app\models\UploadForm;
 use common\models\Carta;
 use common\models\CartaSearch;
 use common\models\Imagem;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -21,26 +23,45 @@ class CartaController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => true,
+                        'roles' => ['admin', 'avaliador'],
+                    ],
+                    [
+                        'actions' => ['update', 'update_imagem', 'delete'],
+                        'allow' => true,
+                        'roles' => ['admin'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function ($rule, $action) {
+                    return $this->redirect(['site/index']);
+                }
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
     }
 
     /**
      * Lists all Carta models.
      *
-     * @return string
+     * @return string|Response
      */
     public function actionIndex()
     {
+        if (!\Yii::$app->user->can('readCarta')) {
+            return $this->redirect(['site/index']);
+        }
+
         $searchModel = new CartaSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -57,11 +78,16 @@ class CartaController extends Controller
      * @param int $tipo_id Tipo ID
      * @param int $elemento_id Elemento ID
      * @param int $colecao_id Colecao ID
-     * @return string
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id)
     {
+        if (!\Yii::$app->user->can('readCarta')) {
+            return $this->redirect(['site/index']);
+        }
+
+
         return $this->render('view', [
             'model' => $this->findModel($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id),
         ]);
@@ -70,10 +96,14 @@ class CartaController extends Controller
     /**
      * Creates a new Carta model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return string|Response
      */
     public function actionCreate()
     {
+        if (!\Yii::$app->user->can('createCarta')) {
+            return $this->redirect(['site/index']);
+        }
+
         $uploadForm = new UploadForm();
         $imagem = new Imagem();
         $carta = new Carta();
@@ -109,11 +139,15 @@ class CartaController extends Controller
      * @param int $tipo_id Tipo ID
      * @param int $elemento_id Elemento ID
      * @param int $colecao_id Colecao ID
-     * @return string|\yii\web\Response
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id)
     {
+        if (!\Yii::$app->user->can('updateCarta')) {
+            return $this->redirect(['site/index']);
+        }
+
         $model = $this->findModel($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -133,11 +167,15 @@ class CartaController extends Controller
      * @param int $tipo_id Tipo ID
      * @param int $elemento_id Elemento ID
      * @param int $colecao_id Colecao ID
-     * @return string|\yii\web\Response
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate_imagem($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id)
     {
+        if (!\Yii::$app->user->can('updateCarta')) {
+            return $this->redirect(['site/index']);
+        }
+
         $uploadForm = new UploadForm();
         $carta = $this->findModel($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id);
 
@@ -179,11 +217,15 @@ class CartaController extends Controller
      * @param int $tipo_id Tipo ID
      * @param int $elemento_id Elemento ID
      * @param int $colecao_id Colecao ID
-     * @return \yii\web\Response
+     * @return Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id)
     {
+        if (!\Yii::$app->user->can('deleteCarta')) {
+            return $this->redirect(['site/index']);
+        }
+
         $carta = $this->findModel($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id);
 
         $imagem = Imagem::findOne($imagem_id);
