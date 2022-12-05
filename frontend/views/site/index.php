@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
+/** @var \common\models\Carta $cartas */
 
 $this->title = 'PokéLoot';
 ?>
@@ -25,13 +26,16 @@ $this->title = 'PokéLoot';
                     </div>
                     <div class="row">
                         <!-- single product -->
+                        <?php
+                        foreach ($cartas as $carta){
+                        ?>
                         <div class="col-lg-3 col-md-6">
                             <div class="single-product">
-                                <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
+                                <?= Html::img(Yii::getAlias('@imgurl') . '/' . $carta->imagem->nome) ?>
                                 <div class="product-details">
-                                    <h6>Carta_teste1</h6>
+                                    <h6><?= $carta->nome ?></h6>
                                     <div class="price">
-                                        <h6>1,20 €</h6>
+                                        <h6><?= $carta->preco ?></h6>
                                     </div>
                                     <div class="prd-bottom">
                                         <a href="" class="social-info">
@@ -44,66 +48,9 @@ $this->title = 'PokéLoot';
                                 </div>
                             </div>
                         </div>
-                        <!-- single product -->
-                        <div class="col-lg-3 col-md-6">
-                            <div class="single-product">
-                                <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
-                                <div class="product-details">
-                                    <h6>Carta_teste1</h6>
-                                    <div class="price">
-                                        <h6>1,20 €</h6>
-                                    </div>
-                                    <div class="prd-bottom">
-                                        <a href="" class="social-info">
-                                            <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                                        </a>
-                                        <a href="" class="social-info">
-                                            <span><i class="fa fa-star" aria-hidden="true"></i></span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- single product -->
-                        <div class="col-lg-3 col-md-6">
-                            <div class="single-product">
-                                <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
-                                <div class="product-details">
-                                    <h6>Carta_teste1</h6>
-                                    <div class="price">
-                                        <h6>1,20 €</h6>
-                                    </div>
-                                    <div class="prd-bottom">
-                                        <a href="" class="social-info">
-                                            <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                                        </a>
-                                        <a href="" class="social-info">
-                                            <span><i class="fa fa-star" aria-hidden="true"></i></span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- single product -->
-                        <div class="col-lg-3 col-md-6">
-                            <div class="single-product">
-                                <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
-                                <div class="product-details">
-                                    <h6>Carta_teste1</h6>
-                                    <div class="price">
-                                        <h6>1,20 €</h6>
-                                    </div>
-                                    <div class="prd-bottom">
-                                        <a href="" class="social-info">
-                                            <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                                        </a>
-                                        <a href="" class="social-info">
-                                            <span><i class="fa fa-star" aria-hidden="true"></i></span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
