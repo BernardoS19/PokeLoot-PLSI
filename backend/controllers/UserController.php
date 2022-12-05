@@ -62,11 +62,13 @@ class UserController extends Controller
         }
 
         $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams, ['admin', 'avaliador']);
+        $dataProviderCliente = $searchModel->search($this->request->queryParams, 'cliente');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProviderCliente' => $dataProviderCliente,
         ]);
     }
 
