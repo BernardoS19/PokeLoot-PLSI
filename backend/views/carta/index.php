@@ -29,15 +29,47 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'nome',
-            'preco',
+            [
+                'attribute' => 'preco',
+                'label' => 'Preço',
+                'value' => function($model){
+                    return $model->preco . ' €';
+                }
+            ],
+            [
+                'attribute' => 'tipo_id',
+                'label' => 'Tipo',
+                'value' => function($model){
+                    return $model->tipo->nome;
+                },
+            ],
+            [
+                'attribute' => 'elemento_id',
+                'label' => 'Elemento',
+                'value' => function($model){
+                    return $model->elemento->nome;
+                },
+            ],
+            [
+                'attribute' => 'colecao_id',
+                'label' => 'Coleção',
+                'value' => function($model){
+                    return $model->colecao->nome;
+                },
+            ],
             'descricao',
-            'verificado',
-            //'imagem_id',
-            //'tipo_id',
-            //'elemento_id',
-            //'colecao_id',
+            [
+                'attribute' => 'verificado',
+                'label' => 'Verificado',
+                'value' => function($model){
+                    if ($model->verificado){
+                        return 'Sim';
+                    } else {
+                        return 'Não';
+                    }
+                },
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Carta $model, $key, $index, $column) {

@@ -2,14 +2,17 @@
 
 namespace backend\controllers;
 
+use common\models\Perfil;
 use Yii;
 use common\models\User;
 use app\models\UserSearch;
 use frontend\models\SignupForm;
 use yii\base\Model;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -24,6 +27,19 @@ class UserController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        return $this->redirect(['site/index']);
+                    }
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -37,10 +53,14 @@ class UserController extends Controller
     /**
      * Lists all User models.
      *
-     * @return string
+     * @return string|Response
      */
     public function actionIndex()
     {
+        if (!\Yii::$app->user->can('readUser')) {
+            return $this->redirect(['site/index']);
+        }
+
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -53,11 +73,15 @@ class UserController extends Controller
     /**
      * Displays a single User model.
      * @param int $id
-     * @return string
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
+        if (!\Yii::$app->user->can('readUser')) {
+            return $this->redirect(['site/index']);
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -66,10 +90,14 @@ class UserController extends Controller
     /**
      * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return string|Response
      */
     public function actionCreate()
     {
+        if (!\Yii::$app->user->can('createUser')) {
+            return $this->redirect(['site/index']);
+        }
+
         $signup = new SignupForm();
 
         if ($this->request->isPost) {
@@ -107,6 +135,10 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
+        if (!\Yii::$app->user->can('updateUser')) {
+            return $this->redirect(['site/index']);
+        }
+
         $model = $this->findModel($id);
 
         if ($this->request->isPost) {
@@ -137,17 +169,24 @@ class UserController extends Controller
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id
-     * @return \yii\web\Response
+     * @return Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
+        if (!\Yii::$app->user->can('deleteUser')) {
+            return $this->redirect(['site/index']);
+        }
+
         $user = User::findOne($id);
         $authManager = Yii::$app->authManager;
         $role = $authManager->getRole($user->getUserRole());
         $authManager->revoke($role, $id);
 
-        $this->findModel($id)->delete();
+        $perfil = Perfil::findOne(['id_user' => $user->id]);
+
+        $perfil->delete();
+        $user->delete();
 
         return $this->redirect(['index']);
     }

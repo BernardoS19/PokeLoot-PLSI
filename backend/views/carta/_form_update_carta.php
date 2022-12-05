@@ -7,14 +7,11 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var common\models\Carta $model */
 /** @var yii\widgets\ActiveForm $form */
-/** @var UploadForm $uploadForm */
 ?>
 
 <div class="carta-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-
-    <?= $form->field($uploadForm, 'imagemCarta')->fileInput() ?>
+    <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
