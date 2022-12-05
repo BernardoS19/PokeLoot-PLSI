@@ -77,7 +77,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $cartas= Carta::find()->all();
+        $cartas= Carta::find()->orderBy('id DESC')->all();
         return $this->render('index',[
             'cartas'=>$cartas]);
     }
