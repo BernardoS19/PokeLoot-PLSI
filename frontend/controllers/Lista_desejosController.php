@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use common\models\Lista_desejo;
+use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 
@@ -27,7 +29,9 @@ class Lista_desejosController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $user= Yii::$app->user->identity->id;
+        $lista_desejo = Lista_desejo::find()->where(['user_id'=>$user])->all();
+        return $this->render('index',['lista_desejo'=>$lista_desejo]);
     }
 
 }
