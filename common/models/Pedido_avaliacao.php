@@ -10,11 +10,12 @@ use Yii;
  * @property int $user_id
  * @property int $carta_id
  * @property int $autorizado
+ * @property string|null $data_avaliacao
  *
  * @property Carta $carta
  * @property User $user
  */
-class PedidoAvaliacao extends \yii\db\ActiveRecord
+class Pedido_avaliacao extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -32,6 +33,7 @@ class PedidoAvaliacao extends \yii\db\ActiveRecord
         return [
             [['user_id', 'carta_id'], 'required'],
             [['user_id', 'carta_id', 'autorizado'], 'integer'],
+            [['data_avaliacao'], 'safe'],
             [['user_id', 'carta_id'], 'unique', 'targetAttribute' => ['user_id', 'carta_id']],
             [['carta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carta::class, 'targetAttribute' => ['carta_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -47,6 +49,7 @@ class PedidoAvaliacao extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'carta_id' => 'Carta ID',
             'autorizado' => 'Autorizado',
+            'data_avaliacao' => 'Data Avaliacao',
         ];
     }
 

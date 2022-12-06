@@ -4,12 +4,12 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\PedidoAvaliacao;
+use common\models\Pedido_avaliacao;
 
 /**
- * PedidoAvaliacaoSearch represents the model behind the search form of `common\models\PedidoAvaliacao`.
+ * Pedido_avaliacaoSearch represents the model behind the search form of `common\models\Pedido_avaliacao`.
  */
-class PedidoAvaliacaoSearch extends PedidoAvaliacao
+class Pedido_avaliacaoSearch extends Pedido_avaliacao
 {
     /**
      * {@inheritdoc}
@@ -18,6 +18,7 @@ class PedidoAvaliacaoSearch extends PedidoAvaliacao
     {
         return [
             [['user_id', 'carta_id', 'autorizado'], 'integer'],
+            [['data_avaliacao'], 'safe'],
         ];
     }
 
@@ -39,7 +40,7 @@ class PedidoAvaliacaoSearch extends PedidoAvaliacao
      */
     public function search($params)
     {
-        $query = PedidoAvaliacao::find();
+        $query = Pedido_avaliacao::find();
 
         // add conditions that should always apply here
 
@@ -60,6 +61,7 @@ class PedidoAvaliacaoSearch extends PedidoAvaliacao
             'user_id' => $this->user_id,
             'carta_id' => $this->carta_id,
             'autorizado' => $this->autorizado,
+            'data_avaliacao' => $this->data_avaliacao,
         ]);
 
         return $dataProvider;

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\PedidoAvaliacao $model */
+/** @var common\models\Pedido_avaliacao $model */
 
 $this->title = 'Create Pedido Avaliacao';
 $this->params['breadcrumbs'][] = ['label' => 'Pedido Avaliacaos', 'url' => ['index']];

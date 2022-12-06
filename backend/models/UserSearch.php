@@ -41,7 +41,7 @@ class UserSearch extends User
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $role)
     {
         $query = User::find();
 
@@ -74,6 +74,11 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'password_hash', $this->password_hash])
             ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
             ->andFilterWhere(['like', 'verification_token', $this->verification_token]);
+
+        if ($role){
+            $query->join('LEFT JOIN', 'auth_assignment', 'auth_assignment.user_id = id')
+                ->andFilterWhere(['auth_assignment.item_name' => $role]);
+        }
 
         return $dataProvider;
     }
