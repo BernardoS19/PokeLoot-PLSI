@@ -33,7 +33,7 @@ class CartaController extends Controller
                         'roles' => ['admin', 'avaliador'],
                     ],
                     [
-                        'actions' => ['update', 'update_imagem', 'delete'],
+                        'actions' => ['create','update', 'update_imagem', 'delete'],
                         'allow' => true,
                         'roles' => ['admin'],
                     ],
