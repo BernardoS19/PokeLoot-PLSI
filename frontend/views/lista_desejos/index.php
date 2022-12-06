@@ -35,6 +35,9 @@ $this->title = 'Lista de Desejos';
                                     <a href="" class="social-info">
                                         <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                                     </a>
+
+                                       <span></span><?= \yii\bootstrap5\Html::a('<i class="fa fa-star"></i>',['lista_desejos/remover?cartaId='.$item->carta_id], ['data'=>['method'=>'post'],'class'=>'icon_btn']) ?>
+
                                 </div>
                             </div>
                         </div>
