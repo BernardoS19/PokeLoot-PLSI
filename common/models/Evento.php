@@ -33,9 +33,10 @@ class Evento extends \yii\db\ActiveRecord
     {
         return [
             [['descricao', 'data', 'longitude', 'latitude', 'carta_id'], 'required'],
+            [['descricao'], 'string'],
             [['data'], 'safe'],
             [['carta_id'], 'integer'],
-            [['descricao', 'longitude', 'latitude'], 'string', 'max' => 255],
+            [['longitude', 'latitude'], 'string', 'max' => 255],
             [['carta_id'], 'unique'],
             [['carta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carta::class, 'targetAttribute' => ['carta_id' => 'id']],
         ];

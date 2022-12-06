@@ -1,13 +1,13 @@
 <?php
 
-use common\models\PedidoAvaliacao;
+use common\models\Pedido_avaliacao;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\PedidoAvaliacaoSearch $searchModel */
+/** @var common\models\Pedido_avaliacaoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Pedido Avaliacaos';
@@ -32,9 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'user_id',
             'carta_id',
             'autorizado',
+            'data_avaliacao',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, PedidoAvaliacao $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Pedido_avaliacao $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'user_id' => $model->user_id, 'carta_id' => $model->carta_id]);
                  }
             ],

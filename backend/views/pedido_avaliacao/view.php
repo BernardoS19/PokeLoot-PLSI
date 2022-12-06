@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var common\models\PedidoAvaliacao $model */
+/** @var common\models\Pedido_avaliacao $model */
 
 $this->title = $model->user_id;
 $this->params['breadcrumbs'][] = ['label' => 'Pedido Avaliacaos', 'url' => ['index']];
@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'user_id',
             'carta_id',
             'autorizado',
+            'data_avaliacao',
         ],
     ]) ?>
 

@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use common\models\PedidoAvaliacao;
-use common\models\PedidoAvaliacaoSearch;
+use common\models\Pedido_avaliacao;
+use common\models\Pedido_avaliacaoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PedidoAvaliacaoController implements the CRUD actions for PedidoAvaliacao model.
+ * Pedido_avaliacaoController implements the CRUD actions for Pedido_avaliacao model.
  */
-class PedidoAvaliacaoController extends Controller
+class Pedido_avaliacaoController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class PedidoAvaliacaoController extends Controller
     }
 
     /**
-     * Lists all PedidoAvaliacao models.
+     * Lists all Pedido_avaliacao models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new PedidoAvaliacaoSearch();
+        $searchModel = new Pedido_avaliacaoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class PedidoAvaliacaoController extends Controller
     }
 
     /**
-     * Displays a single PedidoAvaliacao model.
+     * Displays a single Pedido_avaliacao model.
      * @param int $user_id User ID
      * @param int $carta_id Carta ID
      * @return string
@@ -62,13 +62,13 @@ class PedidoAvaliacaoController extends Controller
     }
 
     /**
-     * Creates a new PedidoAvaliacao model.
+     * Creates a new Pedido_avaliacao model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new PedidoAvaliacao();
+        $model = new Pedido_avaliacao();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -84,7 +84,7 @@ class PedidoAvaliacaoController extends Controller
     }
 
     /**
-     * Updates an existing PedidoAvaliacao model.
+     * Updates an existing Pedido_avaliacao model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $user_id User ID
      * @param int $carta_id Carta ID
@@ -105,7 +105,7 @@ class PedidoAvaliacaoController extends Controller
     }
 
     /**
-     * Deletes an existing PedidoAvaliacao model.
+     * Deletes an existing Pedido_avaliacao model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $user_id User ID
      * @param int $carta_id Carta ID
@@ -120,16 +120,16 @@ class PedidoAvaliacaoController extends Controller
     }
 
     /**
-     * Finds the PedidoAvaliacao model based on its primary key value.
+     * Finds the Pedido_avaliacao model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $user_id User ID
      * @param int $carta_id Carta ID
-     * @return PedidoAvaliacao the loaded model
+     * @return Pedido_avaliacao the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($user_id, $carta_id)
     {
-        if (($model = PedidoAvaliacao::findOne(['user_id' => $user_id, 'carta_id' => $carta_id])) !== null) {
+        if (($model = Pedido_avaliacao::findOne(['user_id' => $user_id, 'carta_id' => $carta_id])) !== null) {
             return $model;
         }
 

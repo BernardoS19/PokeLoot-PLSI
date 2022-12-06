@@ -49,9 +49,9 @@ class Carta extends \yii\db\ActiveRecord
         return [
             [['nome', 'preco', 'descricao', 'imagem_id', 'tipo_id', 'elemento_id', 'colecao_id'], 'required'],
             [['preco'], 'number'],
+            [['descricao'], 'string'],
             [['verificado', 'imagem_id', 'tipo_id', 'elemento_id', 'colecao_id'], 'integer'],
             [['nome'], 'string', 'max' => 45],
-            [['descricao'], 'string', 'max' => 255],
             [['imagem_id'], 'unique'],
             [['colecao_id'], 'exist', 'skipOnError' => true, 'targetClass' => Colecao::class, 'targetAttribute' => ['colecao_id' => 'id']],
             [['elemento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Elemento::class, 'targetAttribute' => ['elemento_id' => 'id']],
@@ -68,13 +68,13 @@ class Carta extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nome' => 'Nome',
-            'preco' => 'Preço',
-            'descricao' => 'Descrição',
+            'preco' => 'Preco',
+            'descricao' => 'Descricao',
             'verificado' => 'Verificado',
-            'imagem_id' => 'Imagem',
-            'tipo_id' => 'Tipo',
-            'elemento_id' => 'Elemento',
-            'colecao_id' => 'Coleção',
+            'imagem_id' => 'Imagem ID',
+            'tipo_id' => 'Tipo ID',
+            'elemento_id' => 'Elemento ID',
+            'colecao_id' => 'Colecao ID',
         ];
     }
 

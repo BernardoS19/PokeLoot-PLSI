@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\PedidoAvaliacaoSearch $model */
+/** @var common\models\Pedido_avaliacaoSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -20,6 +20,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'carta_id') ?>
 
     <?= $form->field($model, 'autorizado') ?>
+
+    <?= $form->field($model, 'data_avaliacao') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
