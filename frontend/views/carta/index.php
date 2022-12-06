@@ -1,8 +1,13 @@
 <?php
 
 /** @var yii\web\View $this */
+/** @var \common\models\Carta $cartas */
+/* @var $form yii\widgets\ActiveForm */
 
+
+use common\models\Carta;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 $this->title = 'Catálogo';
 ?>
@@ -167,17 +172,20 @@ $this->title = 'Catálogo';
             <!-- Start Filter Bar -->
             <div class="filter-bar d-flex flex-wrap align-items-center">
                 <div class="sorting">
-                    <select>
-                        <option value="1">Default sorting</option>
-                        <option value="1">Default sorting</option>
-                        <option value="1">Default sorting</option>
-                    </select>
+                    <form method="post" id="form-sort" action="<?= \yii\helpers\Url::toRoute(['carta/index']) ?>">
+                        <select name="sort" id="sort" onchange="this.form.submit()">
+                            <option value="default" >Default sorting</option>
+                            <option value="preco_alto" >Preco mais alto</option>
+                            <option value="preco_baixo" >Preco mais baixo</option>
+                            <option value="nome">Nome</option>
+                        </select>
+                    </form>
                 </div>
                 <div class="sorting mr-auto">
                     <select>
-                        <option value="1">Show 12</option>
-                        <option value="1">Show 12</option>
-                        <option value="1">Show 12</option>
+                        <option value="12">Show 12</option>
+                        <option value="24">Show 24</option>
+                        <option value="36">Show 36</option>
                     </select>
                 </div>
                 <div class="pagination">
@@ -195,15 +203,20 @@ $this->title = 'Catálogo';
             <section class="lattest-product-area pb-40 category-list">
                 <div class="row">
                     <!-- single product -->
+                    <?php
+                    foreach ($cartas as $carta){
+                    ?>
                     <div class="col-lg-4 col-md-6">
                         <div class="single-product">
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
+                            <a href="<?= \yii\helpers\Url::toRoute("carta/detalhes?cartaId=".$carta->id) ?>">
+
+                                <?= Html::img(Yii::getAlias('@imgurl') .'/'. $carta->imagem->nome) ?>
+                            </a>
+
                             <div class="product-details">
-                                <h6>addidas New Hammer sole
-                                    for Sports person</h6>
+                                <h6><?= $carta->nome ?></h6>
                                 <div class="price">
-                                    <h6>$150.00</h6>
-                                    <h6 class="l-through">$210.00</h6>
+                                    <h6><?= $carta->preco ?> €</h6>
                                 </div>
                                 <div class="prd-bottom">
 
@@ -227,171 +240,9 @@ $this->title = 'Catálogo';
                             </div>
                         </div>
                     </div>
-                    <!-- single product -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-product">
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
-                            <div class="product-details">
-                                <h6>addidas New Hammer sole
-                                    for Sports person</h6>
-                                <div class="price">
-                                    <h6>$150.00</h6>
-                                    <h6 class="l-through">$210.00</h6>
-                                </div>
-                                <div class="prd-bottom">
-
-                                    <a href="" class="social-info">
-                                        <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">compare</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">view more</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single product -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-product">
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
-                            <div class="product-details">
-                                <h6>addidas New Hammer sole
-                                    for Sports person</h6>
-                                <div class="price">
-                                    <h6>$150.00</h6>
-                                    <h6 class="l-through">$210.00</h6>
-                                </div>
-                                <div class="prd-bottom">
-
-                                    <a href="" class="social-info">
-                                        <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">compare</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">view more</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single product -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-product">
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
-                            <div class="product-details">
-                                <h6>addidas New Hammer sole
-                                    for Sports person</h6>
-                                <div class="price">
-                                    <h6>$150.00</h6>
-                                    <h6 class="l-through">$210.00</h6>
-                                </div>
-                                <div class="prd-bottom">
-
-                                    <a href="" class="social-info">
-                                        <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">compare</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">view more</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single product -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-product">
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
-                            <div class="product-details">
-                                <h6>addidas New Hammer sole
-                                    for Sports person</h6>
-                                <div class="price">
-                                    <h6>$150.00</h6>
-                                    <h6 class="l-through">$210.00</h6>
-                                </div>
-                                <div class="prd-bottom">
-
-                                    <a href="" class="social-info">
-                                        <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">compare</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">view more</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single product -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-product">
-                            <img class="img-fluid" src="img/product/p6.jpg" alt="">
-                            <div class="product-details">
-                                <h6>addidas New Hammer sole
-                                    for Sports person</h6>
-                                <div class="price">
-                                    <h6>$150.00</h6>
-                                    <h6 class="l-through">$210.00</h6>
-                                </div>
-                                <div class="prd-bottom">
-
-                                    <a href="" class="social-info">
-                                        <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">compare</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">view more</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <?php
+                    }
+                    ?>
                 </div>
             </section>
             <!-- End Best Seller -->
@@ -399,9 +250,9 @@ $this->title = 'Catálogo';
             <div class="filter-bar d-flex flex-wrap align-items-center">
                 <div class="sorting mr-auto">
                     <select>
-                        <option value="1">Show 12</option>
-                        <option value="1">Show 12</option>
-                        <option value="1">Show 12</option>
+                        <option value="12">Show 12</option>
+                        <option value="24">Show 24</option>
+                        <option value="36">Show 36</option>
                     </select>
                 </div>
                 <div class="pagination">
