@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use common\models\Evento;
 use common\models\EventoSearch;
+use yii\base\Response;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,13 +23,26 @@ class EventoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'update', 'delete'],
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        return $this->redirect(['site/index']);
+                    }
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],
                 ],
-            ]
+            ],
         );
     }
 
@@ -51,11 +66,15 @@ class EventoController extends Controller
      * Displays a single Evento model.
      * @param int $id ID
      * @param int $carta_id Carta ID
-     * @return string
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id, $carta_id)
     {
+        if (!\Yii::$app->user->can('readEvento')) {
+            return $this->redirect(['site/index']);
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id, $carta_id),
         ]);
