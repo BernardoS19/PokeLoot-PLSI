@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use common\models\Evento;
 use common\models\EventoSearch;
-use yii\base\Response;
+use yii\web\Response;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -112,6 +112,10 @@ class EventoController extends Controller
      */
     public function actionUpdate($id, $carta_id)
     {
+        if (!\Yii::$app->user->can('updateEvento')) {
+            return $this->redirect(['site/index']);
+        }
+
         $model = $this->findModel($id, $carta_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -133,6 +137,10 @@ class EventoController extends Controller
      */
     public function actionDelete($id, $carta_id)
     {
+        if (!\Yii::$app->user->can('deleteEvento')) {
+            return $this->redirect(['site/index']);
+        }
+
         $this->findModel($id, $carta_id)->delete();
 
         return $this->redirect(['index']);
