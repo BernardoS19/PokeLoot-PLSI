@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Colecao $model */
 
-$this->title = 'Create Colecao';
+$this->title = 'Criar Coleção';
 $this->params['breadcrumbs'][] = ['label' => 'Colecaos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
