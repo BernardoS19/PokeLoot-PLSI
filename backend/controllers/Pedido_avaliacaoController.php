@@ -4,6 +4,9 @@ namespace backend\controllers;
 
 use common\models\Pedido_avaliacao;
 use common\models\Pedido_avaliacaoSearch;
+use common\models\User;
+use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,31 +24,70 @@ class Pedido_avaliacaoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index_admin'],
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
+                        [
+                            'actions' => ['index_avaliador'],
+                            'allow' => true,
+                            'roles' => ['avaliador'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        return $this->redirect(['site/index']);
+                    }
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],
                 ],
-            ]
+            ],
         );
     }
 
     /**
-     * Lists all Pedido_avaliacao models.
+     * Página que abre se o utilizador for admin.
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex_admin()
     {
         $searchModel = new Pedido_avaliacaoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render('index_admin', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    /**
+     * Página que abre se o utilizador for avaliador.
+     *
+     * @return string
+     */
+    public function actionIndex_avaliador()
+    {
+        $searchModel = new Pedido_avaliacaoSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index_avaliador', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionAutorizar($user_id, $carta_id) {
+
+    }
+
 
     /**
      * Displays a single Pedido_avaliacao model.

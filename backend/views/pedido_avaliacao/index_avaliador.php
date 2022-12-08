@@ -15,14 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pedido-avaliacao-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Criar Pedido Avaliação', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+    <br>
+    <h3>Pedidos por autorizar</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -38,6 +38,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 'urlCreator' => function ($action, Pedido_avaliacao $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'user_id' => $model->user_id, 'carta_id' => $model->carta_id]);
                  }
+            ],
+        ],
+    ]); ?>
+
+    <br>
+    <h3></h3>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'user_id',
+            'carta_id',
+            'autorizado',
+            'data_avaliacao',
+            [
+                'class' => ActionColumn::className(),
+                'urlCreator' => function ($action, Pedido_avaliacao $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'user_id' => $model->user_id, 'carta_id' => $model->carta_id]);
+                }
             ],
         ],
     ]); ?>
