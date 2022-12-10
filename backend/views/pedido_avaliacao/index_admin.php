@@ -49,9 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'carta',
                 'label' => 'Coleção',
-                'value' => function($model) {
-                    return $model->carta->colecao->nome;
-                },
+                'value' => 'carta.colecao.nome'
             ],
             [
                 'attribute' => 'carta',
@@ -63,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => ActionColumn::class,
-                'template' => '{view} &nbsp; {autorizar} &nbsp; {delete}',
+                'template' => '{view} &nbsp; {autorizar} &nbsp; {cancelar}',
                 'buttons' => [
                     'view' => function ($url) {
                         return Html::a('Ver Carta', $url, ['class' => 'btn btn-info']);
@@ -71,8 +69,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'autorizar' => function ($url) {
                         return Html::a('Autorizar', $url, ['data' => ['method' => 'post'] , 'class' => 'btn btn-success']);
                     },
-                    'delete' => function($url) {
-                        return Html::a('Remover', $url, ['data' => ['confirm' => 'Tem a certeza que pretende eliminar o Pedido?'], 'class' => 'btn btn-danger']);
+                    'cancelar' => function($url) {
+                        return Html::a('Cancelar Pedido', $url, ['data' => ['method' => 'post', 'confirm' => 'Tem a certeza que pretende cancelar o Pedido?'], 'class' => 'btn btn-danger']);
                     },
                 ],
 

@@ -22,43 +22,59 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <br>
-    <h3>Pedidos por autorizar</h3>
+    <h3>Pedidos autorizados por avaliar</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'user_id',
-            'carta_id',
-            'autorizado',
-            'data_avaliacao',
             [
-                'class' => ActionColumn::className(),
+                'attribute' => 'carta',
+                'label' => 'Carta',
+                'value' => 'carta.nome',
+            ],
+            [
+                'attribute' => 'carta',
+                'label' => 'Coleção',
+                'value' => 'carta.colecao.nome',
+            ],
+            [
+                'attribute' => 'carta',
+                'label' => 'Preço Atual',
+                'value' => function($model){
+                    return $model->carta->preco . ' €';
+                },
+            ],
+            [
+                'attribute' => 'pedido_avaliacao',
+                'label' => 'Preço Avaliado',
+                'value' => function($model){
+                    if (!$model->valor_avaliado){
+                        return '- €';
+                    } else {
+                        return $model->valor_avaliado . ' €';
+                    }
+                },
+            ],
+            [
+                'class' => ActionColumn::class,
+                'template' => '{view} &nbsp; {update} &nbsp; {finalizar}',
+                'buttons' => [
+                    'view' => function ($url) {
+                        return Html::a('Ver Carta', $url, ['class' => 'btn btn-info']);
+                    },
+                    'update' => function ($url) {
+                        return Html::a('Alterar Preço', $url, ['class' => 'btn btn-primary']);
+                    },
+                    'finalizar' => function ($url) {
+                        return Html::a('Finalizar Avaliação', $url, ['data' => ['method' => 'post'], 'class' => 'btn btn-success']);
+                    }
+                ],
+
                 'urlCreator' => function ($action, Pedido_avaliacao $model, $key, $index, $column) {
+                    if ($action == 'view'){
+                        return Url::toRoute(['carta/view', 'id' => $model->carta_id, 'imagem_id' => $model->carta->imagem_id, 'tipo_id' => $model->carta->tipo_id, 'elemento_id' => $model->carta->elemento_id, 'colecao_id' => $model->carta->colecao_id]);
+                    }
                     return Url::toRoute([$action, 'user_id' => $model->user_id, 'carta_id' => $model->carta_id]);
                  }
-            ],
-        ],
-    ]); ?>
-
-    <br>
-    <h3></h3>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'user_id',
-            'carta_id',
-            'autorizado',
-            'data_avaliacao',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Pedido_avaliacao $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'user_id' => $model->user_id, 'carta_id' => $model->carta_id]);
-                }
             ],
         ],
     ]); ?>

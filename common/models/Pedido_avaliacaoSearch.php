@@ -17,8 +17,9 @@ class Pedido_avaliacaoSearch extends Pedido_avaliacao
     public function rules()
     {
         return [
-            [['user_id', 'carta_id', 'autorizado'], 'integer'],
-            [['data_avaliacao'], 'safe'],
+            [['user_id', 'carta_id'], 'integer'],
+            [['estado', 'data_avaliacao'], 'safe'],
+            [['valor_avaliado'], 'number'],
         ];
     }
 
@@ -38,7 +39,7 @@ class Pedido_avaliacaoSearch extends Pedido_avaliacao
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $filtro = null)
     {
         $query = Pedido_avaliacao::find();
 
@@ -60,9 +61,22 @@ class Pedido_avaliacaoSearch extends Pedido_avaliacao
         $query->andFilterWhere([
             'user_id' => $this->user_id,
             'carta_id' => $this->carta_id,
-            'autorizado' => $this->autorizado,
+            'valor_avaliado' => $this->valor_avaliado,
             'data_avaliacao' => $this->data_avaliacao,
         ]);
+
+        $query->andFilterWhere(['like', 'estado', $this->estado]);
+
+        if ($filtro){
+            switch ($filtro){
+                case 'por_autorizar':
+                    $query->andFilterWhere(['estado' => 'Por Autorizar']);
+                    break;
+                case 'autorizado':
+                    $query->andFilterWhere(['estado'=> 'Autorizado']);
+                    break;
+            }
+        }
 
         return $dataProvider;
     }

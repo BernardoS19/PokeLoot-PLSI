@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var common\models\Pedido_avaliacao $model */
 
 $this->title = $model->user_id;
-$this->params['breadcrumbs'][] = ['label' => 'Pedidos Avaliação', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Pedido Avaliacaos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -31,7 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'user_id',
             'carta_id',
-            'autorizado',
+            'estado',
+            'valor_avaliado',
             'data_avaliacao',
         ],
     ]) ?>

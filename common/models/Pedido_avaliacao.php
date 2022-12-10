@@ -9,7 +9,8 @@ use Yii;
  *
  * @property int $user_id
  * @property int $carta_id
- * @property int $autorizado
+ * @property string $estado
+ * @property float|null $valor_avaliado
  * @property string|null $data_avaliacao
  *
  * @property Carta $carta
@@ -31,8 +32,10 @@ class Pedido_avaliacao extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'carta_id'], 'required'],
-            [['user_id', 'carta_id', 'autorizado'], 'integer'],
+            [['user_id', 'carta_id', 'estado'], 'required'],
+            [['user_id', 'carta_id'], 'integer'],
+            [['estado'], 'string'],
+            [['valor_avaliado'], 'number'],
             [['data_avaliacao'], 'safe'],
             [['user_id', 'carta_id'], 'unique', 'targetAttribute' => ['user_id', 'carta_id']],
             [['carta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carta::class, 'targetAttribute' => ['carta_id' => 'id']],
@@ -48,7 +51,8 @@ class Pedido_avaliacao extends \yii\db\ActiveRecord
         return [
             'user_id' => 'User ID',
             'carta_id' => 'Carta ID',
-            'autorizado' => 'Autorizado',
+            'estado' => 'Estado',
+            'valor_avaliado' => 'Valor Avaliado',
             'data_avaliacao' => 'Data Avaliacao',
         ];
     }

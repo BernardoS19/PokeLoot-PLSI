@@ -4,12 +4,12 @@ namespace backend\controllers;
 
 use common\models\Pedido_avaliacao;
 use common\models\Pedido_avaliacaoSearch;
-use common\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * Pedido_avaliacaoController implements the CRUD actions for Pedido_avaliacao model.
@@ -28,12 +28,12 @@ class Pedido_avaliacaoController extends Controller
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index_admin'],
+                            'actions' => ['index_admin', 'autorizar', 'cancelar', 'delete'],
                             'allow' => true,
                             'roles' => ['admin'],
                         ],
                         [
-                            'actions' => ['index_avaliador'],
+                            'actions' => ['index_avaliador', 'finalizar', 'update', 'delete'],
                             'allow' => true,
                             'roles' => ['avaliador'],
                         ],
@@ -52,15 +52,15 @@ class Pedido_avaliacaoController extends Controller
         );
     }
 
-    /**
-     * Página que abre se o utilizador for admin.
+    /** - Admin
+     * Página index do admin.
      *
      * @return string
      */
     public function actionIndex_admin()
     {
         $searchModel = new Pedido_avaliacaoSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams, 'por_autorizar');
 
         return $this->render('index_admin', [
             'searchModel' => $searchModel,
@@ -68,15 +68,15 @@ class Pedido_avaliacaoController extends Controller
         ]);
     }
 
-    /**
-     * Página que abre se o utilizador for avaliador.
+    /** - Avaliador
+     * Página index para o avaliador.
      *
      * @return string
      */
     public function actionIndex_avaliador()
     {
         $searchModel = new Pedido_avaliacaoSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams, 'autorizado');
 
         return $this->render('index_avaliador', [
             'searchModel' => $searchModel,
@@ -84,8 +84,60 @@ class Pedido_avaliacaoController extends Controller
         ]);
     }
 
-    public function actionAutorizar($user_id, $carta_id) {
+    /** - Admin
+     * Autoriza um pedido
+     * @return string|Response
+     * @param int $user_id User ID
+     * @param int $carta_id Carta ID
+     */
+    public function actionAutorizar($user_id, $carta_id)
+    {
+        $pedido = Pedido_avaliacao::findOne(['user_id' => $user_id, 'carta_id' => $carta_id]);
+        $pedido->estado = 'Autorizado';
+        $pedido->save();
 
+        return $this->redirect(['pedido_avaliacao/index_admin']);
+    }
+
+    /** - Admin
+     * Cancela o pedido
+     * @return string|Response
+     * @param int $user_id User ID
+     * @param int $carta_id Carta ID
+     */
+    public function actionCancelar($user_id, $carta_id)
+    {
+        $pedido = Pedido_avaliacao::findOne(['user_id' => $user_id, 'carta_id' => $carta_id]);
+        $pedido->estado = 'Cancelado';
+        $pedido->save();
+
+        return $this->redirect(['pedido_avaliacao/index_admin']);
+    }
+
+    /** - Avaliador
+     * Finaliza uma avaliação
+     * @return string|Response
+     * @param int $user_id User ID
+     * @param int $carta_id Carta ID
+     */
+    public function actionFinalizar($user_id, $carta_id)
+    {
+        $pedido = Pedido_avaliacao::findOne(['user_id' => $user_id, 'carta_id' => $carta_id]);
+
+        if ($pedido->estado == 'Autorizado') {
+            if ($pedido->valor_avaliado != null) {
+
+                $pedido->data_avaliacao = date('Y-m-d H:i:s');
+                $pedido->estado = 'Avaliado';
+
+                $pedido->carta->preco = $pedido->valor_avaliado;
+
+                $pedido->carta->save();
+                $pedido->save();
+            }
+        }
+
+        return $this->redirect(['pedido_avaliacao/index_avaliador']);
     }
 
 
@@ -106,7 +158,7 @@ class Pedido_avaliacaoController extends Controller
     /**
      * Creates a new Pedido_avaliacao model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return string|Response
      */
     public function actionCreate()
     {
@@ -126,7 +178,7 @@ class Pedido_avaliacaoController extends Controller
     }
 
     /**
-     * Updates an existing Pedido_avaliacao model.
+     * Faz update do preço para a avaliação da carta.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $user_id User ID
      * @param int $carta_id Carta ID
@@ -138,7 +190,7 @@ class Pedido_avaliacaoController extends Controller
         $model = $this->findModel($user_id, $carta_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'user_id' => $model->user_id, 'carta_id' => $model->carta_id]);
+            return $this->redirect(['index_avaliador', 'user_id' => $model->user_id, 'carta_id' => $model->carta_id]);
         }
 
         return $this->render('update', [
