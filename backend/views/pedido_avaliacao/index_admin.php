@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <br>
     <p>
         <!-- Criar um pedido de avaliação como admin -->
-        <?= Html::a('Criar Pedido Avaliação', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Pedido Avaliação', ['escolher_avaliador'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

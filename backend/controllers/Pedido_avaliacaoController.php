@@ -2,8 +2,11 @@
 
 namespace backend\controllers;
 
+use app\models\UserSearch;
+use common\models\CartaSearch;
 use common\models\Pedido_avaliacao;
 use common\models\Pedido_avaliacaoSearch;
+use common\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -28,14 +31,19 @@ class Pedido_avaliacaoController extends Controller
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index_admin', 'autorizar', 'cancelar', 'delete'],
+                            'actions' => ['index_admin', 'escolher_avaliador', 'autorizar', 'cancelar'],
                             'allow' => true,
                             'roles' => ['admin'],
                         ],
                         [
-                            'actions' => ['index_avaliador', 'finalizar', 'update', 'delete'],
+                            'actions' => ['index_avaliador', 'finalizar', 'update'],
                             'allow' => true,
                             'roles' => ['avaliador'],
+                        ],
+                        [
+                            'actions' => ['escolher_carta', 'create', 'delete'],
+                            'allow' => true,
+                            'roles' => ['admin', 'avaliador'],
                         ],
                     ],
                     'denyCallback' => function ($rule, $action) {
@@ -124,13 +132,14 @@ class Pedido_avaliacaoController extends Controller
     {
         $pedido = Pedido_avaliacao::findOne(['user_id' => $user_id, 'carta_id' => $carta_id]);
 
-        if ($pedido->estado == 'Autorizado') {
+        if ($pedido->estado == 'Autorizado' && $user_id == Yii::$app->user->identity->getId()) {
             if ($pedido->valor_avaliado != null) {
 
                 $pedido->data_avaliacao = date('Y-m-d H:i:s');
                 $pedido->estado = 'Avaliado';
 
                 $pedido->carta->preco = $pedido->valor_avaliado;
+                $pedido->carta->verificado = 1;
 
                 $pedido->carta->save();
                 $pedido->save();
@@ -140,41 +149,60 @@ class Pedido_avaliacaoController extends Controller
         return $this->redirect(['pedido_avaliacao/index_avaliador']);
     }
 
-
-    /**
-     * Displays a single Pedido_avaliacao model.
-     * @param int $user_id User ID
-     * @param int $carta_id Carta ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
+    /** - Admin
+     * O admin escolhe um avaliador para associar a um novo pedido
+     *
+     * @return string|Response
      */
-    public function actionView($user_id, $carta_id)
+    public function actionEscolher_avaliador()
     {
-        return $this->render('view', [
-            'model' => $this->findModel($user_id, $carta_id),
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, 'avaliador');
+
+        return $this->render('escolher_avaliador', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
-    /**
-     * Creates a new Pedido_avaliacao model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+    /** - Admin | Avaliador
+     * O admin ou avaliador escolhe uma carta para associar a um novo pedido
+     * @param int $id User ID
      * @return string|Response
      */
-    public function actionCreate()
+    public function actionEscolher_carta($id)
     {
-        $model = new Pedido_avaliacao();
+        $searchModel = new CartaSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, 'sem_pedido');//todo: lá no model search
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'user_id' => $model->user_id, 'carta_id' => $model->carta_id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
+        return $this->render('escolher_carta', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'userId' => $id,
         ]);
+    }
+
+    /** - Admin | Avaliador
+     * Botão para criar o pedido após a escolha da carta
+     * @param $user_id
+     * @param $id //carta_id
+     * @return string|Response
+     */
+    public function actionCreate($user_id, $id)
+    {
+        $pedido = new Pedido_avaliacao();
+        $pedido->user_id = $user_id;
+        $pedido->carta_id = $id;
+        if (User::findOne(Yii::$app->user->getId())->getUserRole() == 'admin'){
+            $pedido->estado = 'Autorizado';
+        } elseif (User::findOne(Yii::$app->user->getId())->getUserRole() == 'avaliador'){
+            $pedido->estado = 'Por Autorizar';
+        }
+        $pedido->valor_avaliado = null;
+        $pedido->data_avaliacao = null;
+        $pedido->save();
+
+        return $this->redirect(['site/index']);
     }
 
     /**

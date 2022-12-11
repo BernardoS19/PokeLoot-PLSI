@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="pedido-avaliacao-index">
 
     <p>
-        <?= Html::a('Criar Pedido Avaliação', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Pedido Avaliação', ['escolher_carta', 'id' => Yii::$app->user->identity->getId()], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
