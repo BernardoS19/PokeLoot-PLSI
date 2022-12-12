@@ -43,7 +43,7 @@ $this->title = 'PokéLoot';
                                             <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                                         </a>
                                         <a href="" class="social-info">
-                                            <span><i class="fa fa-star" aria-hidden="true"></i></span>
+                                            <?= \yii\bootstrap5\Html::a('<span><i class="fa fa-star" aria-hidden="true"></i></span>',['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'icon_btn']) ?>
                                         </a>
                                     </div>
                                 </div>
