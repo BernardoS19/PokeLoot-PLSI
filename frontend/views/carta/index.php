@@ -1,6 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
+/** @var $cartas */
 
 use yii\helpers\Html;
 
@@ -194,105 +195,35 @@ $this->title = 'Catálogo';
             <!-- Start Best Seller -->
             <section class="lattest-product-area pb-40 category-list">
                 <div class="row">
-                    <!-- single product -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-product">
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
-                            <div class="product-details">
-                                <h6>addidas New Hammer sole
-                                    for Sports person</h6>
-                                <div class="price">
-                                    <h6>$150.00</h6>
-                                    <h6 class="l-through">$210.00</h6>
-                                </div>
-                                <div class="prd-bottom">
+                    <?php
+                        foreach ($cartas as $carta){
+                    ?>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="single-product">
+                                <a href="<?= \yii\helpers\Url::toRoute("carta/detalhes?cartaId=".$carta->id) ?>">
 
-                                    <a href="" class="social-info">
-                                        <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">compare</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">view more</p>
-                                    </a>
+                                    <?= Html::img(Yii::getAlias('@imgurl') .'/'. $carta->imagem->nome) ?>
+                                </a>
+
+                                <div class="product-details">
+                                    <h6><?= $carta->nome ?></h6>
+                                    <div class="price">
+                                        <h6><?= $carta->preco ?> €</h6>
+                                    </div>
+                                    <div class="prd-bottom">
+                                        <div class="card_area d-flex align-items-center">
+                                            <a href="" class="social-info">
+                                                <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                                            </a>
+                                            <?= \yii\bootstrap5\Html::a('<span><i class="fa fa-star"></i></span>',['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- single product -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-product">
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
-                            <div class="product-details">
-                                <h6>addidas New Hammer sole
-                                    for Sports person</h6>
-                                <div class="price">
-                                    <h6>$150.00</h6>
-                                    <h6 class="l-through">$210.00</h6>
-                                </div>
-                                <div class="prd-bottom">
-
-                                    <a href="" class="social-info">
-                                        <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">compare</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">view more</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single product -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-product">
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/carta_teste.png') ?>
-                            <div class="product-details">
-                                <h6>addidas New Hammer sole
-                                    for Sports person</h6>
-                                <div class="price">
-                                    <h6>$150.00</h6>
-                                    <h6 class="l-through">$210.00</h6>
-                                </div>
-                                <div class="prd-bottom">
-
-                                    <a href="" class="social-info">
-                                        <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">compare</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">view more</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                        }
+                    ?>
                 </div>
             </section>
             <!-- End Best Seller -->
