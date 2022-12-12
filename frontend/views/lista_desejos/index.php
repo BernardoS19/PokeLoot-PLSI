@@ -1,7 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var common\models\Lista_desejo $lista_desejo */
+
 use yii\bootstrap5\Html;
 
 $this->title = 'Lista de Desejos';
@@ -42,12 +42,59 @@ $this->title = 'Lista de Desejos';
                             </div>
                         </div>
                     </div>
-                    <?php
-                }
-                ?>
-
+                </div>
+                <!-- single product -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-product">
+                        <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
+                        <div class="product-details">
+                            <h6>Carta_teste1</h6>
+                            <div class="price">
+                                <h6>1,20 €</h6>
+                            </div>
+                            <div class="prd-bottom">
+                                <a href="" class="social-info">
+                                    <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- single product -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-product">
+                        <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
+                        <div class="product-details">
+                            <h6>Carta_teste1</h6>
+                            <div class="price">
+                                <h6>1,20 €</h6>
+                            </div>
+                            <div class="prd-bottom">
+                                <a href="" class="social-info">
+                                    <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- single product -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-product">
+                        <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
+                        <div class="product-details">
+                            <h6>Carta_teste1</h6>
+                            <div class="price">
+                                <h6>1,20 €</h6>
+                            </div>
+                            <div class="prd-bottom">
+                                <a href="" class="social-info">
+                                    <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
     <!-- end product Area -->

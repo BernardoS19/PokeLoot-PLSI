@@ -1,7 +1,6 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var \common\models\Carta $carta */
 
 use yii\helpers\Html;
 
@@ -15,22 +14,31 @@ $this->title = '*nome da carta*';
         <div class="row s_product_inner">
             <div class="col-lg-6">
                 <div class="imagem-detalhes">
-                    <?= Html::img('@imgurl' . '/'.  $carta->imagem->nome) ?>
+                    <?= Html::img('@imgurl' . '/carta_teste.png') ?>
                 </div>
             </div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
-                    <h3><?= $carta->nome?></h3>
-                    <h2><?= $carta->preco?></h2>
+                    <h3>Faded SkyBlu Denim Jeans</h3>
+                    <h2>$149.99</h2>
                     <ul class="list">
-                        <li><span>Tipo: </span><?= $carta->tipo->nome?></a></li>
-                        <li><span>Elemento: </span><?= $carta->elemento->nome?></a></li>
+                        <li><a class="active" href="#"><span>Category</span> : Household</a></li>
+                        <li><a href="#"><span>Availibility</span> : In Stock</a></li>
                     </ul>
-                    <p><?=$carta->descricao?></p>
-
+                    <p>Mill Oil is an innovative oil filled radiator with the most modern technology. If you are looking for
+                        something that can make your interior look awesome, and at the same time give you the pleasant warm feeling
+                        during the winter.</p>
+                    <div class="product_count">
+                        <label for="qty">Quantity:</label>
+                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
+                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                    </div>
                     <div class="card_area d-flex align-items-center">
                         <a class="primary-btn" href="#">Add to Cart</a>
-                        <?= \yii\bootstrap5\Html::a('<i class="fa fa-star"></i>',['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'icon_btn']) ?>
+                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
                     </div>
                 </div>
