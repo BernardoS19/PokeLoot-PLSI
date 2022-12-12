@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var \common\models\Carta $cartas */
+/** @var \common\models\Pedido_avaliacao $avaliadas */
 
 $this->title = 'PokéLoot';
 ?>
@@ -31,7 +32,9 @@ $this->title = 'PokéLoot';
                         ?>
                         <div class="col-lg-3 col-md-6">
                             <div class="single-product">
-                                <?= Html::img(Yii::getAlias('@imgurl') . '/' . $carta->imagem->nome) ?>
+                                <a href="<?= \yii\helpers\Url::toRoute("carta/detalhes?cartaId=".$carta->id) ?>">
+                                    <?= Html::img(Yii::getAlias('@imgurl') .'/'. $carta->imagem->nome) ?>
+                                </a>
                                 <div class="product-details">
                                     <h6><?= $carta->nome ?></h6>
                                     <div class="price">
@@ -41,9 +44,9 @@ $this->title = 'PokéLoot';
                                         <a href="" class="social-info">
                                             <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                                         </a>
-
-                                            <?= \yii\bootstrap5\Html::a('<span><i class="fa fa-star" aria-hidden="true"></i></span>',['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>
-
+                                        <a href="" class="social-info">
+                                            <?= \yii\bootstrap5\Html::a('<span><i class="fa fa-star" aria-hidden="true"></i></span>',['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'icon_btn']) ?>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -56,10 +59,11 @@ $this->title = 'PokéLoot';
             </div>
         <!-- end product Area -->
 
-
         <!-- RECENTEMENTE AVALIADAS -->
+
         <!-- single product slide -->
         <br>
+
         <div class="single-product-slider">
             <div class="container">
                 <div class="row">
@@ -71,13 +75,16 @@ $this->title = 'PokéLoot';
                 </div>
                 <div class="row">
                     <!-- single product -->
+                    <?php
+                    foreach ($avaliadas as $avaliada){
+                    ?>
                     <div class="col-lg-3 col-md-6">
                         <div class="single-product">
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
+                            <?= Html::img(Yii::getAlias('@imgurl') . '/' . $avaliada->carta->imagem->nome) ?>
                             <div class="product-details">
-                                <h6>Carta_teste1</h6>
+                                <h6><?= $avaliada->carta->nome?></h6>
                                 <div class="price">
-                                    <h6>1,20 €</h6>
+                                    <h6><?=$avaliada->carta->preco?></h6>
                                 </div>
                                 <div class="prd-bottom">
                                     <a href="" class="social-info">
@@ -90,66 +97,9 @@ $this->title = 'PokéLoot';
                             </div>
                         </div>
                     </div>
-                    <!-- single product -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-product">
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
-                            <div class="product-details">
-                                <h6>Carta_teste1</h6>
-                                <div class="price">
-                                    <h6>1,20 €</h6>
-                                </div>
-                                <div class="prd-bottom">
-                                    <a href="" class="social-info">
-                                        <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span><i class="fa fa-star" aria-hidden="true"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single product -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-product">
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
-                            <div class="product-details">
-                                <h6>Carta_teste1</h6>
-                                <div class="price">
-                                    <h6>1,20 €</h6>
-                                </div>
-                                <div class="prd-bottom">
-                                    <a href="" class="social-info">
-                                        <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span><i class="fa fa-star" aria-hidden="true"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single product -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-product">
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/' . 'carta_teste.png') ?>
-                            <div class="product-details">
-                                <h6>Carta_teste1</h6>
-                                <div class="price">
-                                    <h6>1,20 €</h6>
-                                </div>
-                                <div class="prd-bottom">
-                                    <a href="" class="social-info">
-                                        <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span><i class="fa fa-star" aria-hidden="true"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                        }
+                    ?>
                 </div>
             </div>
         </div>
