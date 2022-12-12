@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Pedido_avaliacao $model */
 
-$this->title = 'Create Pedido Avaliacao';
-$this->params['breadcrumbs'][] = ['label' => 'Pedido Avaliacaos', 'url' => ['index']];
+$this->title = 'Criar Pedido de Avaliação';
+$this->params['breadcrumbs'][] = ['label' => 'Pedidos Avaliação', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pedido-avaliacao-create">
