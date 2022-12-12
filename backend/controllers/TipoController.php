@@ -4,11 +4,9 @@ namespace backend\controllers;
 
 use common\models\Tipo;
 use common\models\TipoSearch;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\Response;
 
 /**
  * TipoController implements the CRUD actions for Tipo model.
@@ -42,21 +40,17 @@ class TipoController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
-            ],
+            ]
         );
     }
 
     /**
      * Lists all Tipo models.
      *
-     * @return string|Response
+     * @return string
      */
     public function actionIndex()
     {
-        if (!\Yii::$app->user->can('readTipo')) {
-            return $this->redirect(['site/index']);
-        }
-
         $searchModel = new TipoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -69,15 +63,11 @@ class TipoController extends Controller
     /**
      * Displays a single Tipo model.
      * @param int $id ID
-     * @return string|Response
+     * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        if (!\Yii::$app->user->can('readTipo')) {
-            return $this->redirect(['site/index']);
-        }
-
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -90,10 +80,6 @@ class TipoController extends Controller
      */
     public function actionCreate()
     {
-        if (!\Yii::$app->user->can('createTipo')) {
-            return $this->redirect(['site/index']);
-        }
-
         $model = new Tipo();
 
         if ($this->request->isPost) {
@@ -118,10 +104,6 @@ class TipoController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (!\Yii::$app->user->can('updateTipo')) {
-            return $this->redirect(['site/index']);
-        }
-
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -142,10 +124,6 @@ class TipoController extends Controller
      */
     public function actionDelete($id)
     {
-        if (!\Yii::$app->user->can('deleteTipo')) {
-            return $this->redirect(['site/index']);
-        }
-
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

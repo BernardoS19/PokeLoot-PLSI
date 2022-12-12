@@ -1,13 +1,9 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var \common\models\Carta $cartas */
-/* @var $form yii\widgets\ActiveForm */
+/** @var $cartas */
 
-
-use common\models\Carta;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 
 $this->title = 'Catálogo';
 ?>
@@ -172,20 +168,17 @@ $this->title = 'Catálogo';
             <!-- Start Filter Bar -->
             <div class="filter-bar d-flex flex-wrap align-items-center">
                 <div class="sorting">
-                    <form method="post" id="form-sort" action="<?= \yii\helpers\Url::toRoute(['carta/index']) ?>">
-                        <select name="sort" id="sort" onchange="this.form.submit()">
-                            <option value="default" >Default sorting</option>
-                            <option value="preco_alto" >Preco mais alto</option>
-                            <option value="preco_baixo" >Preco mais baixo</option>
-                            <option value="nome">Nome</option>
-                        </select>
-                    </form>
+                    <select>
+                        <option value="1">Default sorting</option>
+                        <option value="1">Default sorting</option>
+                        <option value="1">Default sorting</option>
+                    </select>
                 </div>
                 <div class="sorting mr-auto">
                     <select>
-                        <option value="12">Show 12</option>
-                        <option value="24">Show 24</option>
-                        <option value="36">Show 36</option>
+                        <option value="1">Show 12</option>
+                        <option value="1">Show 12</option>
+                        <option value="1">Show 12</option>
                     </select>
                 </div>
                 <div class="pagination">
@@ -202,33 +195,34 @@ $this->title = 'Catálogo';
             <!-- Start Best Seller -->
             <section class="lattest-product-area pb-40 category-list">
                 <div class="row">
-                    <!-- single product -->
                     <?php
-                    foreach ($cartas as $carta){
+                        foreach ($cartas as $carta){
                     ?>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-product">
-                            <a href="<?= \yii\helpers\Url::toRoute("carta/detalhes?cartaId=".$carta->id) ?>">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="single-product">
+                                <a href="<?= \yii\helpers\Url::toRoute("carta/detalhes?cartaId=".$carta->id) ?>">
 
-                                <?= Html::img(Yii::getAlias('@imgurl') .'/'. $carta->imagem->nome) ?>
-                            </a>
+                                    <?= Html::img(Yii::getAlias('@imgurl') .'/'. $carta->imagem->nome) ?>
+                                </a>
 
-                            <div class="product-details">
-                                <h6><?= $carta->nome ?></h6>
-                                <div class="price">
-                                    <h6><?= $carta->preco ?> €</h6>
-                                </div>
-                                <div class="prd-bottom">
-                                    <div class="card_area d-flex align-items-center">
-                                        <a class="primary-btn" href="#">Add to Cart</a>
-                                        <?= \yii\bootstrap5\Html::a('<i class="fa fa-star"></i>',['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'icon_btn']) ?>
+                                <div class="product-details">
+                                    <h6><?= $carta->nome ?></h6>
+                                    <div class="price">
+                                        <h6><?= $carta->preco ?> €</h6>
+                                    </div>
+                                    <div class="prd-bottom">
+                                        <div class="card_area d-flex align-items-center">
+                                            <a href="" class="social-info">
+                                                <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                                            </a>
+                                            <?= \yii\bootstrap5\Html::a('<span><i class="fa fa-star"></i></span>',['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                        <?php
-                    }
+                    <?php
+                        }
                     ?>
                 </div>
             </section>
@@ -237,9 +231,9 @@ $this->title = 'Catálogo';
             <div class="filter-bar d-flex flex-wrap align-items-center">
                 <div class="sorting mr-auto">
                     <select>
-                        <option value="12">Show 12</option>
-                        <option value="24">Show 24</option>
-                        <option value="36">Show 36</option>
+                        <option value="1">Show 12</option>
+                        <option value="1">Show 12</option>
+                        <option value="1">Show 12</option>
                     </select>
                 </div>
                 <div class="pagination">

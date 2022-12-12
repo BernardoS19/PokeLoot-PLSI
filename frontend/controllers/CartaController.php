@@ -29,6 +29,7 @@ class CartaController extends Controller
     // Página de Catálogo
     public function actionIndex()
     {
+        /*
         if($this->request->isPost){
             if(isset($_Post['sort'])) {
                 $select = $_Post['sort'];
@@ -48,16 +49,22 @@ class CartaController extends Controller
                 }
             }
         }
+        */
+        $cartas = Carta::find()->orderBy('id DESC')->all();
 
-        $cartas= Carta::find()->orderBy('id DESC')->all();
-        return $this->render('index',['cartas'=>$cartas]);
+        return $this->render('index', [
+            'cartas' => $cartas,
+        ]);
     }
 
     // Página de detalhes da Carta
     public function actionDetalhes($cartaId)
     {
-        $carta=Carta::findOne(['id'=>$cartaId]);
-        return $this->render('detalhes',['carta'=>$carta]);
+        $carta = Carta::findOne(['id'=>$cartaId]);
+
+        return $this->render('detalhes',[
+            'carta' => $carta,
+        ]);
     }
 
 }

@@ -2,7 +2,6 @@
 
 namespace frontend\controllers;
 
-
 use common\models\Lista_desejo;
 use Yii;
 use common\models\Carta;
@@ -50,7 +49,7 @@ class Lista_desejosController extends Controller
             }else
                 Yii::$app->session->setFlash("error",'Operação falhada');
         }
-            return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     public function actionRemover($cartaId){
