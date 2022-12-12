@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var common\models\Pedido_avaliacaoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Pedidos de Avaliação';
+$this->title = 'Pedido Avaliacaos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pedido-avaliacao-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Criar Pedido Avaliação', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Pedido Avaliacao', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

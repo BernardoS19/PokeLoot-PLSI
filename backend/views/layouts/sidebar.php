@@ -36,7 +36,7 @@
                     ['label' => 'Dashboard', 'url' => ['site/index'], 'icon' => 'tachometer-alt'],
                     ['label' => 'Utilizadores', 'url' => ['user/index'], 'icon' => 'user'],
                     ['label' => 'Eventos', 'url' => ['evento/index'], 'icon' => 'calendar'],
-                    ['label' => 'Pedidos de Avaliação', 'url' => ['pedido_avaliacao/index'], 'icon' => 'table'],
+                    ['label' => 'Pedidos de Avaliação', 'url' => ['pedidoavaliacao/index'], 'icon' => 'table'],
                     ['label' => 'CATÁLOGO', 'header' => true],
                     ['label' => 'Tipos de Cartas', 'url' => ['tipo/index'], 'icon' => 'table'],
                     ['label' => 'Elementos de Cartas', 'url' => ['elemento/index'], 'icon' => 'table'],

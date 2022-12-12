@@ -87,6 +87,7 @@ class CartaController extends Controller
             return $this->redirect(['site/index']);
         }
 
+
         return $this->render('view', [
             'model' => $this->findModel($id, $imagem_id, $tipo_id, $elemento_id, $colecao_id),
         ]);
