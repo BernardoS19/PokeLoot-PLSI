@@ -44,8 +44,9 @@ $this->title = 'PokéLoot';
                                         <a href="" class="social-info">
                                             <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                                         </a>
-
-                                            <?= \yii\bootstrap5\Html::a('<span><i class="fa fa-star" aria-hidden="true"></i></span>',['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>
+                                        <a href="" class="social-info">
+                                            <?= \yii\bootstrap5\Html::a('<span><i class="fa fa-star" aria-hidden="true"></i></span>',['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'icon_btn']) ?>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
