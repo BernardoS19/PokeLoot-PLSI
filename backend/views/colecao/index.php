@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var common\models\ColecaoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Coleções';
+$this->title = 'Colecaos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="colecao-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Criar Coleção', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Colecao', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
