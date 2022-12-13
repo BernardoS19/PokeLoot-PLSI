@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="pedido-avaliacao-index">
 
     <p>
-        <!-- Consultar a lista de avaliações feitas -->
-        <?= Html::a('Consultar Avaliações efetuadas', ['cartas_avaliadas'], ['class' => 'btn btn-info']) ?>
+        <!-- Consultar pedidos por autorizar -->
+        <?= Html::a('Pedidos por autorizar', ['index_admin'], ['class' => 'btn btn-info']) ?>
 
-        <!-- Consultar a lista de pedidos autorizados que aguardam avaliação -->
-        <?= Html::a('Pedidos que aguardam avaliação', ['pedidos_autorizados'], ['class' => 'btn btn-info']) ?>
+        <!-- Consultar a lista de avaliações feitas -->
+        <?= Html::a('Pedidos que aguardam avaliação', ['cartas_avaliadas'], ['class' => 'btn btn-info']) ?>
     </p>
     <br>
     <p>
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <h3>Pedidos por autorizar</h3>
+    <h3>Pedidos autorizados a aguardar avaliação</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -61,16 +61,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => ActionColumn::class,
-                'template' => '{view} &nbsp; {autorizar} &nbsp; {cancelar}',
+                'template' => '{view}',
                 'buttons' => [
                     'view' => function ($url) {
                         return Html::a('Ver Carta', $url, ['class' => 'btn btn-info']);
-                    },
-                    'autorizar' => function ($url) {
-                        return Html::a('Autorizar', $url, ['data' => ['method' => 'post'] , 'class' => 'btn btn-success']);
-                    },
-                    'cancelar' => function($url) {
-                        return Html::a('Cancelar Pedido', $url, ['data' => ['method' => 'post', 'confirm' => 'Tem a certeza que pretende cancelar o Pedido?'], 'class' => 'btn btn-danger']);
                     },
                 ],
 

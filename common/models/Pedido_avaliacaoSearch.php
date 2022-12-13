@@ -72,8 +72,14 @@ class Pedido_avaliacaoSearch extends Pedido_avaliacao
                 case 'por_autorizar':
                     $query->andFilterWhere(['estado' => 'Por Autorizar']);
                     break;
+                case 'avaliados':
+                    $query->andFilterWhere(['estado' => 'Avaliado']);
+                    break;
+                case 'todos_autorizados':
+                    $query->andFilterWhere(['estado' => 'Autorizado']);
+                    break;
             }
-            if ($filtro == 'autorizado' && $user){
+            if ($filtro == 'autorizados' && $user){
                 $query->andFilterWhere(['estado' => 'Autorizado', 'user_id' => $user]);
             }
         }

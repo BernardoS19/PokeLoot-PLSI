@@ -31,7 +31,7 @@ class Pedido_avaliacaoController extends Controller
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index_admin', 'escolher_avaliador', 'autorizar', 'cancelar'],
+                            'actions' => ['index_admin', 'cartas_avaliadas', 'pedidos_autorizados', 'escolher_avaliador', 'autorizar', 'cancelar'],
                             'allow' => true,
                             'roles' => ['admin'],
                         ],
@@ -75,6 +75,39 @@ class Pedido_avaliacaoController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    /** - Admin
+     * Página de todos os pedidos avaliados por todos os avaliadores.
+     *
+     * @return string
+     */
+    public function actionCartas_avaliadas()
+    {
+        $searchModel = new Pedido_avaliacaoSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, 'avaliados');
+
+        return $this->render('cartas_avaliadas', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /** - Admin
+     * Página de todos os pedidos autorizados que aguardam avaliação.
+     *
+     * @return string
+     */
+    public function actionPedidos_autorizados()
+    {
+        $searchModel = new Pedido_avaliacaoSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, 'todos_autorizados');
+
+        return $this->render('pedidos_autorizados', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
 
     /** - Avaliador
      * Página index para o avaliador.

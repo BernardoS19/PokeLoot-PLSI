@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="pedido-avaliacao-index">
 
     <p>
-        <!-- Consultar a lista de avaliações feitas -->
-        <?= Html::a('Consultar Avaliações efetuadas', ['cartas_avaliadas'], ['class' => 'btn btn-info']) ?>
+        <!-- Consultar pedidos por autorizar -->
+        <?= Html::a('Pedidos por autorizar', ['index_admin'], ['class' => 'btn btn-info']) ?>
 
         <!-- Consultar a lista de pedidos autorizados que aguardam avaliação -->
         <?= Html::a('Pedidos que aguardam avaliação', ['pedidos_autorizados'], ['class' => 'btn btn-info']) ?>
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <h3>Pedidos por autorizar</h3>
+    <h3>Todas as Avaliações</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -47,30 +47,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'carta.nome',
             ],
             [
-                'attribute' => 'carta',
-                'label' => 'Coleção',
-                'value' => 'carta.colecao.nome'
+                'attribute' => 'valor_avaliado',
+                'label' => 'Valor da Avaliação',
+                'value' => function($model) {
+                    return $model->valor_avaliado . ' €';
+                },
             ],
             [
-                'attribute' => 'carta',
-                'label' => 'Preço Atual',
-                'value' => function($model) {
-                    return $model->carta->preco . ' €';
+                'attribute' => 'data_avaliacao',
+                'label' => 'Data da Avaliação',
+                'value' => function($model){
+                    return date('d-m-Y H:i', strtotime($model->data_avaliacao));
                 },
             ],
 
             [
                 'class' => ActionColumn::class,
-                'template' => '{view} &nbsp; {autorizar} &nbsp; {cancelar}',
+                'template' => '{view}',
                 'buttons' => [
                     'view' => function ($url) {
                         return Html::a('Ver Carta', $url, ['class' => 'btn btn-info']);
-                    },
-                    'autorizar' => function ($url) {
-                        return Html::a('Autorizar', $url, ['data' => ['method' => 'post'] , 'class' => 'btn btn-success']);
-                    },
-                    'cancelar' => function($url) {
-                        return Html::a('Cancelar Pedido', $url, ['data' => ['method' => 'post', 'confirm' => 'Tem a certeza que pretende cancelar o Pedido?'], 'class' => 'btn btn-danger']);
                     },
                 ],
 
