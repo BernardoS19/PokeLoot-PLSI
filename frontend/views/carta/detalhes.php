@@ -31,7 +31,6 @@ $this->title = '*nome da carta*';
                     <div class="card_area d-flex align-items-center">
                         <a class="primary-btn" href="#">Add to Cart</a>
                         <?= \yii\bootstrap5\Html::a('<i class="fa fa-star"></i>',['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'icon_btn']) ?>
-                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
                     </div>
                 </div>
             </div>

@@ -26,7 +26,9 @@ $this->title = 'Lista de Desejos';
                     <div class="col-lg-3 col-md-6">
                         <div class="single-product">
                             <?= \yii\bootstrap5\Html::a('<i class="fa fa-remove"></i> Remover',['lista_desejos/remover?cartaId='.$item->carta_id], ['data'=>['method'=>'post'],'class'=>'']) ?>
-                            <?= Html::img(Yii::getAlias('@imgurl') . '/' . $item->carta->imagem->nome) ?>
+                            <a href="<?= \yii\helpers\Url::toRoute("carta/detalhes?cartaId=".$item->carta->id) ?>">
+                                <?= Html::img(Yii::getAlias('@imgurl') .'/'. $item->carta->imagem->nome) ?>
+                            </a>
                             <div class="product-details">
                                 <h6><?= $item->carta->nome ?></h6>
                                 <div class="price">
