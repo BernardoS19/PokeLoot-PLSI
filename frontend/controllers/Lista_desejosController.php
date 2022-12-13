@@ -47,7 +47,7 @@ class Lista_desejosController extends Controller
             if($listadesejos->save()){
                 Yii::$app->session->setFlash("success",'Carta adicionada à Lista de Desejos');
             }else
-                Yii::$app->session->setFlash("error",'Operação falhada');
+                Yii::$app->session->setFlash("error",'Carta ja foi adicionada aos favoritos');
         }
         return $this->redirect(Yii::$app->request->referrer);
     }

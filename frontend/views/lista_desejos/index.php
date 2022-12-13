@@ -33,10 +33,7 @@ $this->title = 'Lista de Desejos';
                                     <h6><?= $item->carta->preco ?></h6>
                                 </div>
                                 <div class="prd-bottom">
-                                    <a href="" class="social-info">
-                                        <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                                    </a>
-
+                                    <?= \yii\bootstrap5\Html::a('<span><i class="fa fa-shopping-cart"></i></span> ',['carrinho/adicionar?cartaId='.$item->carta_id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>
                                 </div>
                             </div>
                         </div>
