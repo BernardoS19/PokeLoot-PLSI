@@ -39,7 +39,7 @@ class Pedido_avaliacaoSearch extends Pedido_avaliacao
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $filtro = null)
+    public function search($params, $filtro = null, $user = null)
     {
         $query = Pedido_avaliacao::find();
 
@@ -72,9 +72,9 @@ class Pedido_avaliacaoSearch extends Pedido_avaliacao
                 case 'por_autorizar':
                     $query->andFilterWhere(['estado' => 'Por Autorizar']);
                     break;
-                case 'autorizado':
-                    $query->andFilterWhere(['estado'=> 'Autorizado']);
-                    break;
+            }
+            if ($filtro == 'autorizado' && $user){
+                $query->andFilterWhere(['estado' => 'Autorizado', 'user_id' => $user]);
             }
         }
 

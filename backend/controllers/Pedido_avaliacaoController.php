@@ -83,8 +83,9 @@ class Pedido_avaliacaoController extends Controller
      */
     public function actionIndex_avaliador()
     {
+        $userId = Yii::$app->user->identity->getId();
         $searchModel = new Pedido_avaliacaoSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams, 'autorizado');
+        $dataProvider = $searchModel->search($this->request->queryParams, 'autorizado', $userId);
 
         return $this->render('index_avaliador', [
             'searchModel' => $searchModel,

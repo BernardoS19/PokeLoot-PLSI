@@ -73,8 +73,8 @@ class CartaSearch extends Carta
 
         if ($filtro){
             if ($filtro == 'sem_pedido'){
-                //TODO: É PRECISO FAZER UM JOIN COM O PEDIDO_AVALIACAO PARA SABER SE JÁ EXISTE NUM PEDIDO OU NÃO
-                $query->andFilterWhere(['verificado' => 0]);
+                $query->join('LEFT JOIN', 'pedido_avaliacao', 'pedido_avaliacao.carta_id = id')
+                    ->andFilterWhere(['carta.verificado' => 0])->andWhere(['pedido_avaliacao.carta_id' => null]);
             }
         }
 

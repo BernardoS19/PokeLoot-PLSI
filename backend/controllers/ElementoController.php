@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Elemento;
 use common\models\ElementoSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

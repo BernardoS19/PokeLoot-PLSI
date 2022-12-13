@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Colecao;
 use common\models\ColecaoSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
