@@ -31,7 +31,9 @@ $this->title = 'PokéLoot';
                         ?>
                         <div class="col-lg-3 col-md-6">
                             <div class="single-product">
-                                <?= Html::img(Yii::getAlias('@imgurl') . '/' . $carta->imagem->nome) ?>
+                                <a href="<?= \yii\helpers\Url::toRoute("carta/detalhes?cartaId=".$carta->id) ?>">
+                                    <?= Html::img(Yii::getAlias('@imgurl') .'/'. $carta->imagem->nome) ?>
+                                </a>
                                 <div class="product-details">
                                     <h6><?= $carta->nome ?></h6>
                                     <div class="price">
