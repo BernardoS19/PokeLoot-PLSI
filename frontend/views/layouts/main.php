@@ -98,9 +98,9 @@ AppAsset::register($this);
         <!-- SEARCH INPUT -->
         <div class="search_input" id="search_input_box">
             <div class="container">
-                <form class="d-flex justify-content-between">
-                    <input type="text" class="form-control" id="search_input" placeholder="Procurar">
-                    <button type="submit" class="btn"></button>
+                <form class="d-flex justify-content-between" id="procura" action="<?= Url::toRoute('carta/index') ?>" method="get">
+                    <input type="text" class="form-control" id="search_input" placeholder="Procurar" name="nome">
+                    <button type="submit" class="btn" id="procura_submit"></button>
                     <span id="close_search" title="Close Search"><i class="fa fa-close" aria-hidden="true"></i></span>
                 </form>
             </div>
