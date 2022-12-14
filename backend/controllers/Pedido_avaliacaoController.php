@@ -36,7 +36,7 @@ class Pedido_avaliacaoController extends Controller
                             'roles' => ['admin'],
                         ],
                         [
-                            'actions' => ['index_avaliador', 'finalizar', 'update'],
+                            'actions' => ['index_avaliador', 'pedidos_avaliador', 'finalizar', 'update'],
                             'allow' => true,
                             'roles' => ['avaliador'],
                         ],
@@ -118,13 +118,31 @@ class Pedido_avaliacaoController extends Controller
     {
         $userId = Yii::$app->user->identity->getId();
         $searchModel = new Pedido_avaliacaoSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams, 'autorizado', $userId);
+        $dataProvider = $searchModel->search($this->request->queryParams, 'autorizados', $userId);
 
         return $this->render('index_avaliador', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    /** - Avaliador
+     * Página index para o avaliador.
+     *
+     * @return string
+     */
+    public function actionPedidos_avaliador()
+    {
+        $userId = Yii::$app->user->identity->getId();
+        $searchModel = new Pedido_avaliacaoSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, null, $userId);
+
+        return $this->render('pedidos_avaliador', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
 
     /** - Admin
      * Autoriza um pedido

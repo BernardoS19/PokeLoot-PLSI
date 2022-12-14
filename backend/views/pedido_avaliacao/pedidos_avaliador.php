@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <!-- Consultar todos os pedidos associados ao avaliador -->
-        <?= Html::a('Consultar Todos os meus Pedidos', ['pedidos_avaliador'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Consultar Pedidos autorizados', ['index_avaliador'], ['class' => 'btn btn-info']) ?>
     </p>
     <br>
     <p>
@@ -37,16 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'carta.nome',
             ],
             [
-                'attribute' => 'carta',
-                'label' => 'Coleção',
-                'value' => 'carta.colecao.nome',
-            ],
-            [
-                'attribute' => 'carta',
-                'label' => 'Preço Atual',
-                'value' => function($model){
-                    return $model->carta->preco . ' €';
-                },
+                'attribute' => 'pedido_avaliacao',
+                'label' => 'Estado',
+                'value' => 'estado',
             ],
             [
                 'attribute' => 'pedido_avaliacao',
@@ -60,18 +53,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
+                'attribute' => 'data_avaliacao',
+                'label' => 'Data da Avaliação',
+                'value' => function($model){
+                    if ($model->data_avaliacao != null){
+                        return date('d-m-Y H:i', strtotime($model->data_avaliacao));
+                    } else {
+                        return '---';
+                    }
+
+                },
+            ],
+            [
                 'class' => ActionColumn::class,
-                'template' => '{view} &nbsp; {update} &nbsp; {finalizar}',
+                'template' => '{view}',
                 'buttons' => [
                     'view' => function ($url) {
                         return Html::a('Ver Carta', $url, ['class' => 'btn btn-info']);
                     },
-                    'update' => function ($url) {
-                        return Html::a('Alterar Preço', $url, ['class' => 'btn btn-primary']);
-                    },
-                    'finalizar' => function ($url) {
-                        return Html::a('Finalizar Avaliação', $url, ['data' => ['method' => 'post'], 'class' => 'btn btn-success']);
-                    }
                 ],
 
                 'urlCreator' => function ($action, Pedido_avaliacao $model, $key, $index, $column) {

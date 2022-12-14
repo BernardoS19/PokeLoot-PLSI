@@ -82,8 +82,11 @@ class Pedido_avaliacaoSearch extends Pedido_avaliacao
             if ($filtro == 'autorizados' && $user){
                 $query->andFilterWhere(['estado' => 'Autorizado', 'user_id' => $user]);
             }
-        }
 
+        }
+        if (!$filtro && $user){
+            $query->andFilterWhere(['user_id' => $user]);
+        }
         return $dataProvider;
     }
 }
