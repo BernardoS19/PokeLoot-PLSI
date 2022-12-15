@@ -8,12 +8,12 @@ use Yii;
  * This is the model class for table "fatura".
  *
  * @property int $id
- * @property string $data
+ * @property string|null $data
  * @property int $pago
  * @property int $user_id
  *
  * @property Carta[] $cartas
- * @property LinhaFatura[] $linhaFaturas
+ * @property LinhaFatura[] $linhasFatura
  * @property User $user
  */
 class Fatura extends \yii\db\ActiveRecord
@@ -32,9 +32,9 @@ class Fatura extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['data', 'user_id'], 'required'],
             [['data'], 'safe'],
             [['pago', 'user_id'], 'integer'],
+            [['user_id'], 'required'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -63,11 +63,11 @@ class Fatura extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[LinhaFaturas]].
+     * Gets query for [[LinhasFatura]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getLinhaFaturas()
+    public function getLinhasFatura()
     {
         return $this->hasMany(LinhaFatura::class, ['fatura_id' => 'id']);
     }

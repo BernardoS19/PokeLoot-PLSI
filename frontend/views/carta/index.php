@@ -212,9 +212,8 @@ $this->title = 'Catálogo';
                                     </div>
                                     <div class="prd-bottom">
                                         <div class="card_area d-flex align-items-center">
-                                            <a href="" class="social-info">
-                                                <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                                            </a>
+                                            <?= \yii\bootstrap5\Html::a('<span><i class="fa fa-shopping-cart"></i> </span>',['carrinho/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>
+
                                             <?= \yii\bootstrap5\Html::a('<span><i class="fa fa-star"></i></span>',['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>
                                         </div>
                                     </div>

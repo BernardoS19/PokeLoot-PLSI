@@ -29,28 +29,22 @@ class CartaController extends Controller
     // Página de Catálogo
     public function actionIndex()
     {
-        /*
-        if($this->request->isPost){
-            if(isset($_Post['sort'])) {
-                $select = $_Post['sort'];
-                switch ($select) {
-                    case'preco_alto':
-                        return $cartas = Carta::find()->orderBy('preco DESC')->all();
-                        break;
-                    case 'preco_baixo':
-                        return $cartas = Carta::find()->orderBy('preco ASC')->all();
-                        break;
-                    case 'nome':
-                        return $cartas = Carta::find()->orderBy('nome DESC')->all();
-                        break;
-                    default:
-                        $cartas = Carta::find()->orderBy('id DESC')->all();
-                        return $this->render('index', ['cartas' => $cartas]);
+        if(!isset($_GET['nome'])){
+            $cartas = Carta::find()->orderBy('id DESC')->all();
+        }else{
+            $pesquisa = null;
+            if(isset($_GET['nome'])){
+                $nome = $_GET['nome'];
+                if($pesquisa!= null){
+                    $pesquisa += ['nome' => $nome];
+                }else{
+                    $pesquisa = ['like','carta.nome','%'.$nome.'%', false];
                 }
             }
+            $cartas= Carta::find()->where($pesquisa)->orderBy('id DESC')->all();
         }
-        */
-        $cartas = Carta::find()->orderBy('id DESC')->all();
+
+
 
         return $this->render('index', [
             'cartas' => $cartas,
