@@ -35,7 +35,7 @@ class Pedido_avaliacao extends \yii\db\ActiveRecord
             [['user_id', 'carta_id', 'estado'], 'required'],
             [['user_id', 'carta_id'], 'integer'],
             [['estado'], 'string'],
-            [['valor_avaliado'], 'number'],
+            [['valor_avaliado'], 'number', 'min' => 0.1],
             [['data_avaliacao'], 'safe'],
             [['user_id', 'carta_id'], 'unique', 'targetAttribute' => ['user_id', 'carta_id']],
             [['carta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carta::class, 'targetAttribute' => ['carta_id' => 'id']],

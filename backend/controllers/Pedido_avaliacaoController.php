@@ -31,7 +31,7 @@ class Pedido_avaliacaoController extends Controller
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index_admin', 'cartas_avaliadas', 'pedidos_autorizados', 'escolher_avaliador', 'autorizar', 'cancelar'],
+                            'actions' => ['index_admin', 'cartas_avaliadas', 'pedidos_autorizados', 'escolher_avaliador', 'autorizar', 'cancelar', 'delete'],
                             'allow' => true,
                             'roles' => ['admin'],
                         ],
@@ -41,7 +41,7 @@ class Pedido_avaliacaoController extends Controller
                             'roles' => ['avaliador'],
                         ],
                         [
-                            'actions' => ['escolher_carta', 'create', 'delete'],
+                            'actions' => ['escolher_carta', 'create'],
                             'allow' => true,
                             'roles' => ['admin', 'avaliador'],
                         ],
@@ -63,10 +63,14 @@ class Pedido_avaliacaoController extends Controller
     /** - Admin
      * Página index do admin.
      *
-     * @return string
+     * @return string|Response
      */
     public function actionIndex_admin()
     {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'admin'){
+            return $this->redirect(['site/index']);
+        }
+
         $searchModel = new Pedido_avaliacaoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, 'por_autorizar');
 
@@ -79,10 +83,14 @@ class Pedido_avaliacaoController extends Controller
     /** - Admin
      * Página de todos os pedidos avaliados por todos os avaliadores.
      *
-     * @return string
+     * @return string|Response
      */
     public function actionCartas_avaliadas()
     {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'admin'){
+            return $this->redirect(['site/index']);
+        }
+
         $searchModel = new Pedido_avaliacaoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, 'avaliados');
 
@@ -95,10 +103,14 @@ class Pedido_avaliacaoController extends Controller
     /** - Admin
      * Página de todos os pedidos autorizados que aguardam avaliação.
      *
-     * @return string
+     * @return string|Response
      */
     public function actionPedidos_autorizados()
     {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'admin'){
+            return $this->redirect(['site/index']);
+        }
+
         $searchModel = new Pedido_avaliacaoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, 'todos_autorizados');
 
@@ -112,10 +124,14 @@ class Pedido_avaliacaoController extends Controller
     /** - Avaliador
      * Página index para o avaliador.
      *
-     * @return string
+     * @return string|Response
      */
     public function actionIndex_avaliador()
     {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'avaliador'){
+            return $this->redirect(['site/index']);
+        }
+
         $userId = Yii::$app->user->identity->getId();
         $searchModel = new Pedido_avaliacaoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, 'autorizados', $userId);
@@ -133,6 +149,10 @@ class Pedido_avaliacaoController extends Controller
      */
     public function actionPedidos_avaliador()
     {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'avaliador'){
+            return $this->redirect(['site/index']);
+        }
+
         $userId = Yii::$app->user->identity->getId();
         $searchModel = new Pedido_avaliacaoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, null, $userId);
@@ -152,6 +172,10 @@ class Pedido_avaliacaoController extends Controller
      */
     public function actionAutorizar($user_id, $carta_id)
     {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'admin'){
+            return $this->redirect(['site/index']);
+        }
+
         $pedido = Pedido_avaliacao::findOne(['user_id' => $user_id, 'carta_id' => $carta_id]);
         $pedido->estado = 'Autorizado';
         $pedido->save();
@@ -167,6 +191,10 @@ class Pedido_avaliacaoController extends Controller
      */
     public function actionCancelar($user_id, $carta_id)
     {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'admin'){
+            return $this->redirect(['site/index']);
+        }
+
         $pedido = Pedido_avaliacao::findOne(['user_id' => $user_id, 'carta_id' => $carta_id]);
         $pedido->estado = 'Cancelado';
         $pedido->save();
@@ -182,6 +210,10 @@ class Pedido_avaliacaoController extends Controller
      */
     public function actionFinalizar($user_id, $carta_id)
     {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'avaliador'){
+            return $this->redirect(['site/index']);
+        }
+
         $pedido = Pedido_avaliacao::findOne(['user_id' => $user_id, 'carta_id' => $carta_id]);
 
         if ($pedido->estado == 'Autorizado' && $user_id == Yii::$app->user->identity->getId()) {
@@ -208,6 +240,10 @@ class Pedido_avaliacaoController extends Controller
      */
     public function actionEscolher_avaliador()
     {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'admin'){
+            return $this->redirect(['site/index']);
+        }
+
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, 'avaliador');
 
@@ -224,8 +260,12 @@ class Pedido_avaliacaoController extends Controller
      */
     public function actionEscolher_carta($id)
     {
+        if (Yii::$app->user->identity->getId() == null || User::findOne(Yii::$app->user->identity->getId())->getUserRole() == 'cliente'){
+            return $this->redirect(['site/index']);
+        }
+
         $searchModel = new CartaSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams, 'sem_pedido');//todo: lá no model search
+        $dataProvider = $searchModel->search($this->request->queryParams, 'sem_pedido');
 
         return $this->render('escolher_carta', [
             'searchModel' => $searchModel,
@@ -242,6 +282,10 @@ class Pedido_avaliacaoController extends Controller
      */
     public function actionCreate($user_id, $id)
     {
+        if (Yii::$app->user->identity->getId() == null || User::findOne(Yii::$app->user->identity->getId())->getUserRole() == 'cliente'){
+            return $this->redirect(['site/index']);
+        }
+
         $pedido = new Pedido_avaliacao();
         $pedido->user_id = $user_id;
         $pedido->carta_id = $id;
@@ -267,6 +311,13 @@ class Pedido_avaliacaoController extends Controller
      */
     public function actionUpdate($user_id, $carta_id)
     {
+        if (Yii::$app->user->identity->getId() == null || User::findOne(Yii::$app->user->identity->getId())->getUserRole() == 'cliente'){
+            return $this->redirect(['site/index']);
+        }
+        if (Yii::$app->user->identity->getId() != $user_id){
+            return $this->redirect(['site/index']);
+        }
+
         $model = $this->findModel($user_id, $carta_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {

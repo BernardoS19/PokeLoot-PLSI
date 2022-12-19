@@ -48,7 +48,7 @@ class Carta extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'preco', 'descricao', 'imagem_id', 'tipo_id', 'elemento_id', 'colecao_id'], 'required'],
-            [['preco'], 'number'],
+            [['preco'], 'number', 'min' => 0.1],
             [['descricao'], 'string'],
             [['verificado', 'imagem_id', 'tipo_id', 'elemento_id', 'colecao_id'], 'integer'],
             [['nome'], 'string', 'max' => 45],

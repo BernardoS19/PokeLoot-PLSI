@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Carta;
+use common\models\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -11,7 +12,7 @@ use yii\grid\GridView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 /** @var int $userId */
 
-$this->title = 'Cartas';
+$this->title = 'Criar Pedido de Avaliação';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carta-index">
@@ -19,7 +20,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h3>Escolher uma Carta</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -39,20 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'attribute' => 'elemento_id',
-                'label' => 'Elemento',
-                'value' => function($model){
-                    return $model->elemento->nome;
-                },
-            ],
-            [
                 'attribute' => 'colecao_id',
                 'label' => 'Coleção',
                 'value' => function($model){
                     return $model->colecao->nome;
                 },
             ],
-            'descricao',
             [
                 'class' => ActionColumn::class,
                 'template' => '{view} &nbsp {create}',
@@ -61,14 +53,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Html::a('Ver Carta', $url, ['class' => 'btn btn-info']);
                     },
                     'create' => function ($url) use ($userId) {
-                        if (\common\models\User::findOne(Yii::$app->user->getId())->getUserRole() == 'avaliador'){
+                        if (User::findOne(Yii::$app->user->getId())->getUserRole() == 'avaliador'){
                             if ($userId == Yii::$app->user->getId()){
                                 return Html::a('Escolher', $url.'&user_id='.$userId, ['data' => ['method' => 'post'], 'class' => 'btn btn-success']);
                             } else {
                                 return ''; //ERRO
                             }
+                        } elseif (User::findOne(Yii::$app->user->getId())->getUserRole() == 'admin') {
+                            return Html::a('Escolher', $url . '&user_id=' . $userId, ['data' => ['method' => 'post'], 'class' => 'btn btn-success']);
+                        } else {
+                            return ''; //ERRO
                         }
-                        return Html::a('Escolher', $url.'&user_id='.$userId, ['data' => ['method' => 'post'], 'class' => 'btn btn-success']);
                     },
                 ],
                 'urlCreator' => function ($action, Carta $model, $key, $index, $column) {
