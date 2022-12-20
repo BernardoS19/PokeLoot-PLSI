@@ -48,7 +48,7 @@ class Carta extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'preco', 'descricao', 'imagem_id', 'tipo_id', 'elemento_id', 'colecao_id'], 'required'],
-            [['preco'], 'number'],
+            [['preco'], 'number', 'min' => 0.1],
             [['descricao'], 'string'],
             [['verificado', 'imagem_id', 'tipo_id', 'elemento_id', 'colecao_id'], 'integer'],
             [['nome'], 'string', 'max' => 45],
@@ -71,10 +71,10 @@ class Carta extends \yii\db\ActiveRecord
             'preco' => 'Preco',
             'descricao' => 'Descricao',
             'verificado' => 'Verificado',
-            'imagem_id' => 'Imagem ID',
-            'tipo_id' => 'Tipo ID',
-            'elemento_id' => 'Elemento ID',
-            'colecao_id' => 'Colecao ID',
+            'imagem_id' => 'Imagem',
+            'tipo_id' => 'Tipo',
+            'elemento_id' => 'Elemento',
+            'colecao_id' => 'Colecao',
         ];
     }
 

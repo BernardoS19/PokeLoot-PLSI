@@ -31,7 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'user_id',
             'carta_id',
-            'autorizado',
+            'estado',
+            'valor_avaliado',
             'data_avaliacao',
         ],
     ]) ?>

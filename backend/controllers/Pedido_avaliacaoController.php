@@ -2,11 +2,17 @@
 
 namespace backend\controllers;
 
+use app\models\UserSearch;
+use common\models\CartaSearch;
 use common\models\Pedido_avaliacao;
 use common\models\Pedido_avaliacaoSearch;
+use common\models\User;
+use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * Pedido_avaliacaoController implements the CRUD actions for Pedido_avaliacao model.
@@ -21,70 +27,282 @@ class Pedido_avaliacaoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index_admin', 'cartas_avaliadas', 'pedidos_autorizados', 'escolher_avaliador', 'autorizar', 'cancelar', 'delete'],
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
+                        [
+                            'actions' => ['index_avaliador', 'pedidos_avaliador', 'finalizar', 'update'],
+                            'allow' => true,
+                            'roles' => ['avaliador'],
+                        ],
+                        [
+                            'actions' => ['escolher_carta', 'create'],
+                            'allow' => true,
+                            'roles' => ['admin', 'avaliador'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        return $this->redirect(['site/index']);
+                    }
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],
                 ],
-            ]
+            ],
         );
     }
 
-    /**
-     * Lists all Pedido_avaliacao models.
+    /** - Admin
+     * Página index do admin.
      *
-     * @return string
+     * @return string|Response
      */
-    public function actionIndex()
+    public function actionIndex_admin()
     {
-        $searchModel = new Pedido_avaliacaoSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'admin'){
+            return $this->redirect(['site/index']);
+        }
 
-        return $this->render('index', [
+        $searchModel = new Pedido_avaliacaoSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, 'por_autorizar');
+
+        return $this->render('index_admin', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
-    /**
-     * Displays a single Pedido_avaliacao model.
-     * @param int $user_id User ID
-     * @param int $carta_id Carta ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
+    /** - Admin
+     * Página de todos os pedidos avaliados por todos os avaliadores.
+     *
+     * @return string|Response
      */
-    public function actionView($user_id, $carta_id)
+    public function actionCartas_avaliadas()
     {
-        return $this->render('view', [
-            'model' => $this->findModel($user_id, $carta_id),
-        ]);
-    }
-
-    /**
-     * Creates a new Pedido_avaliacao model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Pedido_avaliacao();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'user_id' => $model->user_id, 'carta_id' => $model->carta_id]);
-            }
-        } else {
-            $model->loadDefaultValues();
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'admin'){
+            return $this->redirect(['site/index']);
         }
 
-        return $this->render('create', [
-            'model' => $model,
+        $searchModel = new Pedido_avaliacaoSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, 'avaliados');
+
+        return $this->render('cartas_avaliadas', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
+    /** - Admin
+     * Página de todos os pedidos autorizados que aguardam avaliação.
+     *
+     * @return string|Response
+     */
+    public function actionPedidos_autorizados()
+    {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'admin'){
+            return $this->redirect(['site/index']);
+        }
+
+        $searchModel = new Pedido_avaliacaoSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, 'todos_autorizados');
+
+        return $this->render('pedidos_autorizados', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    /** - Avaliador
+     * Página index para o avaliador.
+     *
+     * @return string|Response
+     */
+    public function actionIndex_avaliador()
+    {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'avaliador'){
+            return $this->redirect(['site/index']);
+        }
+
+        $userId = Yii::$app->user->identity->getId();
+        $searchModel = new Pedido_avaliacaoSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, 'autorizados', $userId);
+
+        return $this->render('index_avaliador', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /** - Avaliador
+     * Página index para o avaliador.
+     *
+     * @return string
+     */
+    public function actionPedidos_avaliador()
+    {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'avaliador'){
+            return $this->redirect(['site/index']);
+        }
+
+        $userId = Yii::$app->user->identity->getId();
+        $searchModel = new Pedido_avaliacaoSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, null, $userId);
+
+        return $this->render('pedidos_avaliador', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    /** - Admin
+     * Autoriza um pedido
+     * @return string|Response
+     * @param int $user_id User ID
+     * @param int $carta_id Carta ID
+     */
+    public function actionAutorizar($user_id, $carta_id)
+    {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'admin'){
+            return $this->redirect(['site/index']);
+        }
+
+        $pedido = Pedido_avaliacao::findOne(['user_id' => $user_id, 'carta_id' => $carta_id]);
+        $pedido->estado = 'Autorizado';
+        $pedido->save();
+
+        return $this->redirect(['pedido_avaliacao/index_admin']);
+    }
+
+    /** - Admin
+     * Cancela o pedido
+     * @return string|Response
+     * @param int $user_id User ID
+     * @param int $carta_id Carta ID
+     */
+    public function actionCancelar($user_id, $carta_id)
+    {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'admin'){
+            return $this->redirect(['site/index']);
+        }
+
+        $pedido = Pedido_avaliacao::findOne(['user_id' => $user_id, 'carta_id' => $carta_id]);
+        $pedido->estado = 'Cancelado';
+        $pedido->save();
+
+        return $this->redirect(['pedido_avaliacao/index_admin']);
+    }
+
+    /** - Avaliador
+     * Finaliza uma avaliação
+     * @return string|Response
+     * @param int $user_id User ID
+     * @param int $carta_id Carta ID
+     */
+    public function actionFinalizar($user_id, $carta_id)
+    {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'avaliador'){
+            return $this->redirect(['site/index']);
+        }
+
+        $pedido = Pedido_avaliacao::findOne(['user_id' => $user_id, 'carta_id' => $carta_id]);
+
+        if ($pedido->estado == 'Autorizado' && $user_id == Yii::$app->user->identity->getId()) {
+            if ($pedido->valor_avaliado != null) {
+
+                $pedido->data_avaliacao = date('Y-m-d H:i:s');
+                $pedido->estado = 'Avaliado';
+
+                $pedido->carta->preco = $pedido->valor_avaliado;
+                $pedido->carta->verificado = 1;
+
+                $pedido->carta->save();
+                $pedido->save();
+            }
+        }
+
+        return $this->redirect(['pedido_avaliacao/index_avaliador']);
+    }
+
+    /** - Admin
+     * O admin escolhe um avaliador para associar a um novo pedido
+     *
+     * @return string|Response
+     */
+    public function actionEscolher_avaliador()
+    {
+        if (User::findOne(Yii::$app->user->identity->getId())->getUserRole() != 'admin'){
+            return $this->redirect(['site/index']);
+        }
+
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, 'avaliador');
+
+        return $this->render('escolher_avaliador', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /** - Admin | Avaliador
+     * O admin ou avaliador escolhe uma carta para associar a um novo pedido
+     * @param int $id User ID
+     * @return string|Response
+     */
+    public function actionEscolher_carta($id)
+    {
+        if (Yii::$app->user->identity->getId() == null || User::findOne(Yii::$app->user->identity->getId())->getUserRole() == 'cliente'){
+            return $this->redirect(['site/index']);
+        }
+
+        $searchModel = new CartaSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, 'sem_pedido');
+
+        return $this->render('escolher_carta', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'userId' => $id,
+        ]);
+    }
+
+    /** - Admin | Avaliador
+     * Botão para criar o pedido após a escolha da carta
+     * @param $user_id
+     * @param $id //carta_id
+     * @return string|Response
+     */
+    public function actionCreate($user_id, $id)
+    {
+        if (Yii::$app->user->identity->getId() == null || User::findOne(Yii::$app->user->identity->getId())->getUserRole() == 'cliente'){
+            return $this->redirect(['site/index']);
+        }
+
+        $pedido = new Pedido_avaliacao();
+        $pedido->user_id = $user_id;
+        $pedido->carta_id = $id;
+        if (User::findOne(Yii::$app->user->getId())->getUserRole() == 'admin'){
+            $pedido->estado = 'Autorizado';
+        } elseif (User::findOne(Yii::$app->user->getId())->getUserRole() == 'avaliador'){
+            $pedido->estado = 'Por Autorizar';
+        }
+        $pedido->valor_avaliado = null;
+        $pedido->data_avaliacao = null;
+        $pedido->save();
+
+        return $this->redirect(['site/index']);
+    }
+
     /**
-     * Updates an existing Pedido_avaliacao model.
+     * Faz update do preço para a avaliação da carta.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $user_id User ID
      * @param int $carta_id Carta ID
@@ -93,10 +311,17 @@ class Pedido_avaliacaoController extends Controller
      */
     public function actionUpdate($user_id, $carta_id)
     {
+        if (Yii::$app->user->identity->getId() == null || User::findOne(Yii::$app->user->identity->getId())->getUserRole() == 'cliente'){
+            return $this->redirect(['site/index']);
+        }
+        if (Yii::$app->user->identity->getId() != $user_id){
+            return $this->redirect(['site/index']);
+        }
+
         $model = $this->findModel($user_id, $carta_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'user_id' => $model->user_id, 'carta_id' => $model->carta_id]);
+            return $this->redirect(['index_avaliador', 'user_id' => $model->user_id, 'carta_id' => $model->carta_id]);
         }
 
         return $this->render('update', [

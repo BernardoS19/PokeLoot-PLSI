@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Carta;
+use common\models\Pedido_avaliacao;
 use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -77,9 +78,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $cartas= Carta::find()->orderBy('id DESC')->limit(4)->all();
+        $cartas = Carta::find()->orderBy('id DESC')->limit(4)->all();
+
+        $avaliadas = Pedido_avaliacao::find()->where(['estado' => 'Avaliado'])->orderBy('data_avaliacao DESC')->limit(4)->all();
+
         return $this->render('index',[
-            'cartas'=>$cartas]);
+            'cartas' => $cartas,
+            'avaliadas' => $avaliadas,
+        ]);
     }
 
 

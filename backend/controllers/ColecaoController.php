@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Colecao;
 use common\models\ColecaoSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,6 +22,19 @@ class ColecaoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        return $this->redirect(['site/index']);
+                    }
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

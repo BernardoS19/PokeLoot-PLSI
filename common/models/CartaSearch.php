@@ -39,7 +39,7 @@ class CartaSearch extends Carta
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $filtro = null)
     {
         $query = Carta::find();
 
@@ -70,6 +70,13 @@ class CartaSearch extends Carta
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'descricao', $this->descricao]);
+
+        if ($filtro){
+            if ($filtro == 'sem_pedido'){
+                $query->join('LEFT JOIN', 'pedido_avaliacao', 'pedido_avaliacao.carta_id = id')
+                    ->andFilterWhere(['carta.verificado' => 0])->andWhere(['pedido_avaliacao.carta_id' => null]);
+            }
+        }
 
         return $dataProvider;
     }

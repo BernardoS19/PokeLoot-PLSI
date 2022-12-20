@@ -19,7 +19,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'carta_id') ?>
 
-    <?= $form->field($model, 'autorizado') ?>
+    <?= $form->field($model, 'estado') ?>
+
+    <?= $form->field($model, 'valor_avaliado') ?>
 
     <?= $form->field($model, 'data_avaliacao') ?>
 

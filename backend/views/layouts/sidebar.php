@@ -30,18 +30,22 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <?php
-            echo \hail812\adminlte\widgets\Menu::widget([
-                'items' => [
-                    ['label' => 'ADMINISTRAÇÃO', 'header' => true],
-                    ['label' => 'Dashboard', 'url' => ['site/index'], 'icon' => 'tachometer-alt'],
-                    ['label' => 'Utilizadores', 'url' => ['user/index'], 'icon' => 'user'],
-                    ['label' => 'Eventos', 'url' => ['evento/index'], 'icon' => 'calendar'],
-                    ['label' => 'Pedidos de Avaliação', 'url' => ['pedidoavaliacao/index'], 'icon' => 'table'],
-                    ['label' => 'CATÁLOGO', 'header' => true],
-                    ['label' => 'Tipos de Cartas', 'url' => ['tipo/index'], 'icon' => 'table'],
-                    ['label' => 'Elementos de Cartas', 'url' => ['elemento/index'], 'icon' => 'table'],
-                    ['label' => 'Coleções', 'url' => ['colecao/index'], 'icon' => 'table'],
-                    ['label' => 'Cartas', 'url' => ['carta/index'], 'icon' => 'table'],
+
+            switch (\common\models\User::findOne(Yii::$app->user->identity->getId())->getUserRole()){
+                case 'admin':
+                    echo \hail812\adminlte\widgets\Menu::widget([
+                        'items' => [
+                            ['label' => 'Dashboard', 'url' => ['site/index'], 'icon' => 'tachometer-alt'],
+                            ['label' => 'ADMINISTRAÇÃO', 'header' => true],
+                            ['label' => 'Utilizadores', 'url' => ['user/index'], 'icon' => 'user'],
+                            ['label' => 'Eventos', 'url' => ['evento/index'], 'icon' => 'calendar'],
+                            ['label' => 'AVALIAÇÕES', 'header' => true],
+                            ['label' => 'Pedidos de Avaliação', 'url' => ['pedido_avaliacao/index_admin'], 'icon' => 'table'],
+                            ['label' => 'CATÁLOGO', 'header' => true],
+                            ['label' => 'Tipos de Cartas', 'url' => ['tipo/index'], 'icon' => 'table'],
+                            ['label' => 'Elementos de Cartas', 'url' => ['elemento/index'], 'icon' => 'table'],
+                            ['label' => 'Coleções', 'url' => ['colecao/index'], 'icon' => 'table'],
+                            ['label' => 'Cartas', 'url' => ['carta/index'], 'icon' => 'table'],
 //                    [
 //                        'label' => 'Starter Pages',
 //                        'icon' => 'tachometer-alt',
@@ -52,9 +56,9 @@
 //                        ]
 //                    ],
 //                    ['label' => 'Simple Link', 'icon' => 'th', 'badge' => '<span class="right badge badge-danger">New</span>'],
-                    ['label' => 'Yii2 PROVIDED', 'header' => true],
+                            ['label' => 'Yii2 PROVIDED', 'header' => true],
 //                    ['label' => 'Login', 'url' => ['site/login'], 'icon' => 'sign-in-alt', 'visible' => Yii::$app->user->isGuest],
-                    ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
+                            ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
 //                    ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank'],
 //                    ['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
 //                    ['label' => 'Level1'],
@@ -79,8 +83,31 @@
 //                    ['label' => 'Important', 'iconStyle' => 'far', 'iconClassAdded' => 'text-danger'],
 //                    ['label' => 'Warning', 'iconClass' => 'nav-icon far fa-circle text-warning'],
 //                    ['label' => 'Informational', 'iconStyle' => 'far', 'iconClassAdded' => 'text-info'],
-                ],
-            ]);
+                        ],
+                    ]);
+                    break;
+
+                case 'avaliador':
+                    echo \hail812\adminlte\widgets\Menu::widget([
+                        'items' => [
+                            ['label' => 'Dashboard', 'url' => ['site/index'], 'icon' => 'tachometer-alt'],
+                            ['label' => 'AVALIAÇÕES', 'header' => true],
+                            ['label' => 'Pedidos de Avaliação', 'url' => ['pedido_avaliacao/index_avaliador'], 'icon' => 'table'],
+
+
+//                    ['label' => 'Simple Link', 'icon' => 'th', 'badge' => '<span class="right badge badge-danger">New</span>'],
+                            ['label' => 'Yii2 PROVIDED', 'header' => true],
+//                    ['label' => 'Login', 'url' => ['site/login'], 'icon' => 'sign-in-alt', 'visible' => Yii::$app->user->isGuest],
+                            ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
+
+                        ],
+                    ]);
+                    break;
+
+                default: echo '';
+                break;
+            }
+
             ?>
         </nav>
         <!-- /.sidebar-menu -->
