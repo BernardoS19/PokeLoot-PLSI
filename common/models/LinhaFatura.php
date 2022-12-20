@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $fatura_id
  * @property int $carta_id
- * @property float $preco
+ * @property float|null $preco
  *
  * @property Carta $carta
  * @property Fatura $fatura
@@ -30,7 +30,7 @@ class LinhaFatura extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fatura_id', 'carta_id', 'preco'], 'required'],
+            [['fatura_id', 'carta_id'], 'required'],
             [['fatura_id', 'carta_id'], 'integer'],
             [['preco'], 'number'],
             [['fatura_id', 'carta_id'], 'unique', 'targetAttribute' => ['fatura_id', 'carta_id']],

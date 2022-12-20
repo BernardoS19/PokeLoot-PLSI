@@ -2,6 +2,7 @@
 
 /** @var yii\web\View $this */
 /** @var  $linhasfatura */
+/** @var  $precoTotal */
 
 use yii\helpers\Html;
 
@@ -16,16 +17,16 @@ $this->title = 'Carrinho';
         <div class="cart_inner">
             <?php
             if($linhasfatura!= null){
-
             ?>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Carta</th>
+                        <th scope="col">Preço</th>
                     </tr>
                     </thead>
+
                     <?php
                     foreach ($linhasfatura as $linhafatura){
                     ?>
@@ -45,15 +46,26 @@ $this->title = 'Carrinho';
                             </div>
                         </td>
                         <td>
-                            <h5><?= $linhafatura->carta->preco ?></h5>
+                            <h5><?= $linhafatura->carta->preco ?> €</h5>
                         </td>
                         <td>
-                            <?= \yii\bootstrap5\Html::a('<i class="fa fa-remove"></i> Remover',['carrinho/remover?cartaId='.$linhafatura->carta_id], ['data'=>['method'=>'post'],'class'=>'']) ?>
+                            <?= \yii\bootstrap5\Html::a('<i class="fa fa-remove"></i> Remover',['carrinho/remover?cartaId='.$linhafatura->carta_id], ['data'=>['method'=>'post'],'class'=>'btn btn-danger btn-sm']) ?>
                         </td>
                     </tr>
                     <?php
                     }
                     ?>
+                    <tr>
+                        <td>
+                            <h4>Total</h4>
+                        </td>
+                        <td style="white-space: nowrap">
+                            <h4><?= $precoTotal ?> €</h4>
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
                     <tr>
                         <td>
 
@@ -62,34 +74,8 @@ $this->title = 'Carrinho';
 
                         </td>
                         <td>
-                            <h5>Subtotal</h5>
-                        </td>
-                        <td>
-                            <h5>$2160.00</h5>
-                        </td>
-                    </tr>
-                    <tr class="shipping_area">
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-
-                    </tr>
-                    <tr class="out_button_area">
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-                            <div class="checkout_btn_inner d-flex align-items-center">
-                                <a class="primary-btn" href="#">Proceed to checkout</a>
+                            <div class="checkout_btn_inner d-flex align-items-end">
+                                <a class="primary-btn rounded" href="#">Comprar</a>
                             </div>
                         </td>
                     </tr>
