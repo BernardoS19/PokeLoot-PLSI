@@ -5,7 +5,7 @@
 
 use yii\helpers\Html;
 
-$this->title = '*nome da carta*';
+$this->title = $carta->nome.' | '.$carta->colecao->nome;
 ?>
 <div class="p-4"></div>
 
@@ -21,10 +21,17 @@ $this->title = '*nome da carta*';
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
                     <h3><?= $carta->nome?></h3>
-                    <h2><?= $carta->preco?></h2>
+                    <?php
+                    if ($carta->verificado){
+                        echo '<h5 class="verificado"><i class="fa fa-check-circle-o"></i> Verificado</h5>';
+                    }
+                    ?>
+
+                    <h2><?= $carta->preco?> €</h2>
                     <ul class="list">
                         <li><span>Tipo: </span><?= $carta->tipo->nome?></a></li>
-                        <li><span>Elemento: </span><?= $carta->elemento->nome?></a></li>
+                        <li><span><?php echo $carta->tipo->nome == 'Treinador' ? 'Género:' : 'Elemento:'?> </span><?= $carta->elemento->nome?></a></li>
+                        <li><span>Coleção: </span><?= $carta->colecao->nome?></a></li>
                     </ul>
                     <p><?=$carta->descricao?></p>
 

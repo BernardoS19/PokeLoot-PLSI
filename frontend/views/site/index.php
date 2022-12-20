@@ -36,14 +36,14 @@ $this->title = 'PokéLoot';
                                     <?= Html::img(Yii::getAlias('@imgurl') .'/'. $carta->imagem->nome) ?>
                                 </a>
                                 <div class="product-details">
-                                    <h6><?= $carta->nome ?></h6>
+                                    <h6><?= $carta->nome ?> <?php echo $carta->verificado ? '<i class="fa fa-check-circle-o verificado"></i>':''; ?></h6>
                                     <div class="price">
-                                        <h6><?= $carta->preco ?></h6>
+                                        <h6><?= $carta->preco ?> €</h6>
                                     </div>
                                     <div class="prd-bottom">
-                                        <?= Html::a('<span><i class="fa fa-shopping-cart"></i> </span>',['carrinho/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>
+                                        <?= Html::a('<span><i class="fa fa-shopping-cart"></i> </span>', ['carrinho/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>
 
-                                        <?= Html::a('<span><i class="fa fa-star" aria-hidden="true"></i></span>',['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>
+                                        <?= Html::a('<span><i class="fa fa-star" aria-hidden="true"></i></span>', ['lista_desejos/adicionar?cartaId='.$carta->id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>
                                     </div>
                                 </div>
                             </div>
@@ -80,9 +80,9 @@ $this->title = 'PokéLoot';
                                     <?= Html::img(Yii::getAlias('@imgurl') .'/'. $avaliada->carta->imagem->nome) ?>
                                 </a>
                                 <div class="product-details">
-                                    <h6><?= $avaliada->carta->nome ?></h6>
+                                    <h6><?= $avaliada->carta->nome ?> <?php echo $carta->verificado ? '<i class="fa fa-check-circle-o verificado"></i>':''; ?></h6>
                                     <div class="price">
-                                        <h6><?= $avaliada->carta->preco ?></h6>
+                                        <h6><?= $avaliada->carta->preco ?> €</h6>
                                     </div>
                                     <div class="prd-bottom">
                                         <?= Html::a('<span><i class="fa fa-shopping-cart"></i> </span>',['carrinho/adicionar?cartaId='.$avaliada->carta->id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>

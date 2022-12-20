@@ -25,17 +25,18 @@ $this->title = 'Lista de Desejos';
                     ?>
                     <div class="col-lg-3 col-md-6">
                         <div class="single-product">
-                            <?= \yii\bootstrap5\Html::a('<i class="fa fa-remove"></i> Remover',['lista_desejos/remover?cartaId='.$item->carta_id], ['data'=>['method'=>'post'],'class'=>'']) ?>
+                            <?= \yii\bootstrap5\Html::a('<i class="fa fa-remove"></i> Remover',['lista_desejos/remover?cartaId='.$item->carta_id], ['data'=>['method'=>'post'],'class'=>'btn btn-sm btn-danger']) ?>
+                            <h5></h5>
                             <a href="<?= \yii\helpers\Url::toRoute("carta/detalhes?cartaId=".$item->carta->id) ?>">
                                 <?= Html::img(Yii::getAlias('@imgurl') .'/'. $item->carta->imagem->nome) ?>
                             </a>
                             <div class="product-details">
-                                <h6><?= $item->carta->nome ?></h6>
+                                <h6><?= $item->carta->nome ?> <?php echo $item->carta->verificado ? '<i class="fa fa-check-circle-o verificado"></i>':''; ?></h6>
                                 <div class="price">
-                                    <h6><?= $item->carta->preco ?></h6>
+                                    <h6><?= $item->carta->preco ?> €</h6>
                                 </div>
-                                <div class="prd-bottom">
-                                    <?= \yii\bootstrap5\Html::a('<span><i class="fa fa-shopping-cart"></i></span> ',['carrinho/adicionar?cartaId='.$item->carta_id], ['data'=>['method'=>'post'],'class'=>'social-info']) ?>
+                                <div class="prd-bottom align-items-center">
+                                    <?= \yii\bootstrap5\Html::a('<span><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</span> ', ['carrinho/adicionar?cartaId='.$item->carta_id], ['data' => ['method'=>'post'],'class' => 'genric-btn primary-btn rounded']) ?>
                                 </div>
                             </div>
                         </div>
