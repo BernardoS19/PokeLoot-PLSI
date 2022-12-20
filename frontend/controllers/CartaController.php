@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Carta;
+use yii\data\Pagination;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 
@@ -29,9 +30,15 @@ class CartaController extends Controller
     // Página de Catálogo
     public function actionIndex()
     {
-        if(!isset($_GET['nome'])){
-            $cartas = Carta::find()->orderBy('id DESC')->all();
-        }else{
+        $query = Carta::find();
+        $count = clone $query;
+        $paginas = new Pagination(['totalCount' => $count->count(), 'pageSize' => 9]);
+
+        if(!isset($_GET['nome']))
+        {
+            $cartas = $query->offset($paginas->offset)->limit($paginas->limit)->orderBy('id DESC')->all();
+        }
+        else {
             $pesquisa = null;
             if(isset($_GET['nome'])){
                 $nome = $_GET['nome'];
@@ -41,13 +48,12 @@ class CartaController extends Controller
                     $pesquisa = ['like','carta.nome','%'.$nome.'%', false];
                 }
             }
-            $cartas= Carta::find()->where($pesquisa)->orderBy('id DESC')->all();
+            $cartas = $query->offset($paginas->offset)->limit($paginas->limit)->where($pesquisa)->orderBy('id DESC')->all();
         }
-
-
 
         return $this->render('index', [
             'cartas' => $cartas,
+            'paginas' => $paginas,
         ]);
     }
 
