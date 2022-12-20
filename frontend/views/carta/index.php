@@ -204,7 +204,7 @@ $this->title = 'Catálogo';
                                 </a>
 
                                 <div class="product-details">
-                                    <h6><?= $carta->nome ?></h6>
+                                    <h6><?= $carta->nome ?> <?php echo $carta->verificado ? '<i class="fa fa-check-circle-o verificado"></i>':''; ?></h6>
                                     <div class="price">
                                         <h6><?= $carta->preco ?> €</h6>
                                     </div>

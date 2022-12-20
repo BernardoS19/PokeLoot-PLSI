@@ -5,8 +5,9 @@
 /** @var  $precoTotal */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
-$this->title = 'Carrinho';
+    $this->title = 'Carrinho';
 ?>
 <div class="p-4"></div>
 
@@ -36,10 +37,17 @@ $this->title = 'Carrinho';
                         <td>
                             <div class="media">
                                 <div class="d-flex">
-                                    <?= Html::img(Yii::getAlias('@imgurl') . '/' . $linhafatura->carta->imagem->nome) ?>
+                                    <a href="<?= Url::toRoute("carta/detalhes?cartaId=".$linhafatura->carta->id) ?>">
+                                        <?= Html::img(Yii::getAlias('@imgurl') . '/' . $linhafatura->carta->imagem->nome) ?>
+                                    </a>
                                 </div>
                                 <div class="media-body">
                                     <h4><?= $linhafatura->carta->nome ?></h4>
+                                    <?php
+                                    if ($linhafatura->carta->verificado){
+                                        echo '<span class="verificado"><i class="fa fa-check-circle-o"></i> Verificado</span>';
+                                    }
+                                    ?>
                                     <br>
                                     <p><?= $linhafatura->carta->descricao ?></p>
                                 </div>

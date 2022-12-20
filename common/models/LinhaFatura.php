@@ -10,6 +10,7 @@ use Yii;
  * @property int $fatura_id
  * @property int $carta_id
  * @property float|null $preco
+ * @property int|null $verificado
  *
  * @property Carta $carta
  * @property Fatura $fatura
@@ -31,7 +32,7 @@ class LinhaFatura extends \yii\db\ActiveRecord
     {
         return [
             [['fatura_id', 'carta_id'], 'required'],
-            [['fatura_id', 'carta_id'], 'integer'],
+            [['fatura_id', 'carta_id', 'verificado'], 'integer'],
             [['preco'], 'number'],
             [['fatura_id', 'carta_id'], 'unique', 'targetAttribute' => ['fatura_id', 'carta_id']],
             [['carta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carta::class, 'targetAttribute' => ['carta_id' => 'id']],
@@ -48,6 +49,7 @@ class LinhaFatura extends \yii\db\ActiveRecord
             'fatura_id' => 'Fatura ID',
             'carta_id' => 'Carta ID',
             'preco' => 'Preco',
+            'verificado' => 'Verificado',
         ];
     }
 
