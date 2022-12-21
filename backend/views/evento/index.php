@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Evento', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Evento', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,15 +29,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-
             'descricao',
-            'data',
+            [
+                'attribute' => 'data',
+                'label' => 'Data',
+                'value' => function($model){
+                    return date('d-m-Y', strtotime($model->data));
+                }
+            ],
             'longitude',
             'latitude',
             [
-                'attribute'=>'carta_id',
-                'label'=>'Nome',
-                'value'=> function($model){
+                'attribute' => 'carta_id',
+                'label' => 'Carta',
+                'value' => function($model){
                     return $model->carta->nome;
                 },
             ],
