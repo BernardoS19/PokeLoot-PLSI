@@ -2,7 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use ibrarturi\latlngfinder\LatLngFinder;
+use dosamigos\google\maps\LatLng;
+use dosamigos\google\maps\Map;
+use dosamigos\google\maps\overlays\Marker;
 
 /** @var yii\web\View $this */
 /** @var common\models\Evento $model */
@@ -64,10 +66,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'evento',
                 'label' => 'Local',
                 'value' => function($model){
+                    $coord = new LatLng(['lat' => (float)$model->latitude, 'lng' => (float)$model->longitude]);
+                    $map = new Map([
+                        'center' => $coord,
+                        'zoom' => 15,
+                    ]);
+                    $marker = new Marker([
+                        'position' => $coord,
+                        'title' => 'Local do Evento',
+                    ]);
+                    $map->addOverlay($marker);
                     return '<div class="row">
-                                <div class="col-6">
-                                mapa
-                                </div>
+                                <div class="col-6">'
+                                .
+                                $map->display()
+                                .
+                                '</div>
                                 <div class="col-6">
                                     <b>Latitude:</b> '.$model->latitude.'
                                     <br>
