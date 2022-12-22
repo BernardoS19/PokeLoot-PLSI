@@ -6,6 +6,7 @@ use ibrarturi\latlngfinder\LatLngFinder;
 
 /** @var yii\web\View $this */
 /** @var common\models\Evento $model */
+/** @var int $carta_nova */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -13,12 +14,16 @@ use ibrarturi\latlngfinder\LatLngFinder;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'descricao')->textarea() ?>
+
 
     <label for="evento-data">Data</label>
     <br>
     <input type="date" id="evento-data" name="Evento[data]">
     <br>
+    <br>
+
+    <?= $form->field($model, 'descricao')->textarea() ?>
+
     <br>
 
     <label>Escolha no mapa o local do Evento</label>
@@ -30,9 +35,10 @@ use ibrarturi\latlngfinder\LatLngFinder;
                 'lngAttribute' => 'evento-longitude',
                 'mapWidth' => 500,
                 'mapHeight' => 450,
-                'defaultLat' => 38.726,
-                'defaultLng' => -9.130,
+                'defaultLat' => 39.399872,
+                'defaultLng' => -8.224454,
                 'enableZoomField' => false,
+                'defaultZoom' => 7,
             ]);
             ?>
         </div>
@@ -47,6 +53,8 @@ use ibrarturi\latlngfinder\LatLngFinder;
             </div>
         </div>
     </div>
+
+    <input class="form-control" type="text" value="<?= $carta_nova ?>" name="Evento[carta_id]" id="evento-carta_id" style="display:none">
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

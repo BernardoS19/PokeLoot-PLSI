@@ -2,12 +2,15 @@
 
 namespace backend\controllers;
 
+use common\models\CartaSearch;
 use common\models\Evento;
 use common\models\EventoSearch;
+use common\models\User;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * EventoController implements the CRUD actions for Evento model.
@@ -26,7 +29,7 @@ class EventoController extends Controller
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'actions' => ['index', 'view', 'escolher_carta', 'escolher_carta_update', 'create', 'update', 'delete'],
                             'allow' => true,
                             'roles' => ['admin'],
                         ],
@@ -76,11 +79,27 @@ class EventoController extends Controller
     }
 
     /**
+     * O admin escolhe uma carta para associar a um novo evento
+     * @return string|Response
+     */
+    public function actionEscolher_carta()
+    {
+        $searchModel = new CartaSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('escolher_carta', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
      * Creates a new Evento model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param int $id Carta ID
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new Evento();
 
@@ -94,6 +113,24 @@ class EventoController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'carta_id' => $id,
+        ]);
+    }
+
+    /**
+     * O admin escolhe uma carta para associar a um novo evento
+     * @return string|Response
+     */
+    public function actionEscolher_carta_update($id, $carta_id)
+    {
+        $searchModel = new CartaSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('escolher_carta_update', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'id' => $id,
+            'carta_id' => $carta_id,
         ]);
     }
 
@@ -102,10 +139,11 @@ class EventoController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @param int $carta_id Carta ID
+     * @param int $carta_nova Carta ID nova
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id, $carta_id)
+    public function actionUpdate($id, $carta_id, $carta_nova)
     {
         $model = $this->findModel($id, $carta_id);
 
@@ -115,6 +153,7 @@ class EventoController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'carta_nova' => $carta_nova,
         ]);
     }
 

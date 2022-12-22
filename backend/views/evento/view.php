@@ -68,6 +68,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     $coord = new LatLng(['lat' => (float)$model->latitude, 'lng' => (float)$model->longitude]);
                     $map = new Map([
+                        'width' => 500,
+                        'height' => 450,
                         'center' => $coord,
                         'zoom' => 15,
                     ]);
