@@ -2,9 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use ibrarturi\latlngfinder\LatLngFinder;
 
 /** @var yii\web\View $this */
 /** @var common\models\Evento $model */
+
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
@@ -29,12 +31,52 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            [
+                'attribute' => 'data',
+                'label' => 'Data',
+                'value' => function($model){
+                    return date('d/m/Y', strtotime($model->data));
+                }
+            ],
             'descricao',
-            'data',
-            'longitude',
-            'latitude',
-            'carta_id',
+            [
+                'attribute' => 'carta',
+                'label' => 'Carta',
+                'value' => function($model){
+                    return '<div class="row">
+                                <div class="col-3">'
+                                    .Html::img('@imgurl' . '/' . $model->carta->imagem->nome).
+                                '</div>
+                                <div class="col-3">
+                                    <b>'.$model->carta->nome.'</b>
+                                    <br>
+                                    Tipo: '.$model->carta->tipo->nome.'
+                                    <br>
+                                    Elemento: '.$model->carta->elemento->nome.'
+                                    <br>
+                                    Coleção: '.$model->carta->colecao->nome.'
+                                </div>
+                            </div>';
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'evento',
+                'label' => 'Local',
+                'value' => function($model){
+                    return '<div class="row">
+                                <div class="col-6">
+                                mapa
+                                </div>
+                                <div class="col-6">
+                                    <b>Latitude:</b> '.$model->latitude.'
+                                    <br>
+                                    <b>Longitude:</b> '.$model->longitude.'
+                                </div>
+                            </div>';
+                },
+                'format' => 'raw',
+            ],
         ],
     ]) ?>
 

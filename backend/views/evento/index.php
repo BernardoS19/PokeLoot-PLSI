@@ -27,18 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
-            'descricao',
             [
                 'attribute' => 'data',
                 'label' => 'Data',
                 'value' => function($model){
-                    return date('d-m-Y', strtotime($model->data));
+                    return date('d/m/Y', strtotime($model->data));
                 }
             ],
-            'longitude',
-            'latitude',
+            'descricao',
             [
                 'attribute' => 'carta_id',
                 'label' => 'Carta',

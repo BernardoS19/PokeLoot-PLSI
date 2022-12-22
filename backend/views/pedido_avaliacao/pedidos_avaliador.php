@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Data da Avaliação',
                 'value' => function($model){
                     if ($model->data_avaliacao != null){
-                        return date('d-m-Y H:i', strtotime($model->data_avaliacao));
+                        return date('d/m/Y H:i', strtotime($model->data_avaliacao));
                     } else {
                         return '---';
                     }
