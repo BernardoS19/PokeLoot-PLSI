@@ -8,6 +8,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ColecaoController implements the CRUD actions for Colecao model.
@@ -48,10 +49,14 @@ class ColecaoController extends Controller
     /**
      * Lists all Colecao models.
      *
-     * @return string
+     * @return string|Response
      */
     public function actionIndex()
     {
+        if (!\Yii::$app->user->can('readColecao')) {
+            return $this->redirect(['site/index']);
+        }
+
         $searchModel = new ColecaoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -64,11 +69,15 @@ class ColecaoController extends Controller
     /**
      * Displays a single Colecao model.
      * @param int $id ID
-     * @return string
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
+        if (!\Yii::$app->user->can('readColecao')) {
+            return $this->redirect(['site/index']);
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -81,6 +90,10 @@ class ColecaoController extends Controller
      */
     public function actionCreate()
     {
+        if (!\Yii::$app->user->can('createColecao')) {
+            return $this->redirect(['site/index']);
+        }
+
         $model = new Colecao();
 
         if ($this->request->isPost) {
@@ -105,6 +118,10 @@ class ColecaoController extends Controller
      */
     public function actionUpdate($id)
     {
+        if (!\Yii::$app->user->can('updateColecao')) {
+            return $this->redirect(['site/index']);
+        }
+
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -125,6 +142,10 @@ class ColecaoController extends Controller
      */
     public function actionDelete($id)
     {
+        if (!\Yii::$app->user->can('deleteColecao')) {
+            return $this->redirect(['site/index']);
+        }
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

@@ -51,10 +51,14 @@ class EventoController extends Controller
     /**
      * Lists all Evento models.
      *
-     * @return string
+     * @return string|Response
      */
     public function actionIndex()
     {
+        if (!\Yii::$app->user->can('readEvento')) {
+            return $this->redirect(['site/index']);
+        }
+
         $searchModel = new EventoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -68,11 +72,15 @@ class EventoController extends Controller
      * Displays a single Evento model.
      * @param int $id ID
      * @param int $carta_id Carta ID
-     * @return string
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id, $carta_id)
     {
+        if (!\Yii::$app->user->can('readEvento')) {
+            return $this->redirect(['site/index']);
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id, $carta_id),
         ]);
@@ -84,6 +92,10 @@ class EventoController extends Controller
      */
     public function actionEscolher_carta()
     {
+        if (!\Yii::$app->user->can('createEvento')) {
+            return $this->redirect(['site/index']);
+        }
+
         $searchModel = new CartaSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -101,6 +113,10 @@ class EventoController extends Controller
      */
     public function actionCreate($id)
     {
+        if (!\Yii::$app->user->can('createEvento')) {
+            return $this->redirect(['site/index']);
+        }
+
         $model = new Evento();
 
         if ($this->request->isPost) {
@@ -123,6 +139,10 @@ class EventoController extends Controller
      */
     public function actionEscolher_carta_update($id, $carta_id)
     {
+        if (!\Yii::$app->user->can('updateEvento')) {
+            return $this->redirect(['site/index']);
+        }
+
         $searchModel = new CartaSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -145,6 +165,10 @@ class EventoController extends Controller
      */
     public function actionUpdate($id, $carta_id, $carta_nova)
     {
+        if (!\Yii::$app->user->can('updateEvento')) {
+            return $this->redirect(['site/index']);
+        }
+
         $model = $this->findModel($id, $carta_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -167,6 +191,10 @@ class EventoController extends Controller
      */
     public function actionDelete($id, $carta_id)
     {
+        if (!\Yii::$app->user->can('deleteEvento')) {
+            return $this->redirect(['site/index']);
+        }
+
         $this->findModel($id, $carta_id)->delete();
 
         return $this->redirect(['index']);
