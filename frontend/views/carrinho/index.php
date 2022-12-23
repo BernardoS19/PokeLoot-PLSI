@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 /** @var yii\web\View $this */
 /** @var  $linhasfatura */
@@ -83,7 +83,7 @@ use yii\helpers\Url;
                         </td>
                         <td>
                             <div class="checkout_btn_inner d-flex align-items-end">
-                                <a class="primary-btn rounded" href="#">Comprar</a>
+                                <?= Html::a('Comprar', ['carrinho/comprar'], ['class' => 'primary-btn rounded']) ?>
                             </div>
                         </td>
                     </tr>

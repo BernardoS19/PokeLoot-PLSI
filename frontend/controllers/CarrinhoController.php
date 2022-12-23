@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use common\models\LinhaFatura;
 
+use common\models\Lista_desejo;
+use common\models\Perfil;
 use common\models\User;
 use common\models\Carta;
 use common\models\Fatura;
@@ -62,25 +64,36 @@ class CarrinhoController extends Controller
             $carta = Carta::findOne($cartaId);
 
             if ($carta != null) {
-                if (Fatura::findOne(['user_id' => $userId, 'pago' => 0, 'data' => null]) != null) {
-                    $carrinho = Fatura::findOne(['user_id' => $userId, 'pago' => 0, 'data' => null]);
-                } else {
-                    $carrinho = new Fatura();
-                    $carrinho->user_id = $userId;
-                    $carrinho->save();
-                }
+                if (empty(Fatura::find()->join('LEFT JOIN','linha_fatura', 'linha_fatura.fatura_id = fatura.id')->filterWhere(['linha_fatura.carta_id' => $carta->id, 'fatura.pago' => 1])->all()))
+                {
+                    if (Fatura::findOne(['user_id' => $userId, 'pago' => 0, 'data' => null]) != null)
+                    {
+                        $carrinho = Fatura::findOne(['user_id' => $userId, 'pago' => 0, 'data' => null]);
+                    }
+                    else {
+                        $carrinho = new Fatura();
+                        $carrinho->user_id = $userId;
+                        $carrinho->save();
+                    }
 
-                $linhafatura = new LinhaFatura();
-                $linhafatura->fatura_id = $carrinho->id;
-                $linhafatura->carta_id = $cartaId;
+                    $linhafatura = new LinhaFatura();
+                    $linhafatura->fatura_id = $carrinho->id;
+                    $linhafatura->carta_id = $cartaId;
 
-                if ($linhafatura->save()) {
-                    Yii::$app->session->setFlash('success', 'Carta adicionada ao Carrinho de compras');
+                    if ($linhafatura->save())
+                    {
+                        Yii::$app->session->setFlash('success', 'Carta adicionada ao Carrinho de compras');
+                    }
+                    else {
+                        Yii::$app->session->setFlash('error', 'Carta já se encontra no Carrinho');
+                    }
+
                 } else {
-                    Yii::$app->session->setFlash('error', 'Carta já se encontra no carrinho');
+                    Yii::$app->session->setFlash('warning', 'Esta carta já foi comprada por si.');
                 }
             }
-        } else {
+        }
+        else {
             Yii::$app->session->setFlash('error', 'É necessária autenticação para esta funcionalidade');
         }
 
@@ -108,6 +121,51 @@ class CarrinhoController extends Controller
             Yii::$app->session->setFlash('error', 'É necessária autenticação para esta funcionalidade');
         }
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionComprar()
+    {
+        if (!Yii::$app->user->isGuest)
+        {
+            $userId = Yii::$app->user->identity->id;
+            $perfil = Perfil::findOne(['user_id' => $userId]);
+            $fatura = Fatura::findOne(['user_id' => $userId, 'pago' => 0, 'data' => null]);
+
+            if ($fatura != null && !empty($fatura->linhasFatura))
+            {
+                $linhasfatura = LinhaFatura::find()->where(['fatura_id' => $fatura->id])->all();
+                $precoTotal = LinhaFatura::find()->where(['fatura_id' => $fatura->id])->join('RIGHT JOIN', 'carta', 'carta.id = linha_fatura.carta_id')->sum('carta.preco');
+            }
+            else {
+                Yii::$app->session->setFlash('error', 'Não é possível efetuar uma compra sem cartas no Carrinho');
+                return $this->redirect(['site/index']);
+            }
+
+            if ($this->request->isPost)
+            {
+                if(Lista_desejo::find()->join('INNER JOIN', 'linha_fatura', 'lista_desejo.carta_id = linha_fatura.carta_id')->all()) {
+                    $desejos_comprados = Lista_desejo::find()->join('INNER JOIN', 'linha_fatura', 'lista_desejo.carta_id = linha_fatura.carta_id')->all();
+                    foreach ($desejos_comprados as $desejo_comprado){
+                        $desejo_comprado->delete();
+                    }
+                }
+                $fatura->pago = 1;
+                $fatura->data = date('Y-m-d H:i:s');
+                $fatura->save();
+
+                Yii::$app->session->setFlash('success', 'Compra efetuada com sucesso');
+                return $this->redirect(['site/index']);
+            }
+        }
+        else {
+            Yii::$app->session->setFlash('error', 'É necessária autenticação para esta funcionalidade');
+            return $this->redirect(['site/login']);
+        }
+        return $this->render('comprar', [
+            'perfil' => $perfil,
+            'linhasfatura' => $linhasfatura,
+            'precoTotal' => $precoTotal,
+        ]);
     }
 }
 
