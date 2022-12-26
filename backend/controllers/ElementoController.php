@@ -8,6 +8,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ElementoController implements the CRUD actions for Elemento model.
@@ -48,10 +49,14 @@ class ElementoController extends Controller
     /**
      * Lists all Elemento models.
      *
-     * @return string
+     * @return string|Response
      */
     public function actionIndex()
     {
+        if (!\Yii::$app->user->can('readElemento')) {
+            return $this->redirect(['site/index']);
+        }
+
         $searchModel = new ElementoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -64,11 +69,15 @@ class ElementoController extends Controller
     /**
      * Displays a single Elemento model.
      * @param int $id ID
-     * @return string
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
+        if (!\Yii::$app->user->can('readElemento')) {
+            return $this->redirect(['site/index']);
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -81,6 +90,10 @@ class ElementoController extends Controller
      */
     public function actionCreate()
     {
+        if (!\Yii::$app->user->can('createElemento')) {
+            return $this->redirect(['site/index']);
+        }
+
         $model = new Elemento();
 
         if ($this->request->isPost) {
@@ -105,6 +118,10 @@ class ElementoController extends Controller
      */
     public function actionUpdate($id)
     {
+        if (!\Yii::$app->user->can('updateElemento')) {
+            return $this->redirect(['site/index']);
+        }
+
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -125,6 +142,10 @@ class ElementoController extends Controller
      */
     public function actionDelete($id)
     {
+        if (!\Yii::$app->user->can('deleteElemento')) {
+            return $this->redirect(['site/index']);
+        }
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

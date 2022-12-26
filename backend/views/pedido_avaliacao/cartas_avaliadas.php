@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'data_avaliacao',
                 'label' => 'Data da Avaliação',
                 'value' => function($model){
-                    return date('d-m-Y H:i', strtotime($model->data_avaliacao));
+                    return date('d/m/Y H:i', strtotime($model->data_avaliacao));
                 },
             ],
 

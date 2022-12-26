@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Evento', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Evento', ['escolher_carta'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -27,23 +27,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
-
-            'descricao',
-            'data',
-            'longitude',
-            'latitude',
             [
-                'attribute'=>'carta_id',
-                'label'=>'Nome',
-                'value'=> function($model){
+                'attribute' => 'data',
+                'label' => 'Data',
+                'value' => function($model){
+                    return date('d/m/Y', strtotime($model->data));
+                }
+            ],
+            'descricao',
+            [
+                'attribute' => 'carta_id',
+                'label' => 'Carta',
+                'value' => function($model){
                     return $model->carta->nome;
                 },
             ],
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
+                'template' => '{view} {update} {delete}',
                 'urlCreator' => function ($action, Evento $model, $key, $index, $column) {
+                    if ($action == 'update'){
+                        return Url::toRoute(['evento/escolher_carta_update', 'id' => $model->id, 'carta_id' => $model->carta_id]);
+                    }
                     return Url::toRoute([$action, 'id' => $model->id, 'carta_id' => $model->carta_id]);
                  }
             ],
