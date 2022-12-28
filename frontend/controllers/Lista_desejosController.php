@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Fatura;
 use common\models\Lista_desejo;
 use Yii;
 use common\models\Carta;
@@ -40,14 +41,20 @@ class Lista_desejosController extends Controller
         $user=\Yii::$app->user->identity->id;
         $carta = Carta::findOne($cartaId);
         if($carta != null && $user != null){
-            $listadesejos=new Lista_desejo();
-            $listadesejos->user_id= $user;
-            $listadesejos->carta_id=$cartaId;
+            if (empty(Fatura::find()->join('LEFT JOIN','linha_fatura', 'linha_fatura.fatura_id = fatura.id')->filterWhere(['linha_fatura.carta_id' => $carta->id, 'fatura.pago' => 1])->all()))
+            {
+                $listadesejos = new Lista_desejo();
+                $listadesejos->user_id = $user;
+                $listadesejos->carta_id = $cartaId;
 
-            if($listadesejos->save()){
-                Yii::$app->session->setFlash("success",'Carta adicionada à Lista de Desejos');
-            }else
-                Yii::$app->session->setFlash("error",'Carta ja foi adicionada aos favoritos');
+                if ($listadesejos->save()) {
+                    Yii::$app->session->setFlash('success', 'Carta adicionada à Lista de Desejos');
+                } else {
+                    Yii::$app->session->setFlash('error', 'Carta ja foi adicionada aos favoritos');
+                }
+            } else {
+                Yii::$app->session->setFlash('warning', 'Esta carta já foi comprada por si.');
+            }
         }
         return $this->redirect(Yii::$app->request->referrer);
     }

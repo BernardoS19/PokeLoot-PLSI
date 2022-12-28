@@ -3,6 +3,7 @@
 /** @var $linhasfatura */
 /** @var $precoTotal */
 /** @var $perfil */
+/** @var frontend\models\PagamentoForm $pagamento */
 
 use yii\bootstrap5\Html;
 use yii\helpers\Url;
@@ -44,20 +45,16 @@ use yii\widgets\ActiveForm;
                     <br>
                     <?php $form = ActiveForm::begin(['options' => ['class' => 'row contact_form']]); ?>
                         <div class="col-md-12 form-group">
-                            <label for="nome_cartao">Nome no Cartão</label>
-                            <input type="text" class="form-control" id="nome_cartao" name="nome_cartao">
+                            <?= $form->field($pagamento, 'nome')->textInput(['class' => 'form-control']) ?>
                         </div>
                         <div class="col-md-7 form-group">
-                            <label for="numero">Numero do Cartão</label>
-                            <input type="text" class="form-control" id="numero" name="numero">
+                            <?= $form->field($pagamento, 'numero')->textInput(['class' => 'form-control']) ?>
                         </div>
                         <div class="col-md-3 form-group">
-                            <label for="data_validade">Data de Validade</label>
-                            <input type="text" class="form-control" id="data_validade" name="data_validade">
+                            <?= $form->field($pagamento, 'data_validade')->textInput(['class' => 'form-control']) ?>
                         </div>
                         <div class="col-md-2 form-group">
-                            <label for="ccv">CCV</label>
-                            <input type="text" class="form-control" id="ccv" name="ccv">
+                            <?= $form->field($pagamento, 'ccv')->textInput(['class' => 'form-control']) ?>
                         </div>
                         <div class="col-md-3 form-group">
                             <?= Html::submitButton('Finalizar Compra', ['class' => 'genric-btn success radius medium', 'data' => ['confirm' => 'Tem a certeza que quer finalizar a compra?']]) ?>

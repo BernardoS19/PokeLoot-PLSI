@@ -9,6 +9,7 @@ use common\models\Perfil;
 use common\models\User;
 use common\models\Carta;
 use common\models\Fatura;
+use frontend\models\PagamentoForm;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -130,6 +131,7 @@ class CarrinhoController extends Controller
             $userId = Yii::$app->user->identity->id;
             $perfil = Perfil::findOne(['user_id' => $userId]);
             $fatura = Fatura::findOne(['user_id' => $userId, 'pago' => 0, 'data' => null]);
+            $pagamento = new PagamentoForm();
 
             if ($fatura != null && !empty($fatura->linhasFatura))
             {
@@ -143,18 +145,31 @@ class CarrinhoController extends Controller
 
             if ($this->request->isPost)
             {
-                if(Lista_desejo::find()->join('INNER JOIN', 'linha_fatura', 'lista_desejo.carta_id = linha_fatura.carta_id')->all()) {
-                    $desejos_comprados = Lista_desejo::find()->join('INNER JOIN', 'linha_fatura', 'lista_desejo.carta_id = linha_fatura.carta_id')->all();
-                    foreach ($desejos_comprados as $desejo_comprado){
-                        $desejo_comprado->delete();
-                    }
-                }
-                $fatura->pago = 1;
-                $fatura->data = date('Y-m-d H:i:s');
-                $fatura->save();
+                $pagamento->load($this->request->post());
 
-                Yii::$app->session->setFlash('success', 'Compra efetuada com sucesso');
-                return $this->redirect(['site/index']);
+                if ($pagamento->validate())
+                {
+                    if(Lista_desejo::find()->join('INNER JOIN', 'linha_fatura', 'lista_desejo.carta_id = linha_fatura.carta_id')->all()) {
+                        $desejos_comprados = Lista_desejo::find()->join('INNER JOIN', 'linha_fatura', 'lista_desejo.carta_id = linha_fatura.carta_id')->all();
+                        foreach ($desejos_comprados as $desejo_comprado){
+                            $desejo_comprado->delete();
+                        }
+                    }
+                    foreach ($linhasfatura as $linhafatura){
+                        $linhafatura->preco = $linhafatura->carta->preco;
+                        $linhafatura->verificado = $linhafatura->carta->verificado;
+                        $linhafatura->save();
+                    }
+                    $fatura->pago = 1;
+                    $fatura->data = date('Y-m-d H:i:s');
+                    $fatura->save();
+
+                    Yii::$app->session->setFlash('success', 'Compra efetuada com sucesso!');
+                    return $this->redirect(['site/index']);
+                }
+                else {
+                    Yii::$app->session->setFlash('error', 'Ocorreu um erro, Verifique os dados de pagamento.');
+                }
             }
         }
         else {
@@ -165,6 +180,7 @@ class CarrinhoController extends Controller
             'perfil' => $perfil,
             'linhasfatura' => $linhasfatura,
             'precoTotal' => $precoTotal,
+            'pagamento' => $pagamento,
         ]);
     }
 }
