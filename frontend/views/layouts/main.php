@@ -53,8 +53,7 @@ AppAsset::register($this);
                             </li>
                             <!-- EVENTOS -->
                             <li class="nav-item">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Eventos</a>
+                                <?= Html::a('Eventos', ['evento/index'], ['class' => 'nav-link']) ?>
                             </li>
 
                             <li class="nav-item">
