@@ -16,17 +16,18 @@ $this->title = 'Histórico de Aquisições';
         <?php
         foreach ($faturas as $fatura){
         ?>
-        <p>
-            Aquisição em:<h6><?= date('d/m/Y H:i', strtotime($fatura->data)) ?></h6>
+        <h5>Aquisição em: <b><?= date('d/m/Y H:i', strtotime($fatura->data)) ?></b></h5>
             <br>
             <?php
             foreach ($fatura->linhasFatura as $linha){
             ?>
                 <div class="row">
-                    <div class="col-4 col-md-4">
-                        <?= Html::img('@imgurl' . '/' . $linha->carta->imagem->nome) ?>
+                    <div class="col-2 col-md-2">
+                        <a href="<?= \yii\helpers\Url::toRoute("carta/detalhes?cartaId=".$linha->carta->id) ?>">
+                            <?= Html::img('@imgurl' . '/' . $linha->carta->imagem->nome, ['height' => 220]) ?>
+                        </a>
                     </div>
-                    <div class="col-8 col-md-8">
+                    <div class="col-10 col-md-10">
                         <p>
                             <h6><?= $linha->carta->nome ?></h6>
                         </p>
@@ -46,7 +47,7 @@ $this->title = 'Histórico de Aquisições';
             <?php
             }
             ?>
-        </p>
+            <hr class="p-2">
         <?php
         }
         ?>
