@@ -46,10 +46,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Carta',
                 'value' => function($model){
                     return '<div class="row">
-                                <div class="col-3">'
+                                <div class="col-3 col-md-4">'
                                     .Html::img('@imgurl' . '/' . $model->carta->imagem->nome).
                                 '</div>
-                                <div class="col-3">
+                                <div class="col-3 col-md-4">
                                     <b>'.$model->carta->nome.'</b>
                                     <br>
                                     Tipo: '.$model->carta->tipo->nome.'
@@ -79,12 +79,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]);
                     $map->addOverlay($marker);
                     return '<div class="row">
-                                <div class="col-6">'
+                                <div class="col-6 col-md-7">'
                                 .
                                 $map->display()
                                 .
                                 '</div>
-                                <div class="col-6">
+                                <div class="col-6 col-md-5">
                                     <b>Latitude:</b> '.$model->latitude.'
                                     <br>
                                     <b>Longitude:</b> '.$model->longitude.'

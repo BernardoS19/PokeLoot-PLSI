@@ -34,21 +34,28 @@ class EventoController extends Controller
 
         $evento = Evento::find()->where(['>', 'data', $dataAtual])->orderBy('data ASC')->one();
 
-        $coord = new LatLng(['lat' => (float)$evento->latitude, 'lng' => (float)$evento->longitude]);
+        if ($evento != null)
+        {
+            $coord = new LatLng(['lat' => (float)$evento->latitude, 'lng' => (float)$evento->longitude]);
 
-        $map = new Map([
-            'width' => 700,
-            'height' => 400,
-            'center' => $coord,
-            'zoom' => 15,
-        ]);
+            $map = new Map([
+                'width' => 700,
+                'height' => 400,
+                'center' => $coord,
+                'zoom' => 15,
+            ]);
 
-        $marker = new Marker([
-            'position' => $coord,
-            'title' => 'Local do Evento',
-        ]);
+            $marker = new Marker([
+                'position' => $coord,
+                'title' => 'Local do Evento',
+            ]);
 
-        $map->addOverlay($marker);
+            $map->addOverlay($marker);
+        }
+        else {
+            $map = null;
+        }
+
 
         return $this->render('index', [
             'evento' => $evento,

@@ -13,10 +13,16 @@ $this->title = 'Eventos';
 
 <section class="">
     <div class="container">
+        <?php
+        if ($map == null){
+            echo '<h3>De momento não existem eventos ativos</h3>';
+        } else {
+        ?>
         <div class="row">
             <div class="col-lg-8 posts-list">
                 <div class="single-post row">
                     <div class="col-lg-12">
+
                         <div class="feature-img">
                             <?= $map->display() ?>
                         </div>
@@ -58,7 +64,7 @@ $this->title = 'Eventos';
                 </div>
             </div>
         </div>
-
+    <?php } ?>
     </div>
 </section>
 
