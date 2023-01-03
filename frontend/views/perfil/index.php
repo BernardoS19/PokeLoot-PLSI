@@ -13,9 +13,13 @@ $this->title = 'Perfil';
         <h2>Perfil</h2>
         <br>
         <div class="order_d_inner">
+
             <h4>Username: <?= $user->username ?></h4>
             <h6>Email: <span class="text-black"><?= $user->email ?></span></h6>
 
+            <?= Html::a('Ver Histórico de Aquisições', ['perfil/historico'], ['class' => 'genric-btn info rounded']) ?>
+            <br>
+            <br>
             <?php $form = ActiveForm::begin(); ?>
             <div class="p-1">
                 <label for="nome" class="text-black">Nome:</label>
