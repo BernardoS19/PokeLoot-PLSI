@@ -1,6 +1,8 @@
 <?php
 
 /** @var yii\web\View $this */
+/** @var $user */
+/** @var $perfil */
 
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
@@ -14,40 +16,32 @@ $this->title = 'Perfil';
         <br>
         <div class="order_d_inner">
             <h4>Username: <?= $user->username ?></h4>
-            <h6>Email: <span class="text-black"><?= $user->email ?></span></h6>
+            <h5>Email: <span class="text-black"><?= $user->email ?></span></h5>
 
             <?php $form = ActiveForm::begin(); ?>
             <div class="p-1">
-                <label for="nome" class="text-black">Nome:</label>
-                <br>
-                <input type="text" value="<?= $perfil->nome ?>" name="Perfil[nome]" id="nome" disabled>
+                <?= $form->field($perfil,'nome')->textInput(['maxlength' => true, 'disabled' => true, 'style'=>'width: 65%']); ?>
             </div>
             <div class="p-1">
-                <label for="morada" class="text-black">Morada:</label>
-                <br>
-                <input type="text" value="<?= $perfil->morada ?>" name="Perfil[morada]" id="morada" disabled>
+                <?= $form->field($perfil,'morada')->textInput(['maxlength' => true, 'disabled' => true, 'style'=>'width: 65%']); ?>
             </div>
             <div class="p-1">
-                <label for="cod_postal" class="text-black">Código Postal:</label>
-                <br>
-                <input type="text" value="<?= $perfil->cod_postal ?>" name="Perfil[cod_postal]" id="cod_postal" disabled>
+                <?= $form->field($perfil,'cod_postal')->textInput(['maxlength' => true, 'disabled' => true, 'style'=>'width: 65%']); ?>
             </div>
             <div class="p-1">
-                <label for="telefone" class="text-black">Contacto Telef.:</label>
-                <br>
-                <input type="text" value="<?= $perfil->telefone ?>" name="Perfil[telefone]" id="telefone" disabled>
+                <?= $form->field($perfil,'telefone')->textInput(['maxlength' => 9, 'disabled' => true, 'style'=>'width: 65%']); ?>
             </div>
             <div>
-                <a id="editarForm" onclick="editar()" href="#" class="genric-btn primary radius medium">Editar</a>
+                <a id="editarForm" onclick="editar()" href="#" class="genric-btn primary radius">Editar</a>
             </div>
             <div>
-                <?= Html::submitButton('Guardar Alterações', ['class' => 'genric-btn success radius medium', 'id' => 'guardar', 'style' => 'display: none']) ?>
+                <?= Html::submitButton('Guardar Alterações', ['class' => 'genric-btn success radius', 'id' => 'guardar', 'style' => 'display: none']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
 
             <br>
-            <?= Html::a('Logout', ['site/logout'], ['data' => ['method' => 'post'], 'class' => 'genric-btn danger radius medium']) ?>
+            <?= Html::a('Logout', ['site/logout'], ['data' => ['method' => 'post'], 'class' => 'genric-btn danger radius']) ?>
         </div>
         <div class=""></div>
     </div>
@@ -55,10 +49,10 @@ $this->title = 'Perfil';
 
 <script>
     function editar() {
-        document.getElementById("nome").disabled = false;
-        document.getElementById("morada").disabled = false;
-        document.getElementById("cod_postal").disabled = false;
-        document.getElementById("telefone").disabled = false;
+        document.getElementById("perfil-nome").disabled = false;
+        document.getElementById("perfil-morada").disabled = false;
+        document.getElementById("perfil-cod_postal").disabled = false;
+        document.getElementById("perfil-telefone").disabled = false;
         document.getElementById("editarForm").style.display = 'none';
         document.getElementById("guardar").style.display = 'block';
     }

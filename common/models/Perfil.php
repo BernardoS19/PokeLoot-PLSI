@@ -51,9 +51,9 @@ class Perfil extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nome' => 'Nome',
-            'telefone' => 'Telefone',
+            'telefone' => 'Contacto Telefónico',
             'morada' => 'Morada',
-            'cod_postal' => 'Cod Postal',
+            'cod_postal' => 'Código Postal',
             'user_id' => 'User ID',
         ];
     }
