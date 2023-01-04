@@ -14,6 +14,9 @@ $this->title = 'Histórico de Aquisições';
         <h2>Histórico de Aquisições</h2>
         <br>
         <?php
+        if (empty($faturas)){
+            echo '<p>Ainda não existem aquisições feitas por si.</p>';
+        }
         foreach ($faturas as $fatura){
         ?>
         <h5>Aquisição em: <b><?= date('d/m/Y H:i', strtotime($fatura->data)) ?></b></h5>
