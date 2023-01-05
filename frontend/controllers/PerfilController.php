@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Fatura;
 use common\models\Perfil;
 use common\models\User;
 use Yii;
@@ -33,6 +34,7 @@ class PerfilController extends Controller
         if (Yii::$app->user->isGuest){
             return $this->redirect(['site/login']);
         }
+
         $user = User::findOne(Yii::$app->user->id);
         $perfil = Perfil::findOne(['user_id' => $user->id]);
 
@@ -49,6 +51,20 @@ class PerfilController extends Controller
         return $this->render('index', [
             'user' => $user,
             'perfil' => $perfil,
+        ]);
+    }
+
+    public function actionHistorico()
+    {
+        if (Yii::$app->user->isGuest){
+            return $this->redirect(['site/login']);
+        }
+
+        $userId = Yii::$app->user->identity->getId();
+        $faturasPagas = Fatura::find()->where(['user_id' => $userId, 'pago' => 1])->orderBy('data DESC')->all();
+
+        return $this->render('historico', [
+            'faturas' => $faturasPagas,
         ]);
     }
 

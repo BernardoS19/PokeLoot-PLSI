@@ -15,9 +15,13 @@ $this->title = 'Perfil';
         <h2>Perfil</h2>
         <br>
         <div class="order_d_inner">
+
             <h4>Username: <?= $user->username ?></h4>
             <h5>Email: <span class="text-black"><?= $user->email ?></span></h5>
 
+            <?= Html::a('Ver Histórico de Aquisições', ['perfil/historico'], ['class' => 'genric-btn info rounded']) ?>
+            <br>
+            <br>
             <?php $form = ActiveForm::begin(); ?>
             <div class="p-1">
                 <?= $form->field($perfil,'nome')->textInput(['maxlength' => true, 'disabled' => true, 'style'=>'width: 65%']); ?>
