@@ -155,6 +155,9 @@ class UserController extends Controller
             $novaRole = $authManager->getRole(addslashes($_POST["roles"]));
             $authManager->assign($novaRole, $model->id);
 
+            $model->username = $_POST['User']['username'];
+            $model->email = $_POST['User']['email'];
+
             if ($model->save()){
                 return $this->redirect(['view', 'id' => $model->id, 'status' => 'success']);
             } else {
