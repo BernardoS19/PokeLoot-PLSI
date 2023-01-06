@@ -32,8 +32,9 @@ class LinhaFatura extends \yii\db\ActiveRecord
     {
         return [
             [['fatura_id', 'carta_id'], 'required'],
-            [['fatura_id', 'carta_id', 'verificado'], 'integer'],
-            [['preco'], 'number'],
+            [['fatura_id', 'carta_id'], 'integer'],
+            [['verificado'], 'integer', 'min' => 0, 'max' => 1],
+            [['preco'], 'number', 'min' => 0.1],
             [['fatura_id', 'carta_id'], 'unique', 'targetAttribute' => ['fatura_id', 'carta_id']],
             [['carta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carta::class, 'targetAttribute' => ['carta_id' => 'id']],
             [['fatura_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fatura::class, 'targetAttribute' => ['fatura_id' => 'id']],
