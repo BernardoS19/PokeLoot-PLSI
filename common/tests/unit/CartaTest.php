@@ -4,6 +4,7 @@
 namespace common\tests\Unit;
 
 use common\models\Carta;
+use common\models\Imagem;
 use common\tests\UnitTester;
 
 class CartaTest extends \Codeception\Test\Unit
@@ -112,7 +113,7 @@ class CartaTest extends \Codeception\Test\Unit
         $carta->nome = 'Pikachu';
         $carta->preco = 2.30;
         $carta->descricao = 'Lorem Ipsum...';
-        $carta->verificado = 'sim'; // O Valor verificado tem de ser do tipo inteiro
+        $carta->verificado = 5; // O Valor verificado tem de ser do tipo inteiro entre 0 e 1
         $carta->imagem_id = 1;
         $carta->tipo_id = 1;
         $carta->elemento_id = 1;
@@ -127,7 +128,7 @@ class CartaTest extends \Codeception\Test\Unit
         $carta->nome = 'Pikachu';
         $carta->preco = 2.30;
         $carta->descricao = 'Lorem Ipsum...';
-        $carta->verificado = null; // O Valor verificado tem de ser do tipo inteiro
+        $carta->verificado = null; // O Valor verificado tem de ser do tipo inteiro entre 0 e 1
         $carta->imagem_id = 1;
         $carta->tipo_id = 1;
         $carta->elemento_id = 1;
@@ -255,4 +256,56 @@ class CartaTest extends \Codeception\Test\Unit
 
         $this->assertFalse($carta->validate());
     }
+
+    public function testCartaSave()
+    {
+        $carta = new Carta();
+        $carta->nome = 'Pikachu';
+        $carta->preco = 4.24;
+        $carta->descricao = 'Lorem Ipsum...';
+        $carta->verificado = 0;
+        $carta->tipo_id = 1;
+        $carta->elemento_id = 4;
+        $carta->colecao_id = 1;
+
+        $imagem = new Imagem();
+        $imagem->nome = '123456789123.png';
+        $imagem->save();
+
+        $carta->imagem_id = $imagem->id;
+
+        $this->assertTrue($carta->save());
+    }
+
+    public function testEncontrarCartaCriada()
+    {
+
+        $this->tester->seeInDatabase(Carta::tableName(), ['nome' => 'Pikachu']);
+    }
+
+    public function testEditarCartaCriada()
+    {
+        $carta = Carta::find()->where(['nome' => 'Pikachu'])->one();
+        $carta->preco = 1.99;
+
+        $this->assertTrue($carta->save());
+    }
+
+    public function testEncontrarCartaAtualizada()
+    {
+        $this->tester->seeInDatabase(Carta::tableName(), ['nome' => 'Pikachu', 'preco' => 1.99]);
+    }
+
+    public function testEliminarCarta()
+    {
+        $carta = Carta::find()->where(['nome' => 'Pikachu', 'preco' => 1.99])->one();
+
+        $this->assertIsNumeric($carta->delete());
+    }
+
+    public function testVerificarSeCartaFoiEliminada()
+    {
+        $this->tester->dontSeeInDatabase(Carta::tableName(), ['nome' => 'Pikachu']);
+    }
+
 }
