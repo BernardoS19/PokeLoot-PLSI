@@ -3,5 +3,12 @@ actor: UnitTester
 bootstrap: false
 modules:
     enabled:
+        - Db
         - Yii2:
             part: fixtures
+            transaction: false
+    config:
+        Db:
+            dsn: 'mysql:host=127.0.0.1;dbname=pokeloot_test'
+            user: 'root'
+            password: ''
