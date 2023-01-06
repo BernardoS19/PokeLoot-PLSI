@@ -34,12 +34,14 @@ class Pedido_avaliacao extends \yii\db\ActiveRecord
         return [
             [['user_id', 'carta_id', 'estado'], 'required'],
             [['user_id', 'carta_id'], 'integer'],
-            [['estado'], 'string'],
+            [['estado'], 'in', 'range' => ['Por Autorizar', 'Autorizado', 'Avaliado','Cancelado']],
             [['valor_avaliado'], 'number', 'min' => 0.1],
-            [['data_avaliacao'], 'safe'],
+            [['data_avaliacao'], 'datetime', 'format' => 'php:Y-m-d H:i:s'],
             [['user_id', 'carta_id'], 'unique', 'targetAttribute' => ['user_id', 'carta_id']],
             [['carta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carta::class, 'targetAttribute' => ['carta_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            ['user_id', 'validarRole'],
+            ['data_avaliacao', 'compare', 'compareValue' => date('Y-m-d H:i:s'), 'operator' => '==', 'type' => 'datetime'],
         ];
     }
 
@@ -55,6 +57,18 @@ class Pedido_avaliacao extends \yii\db\ActiveRecord
             'valor_avaliado' => 'Valor Avaliado',
             'data_avaliacao' => 'Data Avaliacao',
         ];
+    }
+
+    /*
+     * Valida se é Avaliador, o Utilizador que vai ser associado a um novo Pedido de Avaliação
+     */
+    public function validarRole()
+    {
+
+        if ($this->user->getUserRole() != 'avaliador')
+        {
+            $this->addError('user_id', 'É necessário que seja um Avaliador a ser associado ao Pedido de Avaliação');
+        }
     }
 
     /**
