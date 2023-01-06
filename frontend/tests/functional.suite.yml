@@ -5,3 +5,7 @@ modules:
         - Filesystem
         - Yii2
         - Asserts
+        - Db:
+            dsn: 'mysql:host=127.0.0.1;dbname=pokeloot_test'
+            user: 'root'
+            password: ''
