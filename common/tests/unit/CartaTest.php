@@ -300,9 +300,10 @@ class CartaTest extends \Codeception\Test\Unit
     {
         $carta = Carta::find()->where(['nome' => 'Pikachu', 'preco' => 1.99])->one();
 
-        Imagem::findOne(['id' => $carta->imagem_id])->delete();
-
         $this->assertIsNumeric($carta->delete());
+
+        $imagem = Imagem::find()->where(['id' => $carta->imagem_id])->one();
+        $imagem->delete();
     }
 
     public function testVerificarSeCartaFoiEliminada()

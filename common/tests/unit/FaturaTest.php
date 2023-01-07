@@ -55,7 +55,7 @@ class FaturaTest extends \Codeception\Test\Unit
     {
         $fatura = new Fatura();
 
-        $fatura->data = date('Y-m-d H:i:s');
+        $fatura->data = null;
         $fatura->pago = 10; // O estado Pago só pode ser 0 (Não) ou 1 (Sim)
         $fatura->user_id = 5;
 
@@ -66,7 +66,7 @@ class FaturaTest extends \Codeception\Test\Unit
     {
         $fatura = new Fatura();
 
-        $fatura->data = date('Y-m-d H:i:s');
+        $fatura->data = null;
         $fatura->pago = null; // É obrigatório o preenchimento do estado Pago quando uma fatura é criada
         $fatura->user_id = 5;
 
@@ -77,7 +77,7 @@ class FaturaTest extends \Codeception\Test\Unit
     {
         $fatura = new Fatura();
 
-        $fatura->data = date('Y-m-d H:i:s');
+        $fatura->data = null;
         $fatura->pago = 0;
         $fatura->user_id = 9898; // O Utilizador tem de existir para ser associado a uma fatura
 
@@ -88,7 +88,7 @@ class FaturaTest extends \Codeception\Test\Unit
     {
         $fatura = new Fatura();
 
-        $fatura->data = date('Y-m-d H:i:s');
+        $fatura->data = null;
         $fatura->pago = 0;
         $fatura->user_id = null; // O Utilizador tem de existir para ser associado a uma fatura
 
@@ -99,7 +99,7 @@ class FaturaTest extends \Codeception\Test\Unit
     {
         $fatura = new Fatura();
 
-        $fatura->data = date('Y-m-d H:i:s');
+        $fatura->data = null;
         $fatura->pago = 0;
         $fatura->user_id = 5;
 
