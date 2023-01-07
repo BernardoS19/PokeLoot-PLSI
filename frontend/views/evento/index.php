@@ -2,7 +2,6 @@
 
 /** @var yii\web\View $this */
 /** @var $evento common\models\Evento */
-/** @var $map dosamigos\google\maps\Map */
 
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -14,7 +13,7 @@ $this->title = 'Eventos';
 <section class="">
     <div class="container">
         <?php
-        if ($map == null){
+        if ($evento == null){
             echo '<h3>De momento não existem eventos ativos</h3>';
         } else {
         ?>
@@ -24,7 +23,7 @@ $this->title = 'Eventos';
                     <div class="col-lg-12">
 
                         <div class="feature-img">
-                            <?= $map->display() ?>
+                            <iframe width="700" height="400" frameBorder="1" scrolling="no" marginHeight="0" marginWidth="0" src="https://maps.google.com/maps?q=<?= $evento->latitude.','.$evento->longitude ?>&hl=pt&z=14&amp;output=embed"></iframe>
                         </div>
                     </div>
                     <div class="col-lg-3  col-md-3">

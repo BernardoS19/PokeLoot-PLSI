@@ -66,22 +66,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'evento',
                 'label' => 'Local',
                 'value' => function($model){
-                    $coord = new LatLng(['lat' => (float)$model->latitude, 'lng' => (float)$model->longitude]);
-                    $map = new Map([
-                        'width' => 500,
-                        'height' => 450,
-                        'center' => $coord,
-                        'zoom' => 15,
-                    ]);
-                    $marker = new Marker([
-                        'position' => $coord,
-                        'title' => 'Local do Evento',
-                    ]);
-                    $map->addOverlay($marker);
                     return '<div class="row">
                                 <div class="col-6 col-md-7">'
                                 .
-                                $map->display()
+                                '<iframe width="500" height="450" frameBorder="1" scrolling="no" marginHeight="0" marginWidth="0" src="https://maps.google.com/maps?q='.$model->latitude.','.$model->longitude.'&hl=pt&z=14&amp;output=embed"></iframe>'
                                 .
                                 '</div>
                                 <div class="col-6 col-md-5">
