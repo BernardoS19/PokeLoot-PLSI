@@ -35,10 +35,12 @@ class Evento extends \yii\db\ActiveRecord
             [['descricao', 'data', 'longitude', 'latitude', 'carta_id'], 'required'],
             [['descricao'], 'string'],
             [['data'], 'safe'],
+            [['data'], 'date', 'format' => 'php:Y-m-d'],
             [['carta_id'], 'integer'],
             [['longitude', 'latitude'], 'string', 'max' => 255],
             [['carta_id'], 'unique'],
             [['carta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carta::class, 'targetAttribute' => ['carta_id' => 'id']],
+            ['data', 'validarData'],
         ];
     }
 
@@ -55,6 +57,17 @@ class Evento extends \yii\db\ActiveRecord
             'latitude' => 'Latitude',
             'carta_id' => 'Carta ID',
         ];
+    }
+
+    /*
+     * Valida a data de evento ao ser criado para não ser inferior à data de criação
+     */
+    public function validarData()
+    {
+        if (strtotime($this->data) < strtotime(date('Y-m-d')))
+        {
+            $this->addError('data', 'Por favor insira uma data válida');
+        }
     }
 
     /**
