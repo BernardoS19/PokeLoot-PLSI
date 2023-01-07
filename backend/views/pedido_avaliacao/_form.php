@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'valor_avaliado')->textInput(['maxlength' => true, 'type' => 'number', 'step' => 0.1]) ?>
+    <?= $form->field($model, 'valor_avaliado')->textInput(['maxlength' => true, 'type' => 'number', 'step' => 0.01]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Alterar', ['class' => 'btn btn-success']) ?>
