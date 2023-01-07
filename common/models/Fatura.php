@@ -32,10 +32,12 @@ class Fatura extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['data'], 'safe'],
-            [['pago', 'user_id'], 'integer'],
-            [['user_id'], 'required'],
+            [['data'], 'datetime', 'format' => 'php:Y-m-d H:i:s'],
+            [['user_id'], 'integer'],
+            [['pago'], 'integer', 'min' => 0, 'max' => 1],
+            [['user_id', 'pago'], 'required'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            ['data', 'compare', 'compareValue' => date('Y-m-d H:i:s'), 'operator' => '==', 'type' => 'datetime'],
         ];
     }
 
