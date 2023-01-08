@@ -112,8 +112,8 @@ class PedidosAvaliacaoCest
 
         $I->see('Cubone');
 
-        $I->seeLink('', Locator::href('/index-test.php/pedido_avaliacao/update?user_id=4&carta_id=2'));
-        $I->click(['xpath'=>'//a[@href="/index-test.php/pedido_avaliacao/update?user_id=4&carta_id=2"]']);
+        $I->seeLink('Alterar Preço');
+        $I->click('Alterar Preço');
 
         //Altera o Preço da Carta
         $I->see('Alterar preço da carta: Cubone', 'h1');
@@ -123,6 +123,10 @@ class PedidosAvaliacaoCest
 
         $I->see('Pedidos autorizados por avaliar', 'h3');
 
+        //Finaliza a Avaliação da Carta
+        $I->see('2.50');
+
+        $I->sendAjaxPostRequest('/index-test.php/pedido_avaliacao/finalizar?user_id=4&carta_id=2');
 
     }
 }
