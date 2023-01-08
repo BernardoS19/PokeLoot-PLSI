@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <br>
-    <h3>Pedidos autorizados por avaliar</h3>
+    <h3>Todos os Meus Pedidos</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [

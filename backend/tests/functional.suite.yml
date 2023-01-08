@@ -9,5 +9,5 @@ modules:
             user: 'root'
             password: ''
             dump: tests/_data/pokeloot_test.sql
-            cleanup: true
+            cleanup: false
             populate: true
