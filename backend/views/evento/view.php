@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Update', ['evento/escolher_carta_update', 'id' => $model->id, 'carta_id' => $model->carta_id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id, 'carta_id' => $model->carta_id], [
             'class' => 'btn btn-danger',
+            'id' => 'remover-evento',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',

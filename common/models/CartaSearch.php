@@ -73,8 +73,11 @@ class CartaSearch extends Carta
 
         if ($filtro){
             if ($filtro == 'sem_pedido'){
-                $query->join('LEFT JOIN', 'pedido_avaliacao', 'pedido_avaliacao.carta_id = id')
+                $query->join('LEFT JOIN', 'pedido_avaliacao', 'pedido_avaliacao.carta_id = carta.id')
                     ->andFilterWhere(['carta.verificado' => 0])->andWhere(['pedido_avaliacao.carta_id' => null]);
+            }
+            if ($filtro == 'sem_evento'){
+                $query->join('LEFT JOIN', 'evento', 'carta.id = evento.carta_id')->where(['evento.carta_id' => null]);
             }
         }
 

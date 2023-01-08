@@ -73,10 +73,10 @@ class CarrinhoController extends Controller
                     }
                     else {
                         $carrinho = new Fatura();
+                        $carrinho->pago = 0;
                         $carrinho->user_id = $userId;
                         $carrinho->save();
                     }
-
                     $linhafatura = new LinhaFatura();
                     $linhafatura->fatura_id = $carrinho->id;
                     $linhafatura->carta_id = $cartaId;

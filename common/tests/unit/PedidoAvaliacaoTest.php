@@ -21,7 +21,7 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
         $pedido = new Pedido_avaliacao();
 
         $pedido->user_id = 98998; // O Utilizador precisa de existir para ser associado a um novo Pedido de Avaliação
-        $pedido->carta_id = 5;
+        $pedido->carta_id = 3;
         $pedido->estado = 'Por Autorizar';
         $pedido->valor_avaliado = null;
         $pedido->data_avaliacao = null;
@@ -34,7 +34,7 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
         $pedido = new Pedido_avaliacao();
 
         $pedido->user_id = null; // O Utilizador precisa de existir para ser associado a um novo Pedido de Avaliação
-        $pedido->carta_id = 5;
+        $pedido->carta_id = 3;
         $pedido->estado = 'Por Autorizar';
         $pedido->valor_avaliado = null;
         $pedido->data_avaliacao = null;
@@ -47,7 +47,7 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
         $pedido = new Pedido_avaliacao();
 
         $pedido->user_id = 5; // O Utilizador precisa de ter a role de Avaliador para ser associado a um novo Pedido de Avaliação
-        $pedido->carta_id = 5;
+        $pedido->carta_id = 3;
         $pedido->estado = 'Por Autorizar';
         $pedido->valor_avaliado = null;
         $pedido->data_avaliacao = null;
@@ -86,7 +86,7 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
         $pedido = new Pedido_avaliacao();
 
         $pedido->user_id = 4;
-        $pedido->carta_id = 5;
+        $pedido->carta_id = 3;
         $pedido->estado = 'teste'; // O estado precisa de ter um dos valores predefinidos para criar um novo Pedido de Avaliação
         $pedido->valor_avaliado = null;
         $pedido->data_avaliacao = null;
@@ -99,7 +99,7 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
         $pedido = new Pedido_avaliacao();
 
         $pedido->user_id = 4;
-        $pedido->carta_id = 5;
+        $pedido->carta_id = 3;
         $pedido->estado = null; // O estado tem de estar obrigatoriamente preenchido para criar um novo Pedido de Avaliação
         $pedido->valor_avaliado = null;
         $pedido->data_avaliacao = null;
@@ -112,7 +112,7 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
         $pedido = new Pedido_avaliacao();
 
         $pedido->user_id = 4;
-        $pedido->carta_id = 5;
+        $pedido->carta_id = 3;
         $pedido->estado = 'Autorizado';
         $pedido->valor_avaliado = '2€'; // O valor para avaliação tem de ser do tipo float
         $pedido->data_avaliacao = null;
@@ -125,7 +125,7 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
         $pedido = new Pedido_avaliacao();
 
         $pedido->user_id = 4;
-        $pedido->carta_id = 5;
+        $pedido->carta_id = 3;
         $pedido->estado = 'Autorizado';
         $pedido->valor_avaliado = null;
         $pedido->data_avaliacao = 'data'; // A data de avaliação tem de estar no formato certo
@@ -138,7 +138,7 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
         $pedido = new Pedido_avaliacao();
 
         $pedido->user_id = 4;
-        $pedido->carta_id = 5;
+        $pedido->carta_id = 3;
         $pedido->estado = 'Autorizado';
         $pedido->valor_avaliado = null;
         $pedido->data_avaliacao = date('d/m/Y', strtotime('14/08/2023')); // A data de avaliação tem de estar no formato certo
@@ -151,7 +151,7 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
         $pedido = new Pedido_avaliacao();
 
         $pedido->user_id = 4;
-        $pedido->carta_id = 5;
+        $pedido->carta_id = 3;
         $pedido->estado = 'Autorizado';
         $pedido->valor_avaliado = null;
         $pedido->data_avaliacao = date('Y-m-d', strtotime('2022-03-16')); // Ao criar um Pedido de Avaliação o campo da data tem de ser preenchido com a data da criação
@@ -164,7 +164,7 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
         $pedido = new Pedido_avaliacao();
 
         $pedido->user_id = 4;
-        $pedido->carta_id = 5;
+        $pedido->carta_id = 3;
         $pedido->estado = 'Autorizado';
         $pedido->valor_avaliado = 5.00;
         $pedido->data_avaliacao = date('Y-m-d H:i:s');
@@ -174,12 +174,12 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
 
     public function testEncontrarPedidoAvaliacaoCriado()
     {
-        $this->tester->seeInDatabase(Pedido_avaliacao::tableName(), ['user_id' => 4, 'carta_id' => 5]);
+        $this->tester->seeInDatabase(Pedido_avaliacao::tableName(), ['user_id' => 4, 'carta_id' => 3]);
     }
 
     public function testEditarPedidoAvaliacaoCriado()
     {
-        $pedido = Pedido_avaliacao::find()->where(['user_id' => 4, 'carta_id' => 5])->one();
+        $pedido = Pedido_avaliacao::find()->where(['user_id' => 4, 'carta_id' => 3])->one();
         $pedido->valor_avaliado = 6.50;
 
         $this->assertTrue($pedido->save());
@@ -187,18 +187,18 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
 
     public function testEncontrarPedidoAvaliacaoAtualizado()
     {
-        $this->tester->seeInDatabase(Pedido_avaliacao::tableName(), ['user_id' => 4, 'carta_id' => 5, 'valor_avaliado' => 6.50]);
+        $this->tester->seeInDatabase(Pedido_avaliacao::tableName(), ['user_id' => 4, 'carta_id' => 3, 'valor_avaliado' => 6.50]);
     }
 
     public function testEliminarPedidoAvaliacao()
     {
-        $pedido = Pedido_avaliacao::find()->where(['user_id' => 4, 'carta_id' => 5, 'valor_avaliado' => 6.50])->one();
+        $pedido = Pedido_avaliacao::find()->where(['user_id' => 4, 'carta_id' => 3, 'valor_avaliado' => 6.50])->one();
 
         $this->assertIsNumeric($pedido->delete());
     }
 
     public function testVerificarSePedidoAvaliacaoFoiEliminado()
     {
-        $this->tester->dontSeeInDatabase(Pedido_avaliacao::tableName(), ['user_id' => 4, 'carta_id' => 5, 'valor_avaliado' => 6.50]);
+        $this->tester->dontSeeInDatabase(Pedido_avaliacao::tableName(), ['user_id' => 4, 'carta_id' => 3, 'valor_avaliado' => 6.50]);
     }
 }
