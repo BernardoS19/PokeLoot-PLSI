@@ -14,7 +14,7 @@ class PedidosAvaliacaoCest
     }
 
     // tests
-    public function tryAvaliadorCriaPedidoAvaliacao(FunctionalTester $I)
+    public function tryAvaliadorCriaUmPedidoAvaliacao(FunctionalTester $I)
     {
         //Login
         $I->amOnPage('site/login');
@@ -57,9 +57,8 @@ class PedidosAvaliacaoCest
 
     }
 
-    public function tryAdminAutorizaPedidoAvaliacao(FunctionalTester $I)
+    public function tryAdminAutorizaUmPedidoAvaliacao(FunctionalTester $I)
     {
-        //ESTÁ A DAR ERRO
         //Login
         $I->amOnPage('site/login');
         $I->see('Acesso reservado a administradores');
@@ -77,10 +76,10 @@ class PedidosAvaliacaoCest
 
         //Admin vê o Pedido
         $I->see('avaliador2 | avaliador2@pokeloot.pt');
-        $I->see('Ivysaur');
+        $I->see('Mr. Briney’s Compassion');
 
         //Autoriza o Pedido de Avaliação
-        $I->seeLink('Autorizar', Locator::href('/index-test.php/pedido_avaliacao/autorizar?user_id=4&carta_id=4'));
+        $I->sendAjaxPostRequest('/index-test.php/pedido_avaliacao/autorizar?user_id=4&carta_id=5');
 
         $I->see('Pedidos de Avaliação', 'h1');
 
@@ -91,6 +90,39 @@ class PedidosAvaliacaoCest
         $I->see('Pedidos autorizados a aguardar avaliação', 'h3');
 
         $I->see('avaliador2 | avaliador2@pokeloot.pt');
-        $I->see('Ivysaur');
+        $I->see('Mr. Briney’s Compassion');
+    }
+
+    public function tryAvaliadorAvaliaUmaCartaPeloPedidoAvaliacao(FunctionalTester $I)
+    {
+        //Login
+        $I->amOnPage('site/login');
+        $I->see('Acesso reservado a administradores');
+        $I->fillField('LoginForm[username]', 'avaliador2');
+        $I->fillField('LoginForm[password]', 'avaliador123');
+        $I->click('Entrar');
+
+        //Na Página Inicial
+        $I->see('Página Inicial');
+
+        //Página de Pedidos de Avaliação
+        $I->seeLink('Pedidos de Avaliação');
+        $I->click('Pedidos de Avaliação');
+        $I->see('Pedidos autorizados por avaliar', 'h3');
+
+        $I->see('Cubone');
+
+        $I->seeLink('', Locator::href('/index-test.php/pedido_avaliacao/update?user_id=4&carta_id=2'));
+        $I->click(['xpath'=>'//a[@href="/index-test.php/pedido_avaliacao/update?user_id=4&carta_id=2"]']);
+
+        //Altera o Preço da Carta
+        $I->see('Alterar preço da carta: Cubone', 'h1');
+
+        $I->fillField('Pedido_avaliacao[valor_avaliado]', '2.50');
+        $I->click('Alterar');
+
+        $I->see('Pedidos autorizados por avaliar', 'h3');
+
+
     }
 }

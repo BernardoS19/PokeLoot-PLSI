@@ -13,7 +13,7 @@ class CrudCartaCest
     }
 
     // tests
-    public function tryAdicionarCarta(FunctionalTester $I)
+    public function tryCriarCarta(FunctionalTester $I)
     {
         //Login
         $I->amOnPage('site/login');
@@ -164,11 +164,6 @@ class CrudCartaCest
 
         //Clicar para eliminar a Carta
         $I->seeLink('Remover');
-
-        //erro method not allowed
-//        $I->click('Remover');
-
-        $I->see('Cartas');
-
+        $I->sendAjaxPostRequest('/carta/delete?id=3&imagem_id=3&tipo_id=1&elemento_id=2&colecao_id=1');
     }
 }

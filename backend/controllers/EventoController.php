@@ -97,7 +97,7 @@ class EventoController extends Controller
         }
 
         $searchModel = new CartaSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams, 'sem_evento');
 
         return $this->render('escolher_carta', [
             'searchModel' => $searchModel,
@@ -114,6 +114,10 @@ class EventoController extends Controller
     public function actionCreate($id)
     {
         if (!\Yii::$app->user->can('createEvento')) {
+            return $this->redirect(['site/index']);
+        }
+
+        if (Evento::find()->where(['carta_id' => $id])->one()){
             return $this->redirect(['site/index']);
         }
 

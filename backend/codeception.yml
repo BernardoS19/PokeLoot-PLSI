@@ -17,6 +17,6 @@ modules:
             dsn: 'mysql:host=127.0.0.1;dbname=pokeloot_test'
             user: 'root'
             password: ''
-            dump: tests/_data/pokeloot_test.sql
+            dump: 'tests/_data/pokeloot_test.sql'
             cleanup: true
             populate: true

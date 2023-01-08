@@ -457,7 +457,9 @@ CREATE TABLE IF NOT EXISTS `pedido_avaliacao` (
 --
 
 INSERT INTO `pedido_avaliacao` (`user_id`, `carta_id`, `estado`, `valor_avaliado`, `data_avaliacao`) VALUES
-(2, 1, 'Avaliado', '1.23', '2023-01-07 22:47:12');
+(2, 1, 'Avaliado', '1.23', '2023-01-07 22:47:12'),
+(4, 5, 'Por Autorizar', NULL, NULL),
+(4, 2, 'Autorizado', NULL, NULL);
 
 -- --------------------------------------------------------
 
