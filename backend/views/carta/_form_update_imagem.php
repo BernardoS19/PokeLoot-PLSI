@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 <div class="carta-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', 'id' => 'form-update-imagem']]); ?>
 
     <?= $form->field($uploadForm, 'imagemCarta')->fileInput() ?>
 

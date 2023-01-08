@@ -45,7 +45,7 @@
                             ['label' => 'Tipos de Cartas', 'url' => ['tipo/index'], 'icon' => 'table'],
                             ['label' => 'Elementos de Cartas', 'url' => ['elemento/index'], 'icon' => 'table'],
                             ['label' => 'Coleções', 'url' => ['colecao/index'], 'icon' => 'table'],
-                            ['label' => 'Cartas', 'url' => ['carta/index'], 'icon' => 'table'],
+                            ['label' => 'Gestão de Cartas', 'url' => ['carta/index'], 'icon' => 'table'],
 //                    [
 //                        'label' => 'Starter Pages',
 //                        'icon' => 'tachometer-alt',

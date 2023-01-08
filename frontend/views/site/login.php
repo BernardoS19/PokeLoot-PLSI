@@ -28,7 +28,7 @@ $this->title = 'Login';
             </div>
 
             <div class="col-md-12 form-group">
-                <?= Html::submitButton('Login', ['class' => 'genric-btn primary primary-btn radius', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Login', ['class' => 'genric-btn primary primary-btn radius', 'name' => 'login-button', 'id' => 'login-btn']) ?>
             </div>
             <?php ActiveForm::end(); ?>
             <div style="padding:30px">
