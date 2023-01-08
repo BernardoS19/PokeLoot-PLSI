@@ -1,0 +1,13 @@
+suite_namespace: frontend\tests\acceptance
+actor: AcceptanceTester
+modules:
+    enabled:
+        - WebDriver:
+            url: http://localhost/PokeLoot-PLSI/frontend/web/
+            browser: firefox
+        - Yii2:
+            configFile: 'config/test.php'
+            part: orm
+            transaction: false
+            cleanup: false
+            entryScript: index-test.php
