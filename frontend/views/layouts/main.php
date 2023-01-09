@@ -32,7 +32,7 @@ AppAsset::register($this);
                 <div class="container">
                     <!-- Brand and toggle get grouped for better mobile display -->
 <!--                    <a class="navbar-brand logo_h" href="#"><img src="../../web/img/logo.png" alt=""></a>-->
-                    <h2>PokéLoot</h2>
+                    <h2><?= Html::img(Yii::getAlias('@imgurl').'/pokeloot-y1.png', ['width' => '100px']) ?></h2>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="icon-bar"></span>

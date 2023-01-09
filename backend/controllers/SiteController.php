@@ -2,7 +2,10 @@
 
 namespace backend\controllers;
 
+use common\models\Carta;
+use common\models\Evento;
 use common\models\LoginForm;
+use common\models\Pedido_avaliacao;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -69,7 +72,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $totalCartas = Carta::find()->count();
+
+        $dataAtual = date('Y-m-d');
+        $proximoEvento = Evento::find()->where(['>', 'data', $dataAtual])->orderBy('data ASC')->one();
+
+        $pedidosRecebidos = Pedido_avaliacao::find()->where(['estado' => 'Por Autorizar'])->count();
+
+        return $this->render('index',[
+            'totalCartas' => $totalCartas,
+            'proximoEvento' => $proximoEvento,
+            'pedidosRecebidos' => $pedidosRecebidos,
+        ]);
     }
 
     /**
