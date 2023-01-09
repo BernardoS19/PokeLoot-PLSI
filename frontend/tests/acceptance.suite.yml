@@ -3,11 +3,15 @@ actor: AcceptanceTester
 modules:
     enabled:
         - WebDriver:
-            url: http://localhost/PokeLoot-PLSI/frontend/web/
+            url: 'http://localhost/PokeLoot-PLSI/frontend/web/'
             browser: firefox
+            port: 8000
+            window_size: 1366x768
+            capabilities:
+                acceptInsecureCerts: true # allow self-signed certificates
         - Yii2:
             configFile: 'config/test.php'
-            part: orm
+            part: init
             transaction: false
             cleanup: false
             entryScript: index-test.php

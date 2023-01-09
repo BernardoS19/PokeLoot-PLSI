@@ -166,8 +166,6 @@ class PedidoAvaliacaoTest extends \Codeception\Test\Unit
         $pedido->user_id = 4;
         $pedido->carta_id = 3;
         $pedido->estado = 'Autorizado';
-        $pedido->valor_avaliado = 5.00;
-        $pedido->data_avaliacao = date('Y-m-d H:i:s');
 
         $this->assertTrue($pedido->save());
     }
