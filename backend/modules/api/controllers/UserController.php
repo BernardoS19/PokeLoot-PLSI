@@ -1,6 +1,8 @@
 <?php
 namespace backend\modules\api\controllers;
 
+use common\models\LoginForm;
+use common\models\User;
 use yii\rest\ActiveController;
 use yii\web\Request;
 
@@ -48,5 +50,24 @@ class UserController extends ActiveController
             return ['success' => 'user deleted'];
         }
         return new \Yii\web\NotAcceptableHttpException('nao encontrado');
+    }
+
+    public function actionLogin(){
+        $model = new LoginForm();
+        $model->username = $this->request->post("username");
+        $model->password = $this->request->post("password");
+
+        $myObj = new \stdClass();
+
+        if ($model->login()) {
+            $user = User::findByUsername($model->username);
+
+            $myObj->auth_key = $user->auth_key;
+        }
+        else {
+            $myObj->error = 'Error, username or password may be wrong.';
+            $myObj->auth_key = null;
+        }
+        return $myObj;
     }
 }
