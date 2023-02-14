@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Pedidos por autorizar', ['index_admin'], ['class' => 'btn btn-info']) ?>
 
         <!-- Consultar a lista de avaliações feitas -->
-        <?= Html::a('Pedidos que aguardam avaliação', ['cartas_avaliadas'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Consultar Avaliações efetuadas', ['cartas_avaliadas'], ['class' => 'btn btn-info']) ?>
     </p>
     <br>
     <p>

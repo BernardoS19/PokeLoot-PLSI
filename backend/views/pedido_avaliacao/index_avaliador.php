@@ -42,13 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'carta.colecao.nome',
             ],
             [
-                'attribute' => 'carta',
-                'label' => 'Preço Atual',
-                'value' => function($model){
-                    return $model->carta->preco . ' €';
-                },
-            ],
-            [
                 'attribute' => 'pedido_avaliacao',
                 'label' => 'Preço Avaliado',
                 'value' => function($model){
