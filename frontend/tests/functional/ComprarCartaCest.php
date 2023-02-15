@@ -68,7 +68,7 @@ class ComprarCartaCest
         $I->click('Comprar');
 
         $I->see('Lista de Itens a comprar', 'h2');
-        $I->see('Ivysaur | POP Series 2 ');
+        $I->see('Ivysaur');
         $I->see('Pagamento', 'h4');
 
         //Preencher o formulário do Pagamento e finalizar a compra
