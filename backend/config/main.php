@@ -41,13 +41,12 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                    ['class' => 'yii\rest\UrlRule','controller' =>'api/carta'],
-                    ['class' => 'yii\rest\UrlRule','controller' =>'api/user'],
+                    ['class' => 'yii\rest\UrlRule','controller' => 'api/carta', 'pluralize' => false],
+                    ['class' => 'yii\rest\UrlRule','controller' => 'api/user', 'pluralize' => false],
                 ],
             ],
         ],

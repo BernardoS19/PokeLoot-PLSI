@@ -69,7 +69,7 @@ use yii\widgets\ActiveForm;
                             <?php
                             foreach ($linhasfatura as $linhafatura){
                             ?>
-                            <li><a href="<?= Url::toRoute(['carta/detalhes', 'cartaId' => $linhafatura->carta_id]) ?>"><?= $linhafatura->carta->nome . ' | ' . $linhafatura->carta->colecao->nome ?> <span class="last"><?= $linhafatura->carta->preco ?> €</span></a></li>
+                            <li><a href="<?= Url::toRoute(['carta/detalhes', 'cartaId' => $linhafatura->carta_id]) ?>"><?= $linhafatura->carta->nome ?> <span class="last"><?= $linhafatura->carta->preco ?> €</span></a></li>
                             <?php
                             }
                             ?>

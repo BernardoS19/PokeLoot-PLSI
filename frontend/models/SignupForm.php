@@ -42,7 +42,7 @@ class SignupForm extends Model
     /**
      * Signs user up.
      *
-     * @return bool whether the creating new account was successful and email was sent
+     * @return User whether the creating new account was successful and email was sent
      */
     public function signup()
     {
@@ -70,7 +70,7 @@ class SignupForm extends Model
             $auth->assign($cliente, $user->getId());
         }
 
-        return true;
+        return $user;
     }
 
     /**

@@ -51,13 +51,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Coleção',
                 'value' => 'carta.colecao.nome'
             ],
-            [
-                'attribute' => 'carta',
-                'label' => 'Preço Atual',
-                'value' => function($model) {
-                    return $model->carta->preco . ' €';
-                },
-            ],
 
             [
                 'class' => ActionColumn::class,

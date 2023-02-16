@@ -10,12 +10,10 @@ $this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Cartas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
-var_dump($model->findModel(1));
 ?>
 <div class="carta-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    
 
     <p>
         <?php

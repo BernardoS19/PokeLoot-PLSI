@@ -2,6 +2,8 @@
 
 namespace backend\modules\api;
 
+use yii\base\Module;
+
 /**
  * api module definition class
  */

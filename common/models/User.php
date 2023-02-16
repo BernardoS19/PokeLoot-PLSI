@@ -161,6 +161,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $role;
     }
 
+    public static function findByAuthKey($authKey)
+    {
+        return static::findOne(['auth_key' => $authKey]);
+    }
+
     /**
      * {@inheritdoc}
      */
